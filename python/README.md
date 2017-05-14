@@ -1,0 +1,25 @@
+# functional/python
+
+Implementations of common functional programming functions in Python:
+range, reverse, reduce, map, filter, sort, unique, compose, pipe,
+partial and curry.
+
+    host$ python test.py 
+    test_range1:  ok
+    test_range2:  ok
+    test_reverse:  ok
+    test_reduce:  ok
+    test_map:  ok
+    test_filter:  ok
+    test_sort:  ok
+    test_unique:  ok
+    test_compose:  ok
+    test_pipe1:  ok
+    test_pipe2:  ok
+    test_partial:  ok
+    test_curry1:  ok
+    test_curry2:  ok
+    test_curry3:  ok
+    test_factorial:  ok
+    test_fibonacci:  ok
+    test_primes:  ok
