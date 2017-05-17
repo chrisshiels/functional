@@ -50,12 +50,12 @@ def _sort(f, l):
 
 
 def _unique(l):
-  def internal(a, e):
+  def accumulate(a, e):
     if e in a:
       return a
     else:
       return a + [ e ]
-  return _reduce(internal, l, [])
+  return _reduce(accumulate, l, [])
 
 
 def _compose(f, g):
@@ -82,11 +82,11 @@ def _partial(f, *args):
 
 
 def _curry(f, arity):
-  def internal(x):
+  def internal(v):
     if arity == 1:
-      return f(x)
+      return f(v)
     else:
-      return _curry(_partial(f, x), arity - 1)
+      return _curry(_partial(f, v), arity - 1)
   return internal
 
 
