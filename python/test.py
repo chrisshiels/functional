@@ -62,10 +62,17 @@ def test_map():
 
 
 @test
-def test_filter():
+def test_filter_even():
   return functional._filter(lambda e: e % 2 == 0,
                             functional._range(11, 1)) == \
          [ 2, 4, 6, 8, 10 ]
+
+
+@test
+def test_filter_odd():
+  return functional._filter(lambda e: e % 2 == 1,
+                            functional._range(11, 1)) == \
+         [ 1, 3, 5, 7, 9 ]
 
 
 @test
