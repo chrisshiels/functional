@@ -107,6 +107,19 @@ const _curry = function(f, arity) {
 }
 
 
+const _memoize = function(f) {
+  let cache = {};
+
+  return function(...args) {
+    let key = JSON.stringify(args);
+    if (key in cache)
+      return cache[key];
+    else
+      return cache[key] = f(...args);
+  }
+}
+
+
 const factorial = function(n) {
   if (n <= 1)
     return 1;
@@ -120,6 +133,18 @@ const fibonacci = function(n) {
     return 1;
   else
     return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+
+const memoizedfibonacci = function(n) {
+  const internal = function(f, n) {
+    if (n <= 1)
+      return 1;
+    else
+      return f(f, n - 1) + f(f, n - 2);
+  }
+  let f = _memoize(internal)
+  return f(f, n)
 }
 
 
@@ -140,18 +165,20 @@ const primes = function(n) {
 
 
 module.exports = {
-  '_range':    _range,
-  '_reverse':  _reverse,
-  '_reduce':   _reduce,
-  '_map':      _map,
-  '_filter':  _filter,
-  '_sort':     _sort,
-  '_unique':   _unique,
-  '_compose':  _compose,
-  '_pipe':     _pipe,
-  '_partial':  _partial,
-  '_curry':    _curry,
-  'factorial': factorial,
-  'fibonacci': fibonacci,
-  'primes':    primes
+  '_range':            _range,
+  '_reverse':          _reverse,
+  '_reduce':           _reduce,
+  '_map':              _map,
+  '_filter':           _filter,
+  '_sort':             _sort,
+  '_unique':           _unique,
+  '_compose':          _compose,
+  '_pipe':             _pipe,
+  '_partial':          _partial,
+  '_curry':            _curry,
+  '_memoize':          _memoize,
+  'factorial':         factorial,
+  'fibonacci':         fibonacci,
+  'memoizedfibonacci': memoizedfibonacci,
+  'primes':            primes
 };

@@ -188,6 +188,12 @@ def test_fibonacci():
 
 
 @test
+def test_memoizedfibonacci():
+  return functional.memoizedfibonacci(50) == \
+         20365011074
+
+
+@test
 def test_primes():
   return functional.primes(20) == \
          [ 2, 3, 5, 7, 11, 13, 17, 19 ]

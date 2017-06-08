@@ -234,6 +234,15 @@ describe('functional', function() {
   });
 
 
+  describe('#memoizedfibonacci()', function() {
+    it('returns 20365011074 for memoizedfibonacci(50)',
+       function() {
+         assert.equal(functional.memoizedfibonacci(50),
+                      20365011074);
+    });
+  });
+
+
   describe('#primes()', function() {
     it('returns [ 2, 3, 5, 7, 11, 13, 17, 19 ] for primes(20)',
        function() {
