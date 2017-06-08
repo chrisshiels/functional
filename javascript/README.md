@@ -2,7 +2,7 @@
 
 Implementations of common functional programming functions in JavaScript:
 range, reverse, reduce, map, filter, sort, unique, compose, pipe,
-partial and curry.
+partial, curry and memoize.
 
     host$ npm test
     
@@ -43,8 +43,10 @@ partial and curry.
           ✓ returns [ 1,2,6,24,120,720,5040,40320,362880,3628800 ] for _map(factorial, _range(11, 1))
         #fibonacci()
           ✓ returns [ 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ] for _map(fibonacci, _range(11, 1))
+        #memoizedfibonacci()
+          ✓ returns 20365011074 for memoizedfibonacci(50)
         #primes()
           ✓ returns [ 2, 3, 5, 7, 11, 13, 17, 19 ] for primes(20)
     
     
-      19 passing (25ms)
+      20 passing (24ms)

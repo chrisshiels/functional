@@ -2,15 +2,16 @@
 
 Implementations of common functional programming functions in Python:
 range, reverse, reduce, map, filter, sort, unique, compose, pipe,
-partial and curry.
+partial, curry and memoize.
 
-    host$ python test.py 
+    host$ python test.py
     test_range1:  ok
     test_range2:  ok
     test_reverse:  ok
     test_reduce:  ok
     test_map:  ok
-    test_filter:  ok
+    test_filter_even:  ok
+    test_filter_odd:  ok
     test_sort:  ok
     test_unique:  ok
     test_compose:  ok
@@ -22,4 +23,5 @@ partial and curry.
     test_curry3:  ok
     test_factorial:  ok
     test_fibonacci:  ok
+    test_memoizedfibonacci:  ok
     test_primes:  ok
