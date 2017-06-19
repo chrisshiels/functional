@@ -197,3 +197,9 @@ def test_memoizedfibonacci():
 def test_primes():
   return functional.primes(20) == \
          [ 2, 3, 5, 7, 11, 13, 17, 19 ]
+
+
+@test
+def test_ispalindrome():
+  return functional.ispalindrome('tattarrattat') == \
+         True

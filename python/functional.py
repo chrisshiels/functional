@@ -137,3 +137,12 @@ def primes(n):
     else:
       return [ l[0] ] + sieve(f, _filter(_partial(f, l[0]), l[1:]))
   return sieve(notdivisibleby, _range(n, 2))
+
+
+def ispalindrome(s):
+  if len(s) == 0:
+    return True
+  elif s[0] != s[-1]:
+    return False
+  else:
+    return ispalindrome(s[1:-1])

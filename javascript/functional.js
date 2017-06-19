@@ -164,6 +164,16 @@ const primes = function(n) {
 }
 
 
+const ispalindrome = function(s) {
+  if (s.length === 0)
+    return true;
+  else if (s.slice(0, 1) != s.slice(-1))
+    return false;
+  else
+    return ispalindrome(s.slice(1, -1));
+}
+
+
 module.exports = {
   '_range':            _range,
   '_reverse':          _reverse,
@@ -180,5 +190,6 @@ module.exports = {
   'factorial':         factorial,
   'fibonacci':         fibonacci,
   'memoizedfibonacci': memoizedfibonacci,
-  'primes':            primes
+  'primes':            primes,
+  'ispalindrome':      ispalindrome
 };
