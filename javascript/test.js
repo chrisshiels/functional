@@ -250,4 +250,13 @@ describe('functional', function() {
                           [ 2, 3, 5, 7, 11, 13, 17, 19 ]);
     });
   });
+
+
+  describe('#ispalindrome()', function() {
+    it('returns true for ispalindrome(\'tattarrattat\')',
+       function() {
+         assert.equal(functional.ispalindrome('tattarrattat'),
+                      true);
+    });
+  });
 });
