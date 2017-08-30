@@ -4,6 +4,7 @@ Implementations of common functional programming functions in JavaScript:
 range, reverse, reduce, map, filter, sort, unique, compose, pipe,
 partial, curry and memoize.
 
+    host$ npm install
     host$ npm test
     
     > functional@1.0.0 test /home/chris/gu/github.com/functional/javascript
