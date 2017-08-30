@@ -24,9 +24,9 @@ const _reverse = function(l) {
 
 
 const _reduce = function(f, l, v) {
-  if (l.length === 0) {
+  if (l.length === 0)
     return v;
-  } else
+  else
     return _reduce(f, l.slice(1), f(v, l[0]));
 }
 
