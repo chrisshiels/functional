@@ -42,7 +42,7 @@ describe('functional', function() {
          assert.equal(functional._reduce((a, e) => { return a + e; },
                                          functional._range(11, 1),
                                          0),
-                   55);
+                      55);
     });
   });
 

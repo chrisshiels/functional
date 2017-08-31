@@ -27,3 +27,4 @@ partial, curry and memoize.
     test_fibonacci:  ok
     test_memoizedfibonacci:  ok
     test_primes:  ok
+    test_ispalindrome:  ok
