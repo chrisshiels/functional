@@ -89,6 +89,25 @@ def test_unique():
 
 
 @test
+def test_zip1():
+  a = [ [ 1, 2, 3, 4 ],
+        [ 5, 6, 7, 8 ] ]
+  a1 = [ [ 1, 5 ],
+         [ 2, 6 ],
+         [ 3, 7 ],
+         [ 4, 8 ] ]
+  return functional._zip(*a) == \
+        a1
+
+
+@test
+def test_zip2():
+  a = [ [ 1, 2, 3, 4 ],
+        [ 5, 6, 7, 8 ] ]
+  return functional._zip(*functional._zip(*a)) == a
+
+
+@test
 def test_compose():
   def valueadd1(v):
     return v + 1

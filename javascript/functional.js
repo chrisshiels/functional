@@ -70,6 +70,20 @@ const _unique = function(l) {
 }
 
 
+const _zip = function(...args) {
+  const accumulateheads = function(a, e) {
+    return a.concat(e[0]);
+  }
+  const accumulatetails = function(a, e) {
+    return a.concat([ e.slice(1) ]);
+  }
+  if (args[0].length === 0)
+    return [];
+  return [ _reduce(accumulateheads, args, []) ]
+           .concat(_zip(...(_reduce(accumulatetails, args, []))));
+}
+
+
 const _compose = function(f, g) {
   return function(x) {
     return f(g(x));
@@ -182,6 +196,7 @@ module.exports = {
   '_filter':           _filter,
   '_sort':             _sort,
   '_unique':           _unique,
+  '_zip':              _zip,
   '_compose':          _compose,
   '_pipe':             _pipe,
   '_partial':          _partial,

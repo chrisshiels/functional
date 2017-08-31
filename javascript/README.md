@@ -1,7 +1,7 @@
 # functional/javascript
 
 Implementations of common functional programming functions in JavaScript:
-range, reverse, reduce, map, filter, sort, unique, compose, pipe,
+range, reverse, reduce, map, filter, sort, unique, zip, compose, pipe,
 partial, curry and memoize.
 
     host$ npm install
@@ -29,6 +29,9 @@ partial, curry and memoize.
           ✓ returns [ 1..10 ] for _sort((m, n) => { return m <= n; }, [ 1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ])
         #_unique()
           ✓ returns [ 5,1,4,2,3 ] for _unique([ 5, 1, 4, 2, 3, 3, 2, 4, 1, 5 ])
+        #_zip()
+          ✓ returns [ [ 1, 5 ], [ 2, 6 ], [ 3, 7 ], [ 4, 8 ] ] for _zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ])
+          ✓ returns [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ] for _zip(..._zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]))
         #_compose()
           ✓ returns 3 for _compose(valueadd1, valuemultiply2)(1)
         #_pipe()
@@ -48,6 +51,8 @@ partial, curry and memoize.
           ✓ returns 20365011074 for memoizedfibonacci(50)
         #primes()
           ✓ returns [ 2, 3, 5, 7, 11, 13, 17, 19 ] for primes(20)
+        #ispalindrome()
+          ✓ returns true for ispalindrome('tattarrattat')
     
     
-      20 passing (24ms)
+      23 passing (33ms)

@@ -93,6 +93,29 @@ describe('functional', function() {
   });
 
 
+  describe('#_zip()', function() {
+    it('returns [ [ 1, 5 ], [ 2, 6 ], [ 3, 7 ], [ 4, 8 ] ] for _zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ])',
+       function() {
+         let a = [ [ 1, 2, 3, 4 ],
+                   [ 5, 6, 7, 8 ] ];
+         let a1 = [ [ 1, 5 ],
+                    [ 2, 6 ],
+                    [ 3, 7 ],
+                    [ 4, 8 ] ];
+         assert.deepEqual(functional._zip(...a),
+                          a1);
+    });
+
+    it('returns [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ] for _zip(..._zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]))',
+       function() {
+         let a = [ [ 1, 2, 3, 4 ],
+                   [ 5, 6, 7, 8 ] ];
+         assert.deepEqual(functional._zip(...functional._zip(...a)),
+                          a);
+    });
+  });
+
+
   describe('#_compose()', function() {
     it('returns 3 for _compose(valueadd1, valuemultiply2)(1)',
        function() {

@@ -58,6 +58,17 @@ def _unique(l):
   return _reduce(accumulate, l, [])
 
 
+def _zip(*args):
+  def accumulateheads(a, e):
+    return a + [ e[0] ]
+  def accumulatetails(a, e):
+    return a + [ e[1:] ]
+  args = list(args)
+  if args[0] == []:
+    return []
+  return [ _reduce(accumulateheads, args, []) ] + _zip(*_reduce(accumulatetails, args, []))
+
+
 def _compose(f, g):
   def internal(v):
     return f(g(v))

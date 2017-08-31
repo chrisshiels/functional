@@ -10,6 +10,7 @@ Python:
 * filter
 * sort
 * unique
+* zip
 * compose
 * pipe
 * partial
