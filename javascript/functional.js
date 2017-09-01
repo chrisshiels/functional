@@ -15,14 +15,6 @@ const _range = function(n, m = 0) {
 }
 
 
-const _reverse = function(l) {
-  if (l.length === 0)
-    return [];
-  else
-    return _reverse(l.slice(1)).concat(l[0])
-}
-
-
 const _reduce = function(f, l, v) {
   if (l.length === 0)
     return v;
@@ -45,6 +37,14 @@ const _filter = function(f, l) {
       return a.concat(e);
     else
       return a;
+  }
+  return _reduce(accumulate, l, []);
+}
+
+
+const _reverse = function(l) {
+  const accumulate = function(a, e) {
+    return [ e ].concat(a);
   }
   return _reduce(accumulate, l, []);
 }

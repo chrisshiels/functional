@@ -27,15 +27,6 @@ describe('functional', function() {
   });
 
 
-  describe('#_reverse()',function() {
-    it('returns [ 10..1 ] for _reverse(_range(11, 1))',
-       function() {
-         assert.deepEqual(functional._reverse(functional._range(11, 1)),
-                          [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]);
-    });
-  });
-
-
   describe('#_reduce()', function() {
     it('returns 55 for _reduce((a, e) => { return a + e; }, _range(11, 1), 0)',
        function() {
@@ -70,6 +61,15 @@ describe('functional', function() {
          assert.deepEqual(functional._filter((e) => { return e % 2 === 1; },
                           functional._range(11, 1)),
                           [ 1, 3, 5, 7, 9 ]);
+    });
+  });
+
+
+  describe('#_reverse()',function() {
+    it('returns [ 10..1 ] for _reverse(_range(11, 1))',
+       function() {
+         assert.deepEqual(functional._reverse(functional._range(11, 1)),
+                          [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]);
     });
   });
 

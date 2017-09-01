@@ -11,13 +11,6 @@ def _range(n, m = 0):
     return _range(n - 1, m) + [ n - 1 ]
 
 
-def _reverse(l):
-  if l == []:
-    return []
-  else:
-    return _reverse(l[1:]) + [ l[0] ]
-
-
 def _reduce(f, l, v):
   if l == []:
     return v
@@ -38,6 +31,12 @@ def _filter(f, l):
     else:
       return a
   return _reduce(accumulate, l, [])
+
+
+def _reverse(l):
+  def accumulate(a, e):
+    return [ e ] + a
+  return reduce(accumulate, l, [])
 
 
 def _sort(f, l):

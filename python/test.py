@@ -42,12 +42,6 @@ def test_range2():
 
 
 @test
-def test_reverse():
-  return functional._reverse(functional._range(11, 1)) ==  \
-         [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]
-
-
-@test
 def test_reduce():
   return functional._reduce(lambda a, e: a + e,
                             functional._range(11, 1), 0) == \
@@ -73,6 +67,12 @@ def test_filter_odd():
   return functional._filter(lambda e: e % 2 == 1,
                             functional._range(11, 1)) == \
          [ 1, 3, 5, 7, 9 ]
+
+
+@test
+def test_reverse():
+  return functional._reverse(functional._range(11, 1)) ==  \
+         [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]
 
 
 @test
