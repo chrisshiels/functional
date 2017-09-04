@@ -7,6 +7,7 @@ Python:
 * reduce
 * map
 * filter
+* partition
 * reverse
 * sort
 * unique

@@ -1,8 +1,8 @@
 # functional/javascript
 
 Implementations of common functional programming functions in JavaScript:
-range, reduce, map, filter, reverse, sort, unique, zip, compose, pipe,
-partial, curry and memoize.
+range, reduce, map, filter, partition, reverse, sort, unique, zip, compose,
+pipe, partial, curry and memoize.
 
     host$ npm install
     host$ npm test
@@ -16,8 +16,6 @@ partial, curry and memoize.
         #_range()
           ✓ returns [ 0..9 ] for _range(10)
           ✓ returns [ 1..10 ] for _range(11, 1)
-        #_reverse()
-          ✓ returns [ 10..1 ] for _reverse(_range(11, 1))
         #_reduce()
           ✓ returns 55 for _reduce((a, e) => { return a + e; }, _range(11, 1), 0)
         #_map()
@@ -25,6 +23,12 @@ partial, curry and memoize.
         #_filter()
           ✓ returns [ 2,4,6,8,10 ] for _filter((e) => { return e % 2 === 0; }, _range(11, 1))
           ✓ returns [ 1,3,5,7,9 ] for _filter((e) => { return e % 2 === 1; }, _range(11, 1))
+        #_partition()
+          ✓ returns [ [ 3, 6, 9 ], [ 1, 2, 4, 5, 7, 8, 10 ] ] for _partition((e) => { return e % 3 === 0; }, _range(11, 1))
+          ✓ returns [ [ 1, 2, 4, 5, 7, 8, 10 ], [ 3, 6, 9 ] ] for _partition((e) => { return e % 3 !== 0; }, _range(11, 1))
+          ✓ returns [ [], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ] for _partition((e) => { return e === 0; }, _range(11, 1))
+        #_reverse()
+          ✓ returns [ 10..1 ] for _reverse(_range(11, 1))
         #_sort()
           ✓ returns [ 1..10 ] for _sort((m, n) => { return m <= n; }, [ 1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ])
         #_unique()
@@ -55,4 +59,4 @@ partial, curry and memoize.
           ✓ returns true for ispalindrome('tattarrattat')
     
     
-      23 passing (33ms)
+      26 passing (51ms)

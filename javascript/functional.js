@@ -42,6 +42,19 @@ const _filter = function(f, l) {
 }
 
 
+const _partition = function(f, l) {
+  const accumulate = function(a, e) {
+    let left, right;
+    [ left, right ] = a;
+    if (f(e))
+      return [ left.concat(e), right ];
+    else
+      return [ left, right.concat(e) ];
+  }
+  return _reduce(accumulate, l, [ [], [] ]);
+}
+
+
 const _reverse = function(l) {
   const accumulate = function(a, e) {
     return [ e ].concat(a);
@@ -194,6 +207,7 @@ module.exports = {
   '_reduce':           _reduce,
   '_map':              _map,
   '_filter':           _filter,
+  '_partition':        _partition,
   '_sort':             _sort,
   '_unique':           _unique,
   '_zip':              _zip,

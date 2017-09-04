@@ -33,6 +33,16 @@ def _filter(f, l):
   return _reduce(accumulate, l, [])
 
 
+def _partition(f, l):
+  def accumulate(a, e):
+    left, right = a
+    if f(e):
+      return [ left + [ e ], right ]
+    else:
+      return [ left, right + [ e ] ]
+  return _reduce(accumulate, l, [ [], [] ])
+
+
 def _reverse(l):
   def accumulate(a, e):
     return [ e ] + a
