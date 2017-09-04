@@ -70,6 +70,27 @@ def test_filter_odd():
 
 
 @test
+def test_partition1():
+  return functional._partition(lambda e: e % 3 == 0,
+                               functional._range(11, 1)) == \
+         [ [ 3, 6, 9 ], [ 1, 2, 4, 5, 7, 8, 10 ] ]
+
+
+@test
+def test_partition2():
+  return functional._partition(lambda e: e % 3 != 0,
+                               functional._range(11, 1)) == \
+         [ [ 1, 2, 4, 5, 7, 8, 10 ], [ 3, 6, 9 ] ]
+
+
+@test
+def test_partition3():
+  return functional._partition(lambda e: e == 0,
+                               functional._range(11, 1)) == \
+         [ [], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ]
+
+
+@test
 def test_reverse():
   return functional._reverse(functional._range(11, 1)) ==  \
          [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]

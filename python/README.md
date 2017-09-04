@@ -1,17 +1,20 @@
 # functional/python
 
 Implementations of common functional programming functions in Python:
-range, reduce, map, filter, reverse, sort, unique, zip, compose, pipe,
-partial, curry and memoize.
+range, reduce, map, filter, partition, reverse, sort, unique, zip, compose,
+pipe, partial, curry and memoize.
 
     host$ python test.py
     test_range1:  ok
     test_range2:  ok
-    test_reverse:  ok
     test_reduce:  ok
     test_map:  ok
     test_filter_even:  ok
     test_filter_odd:  ok
+    test_partition1:  ok
+    test_partition2:  ok
+    test_partition3:  ok
+    test_reverse:  ok
     test_sort:  ok
     test_unique:  ok
     test_zip1:  ok

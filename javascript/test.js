@@ -65,6 +65,30 @@ describe('functional', function() {
   });
 
 
+  describe('#_partition()', function() {
+    it('returns [ [ 3, 6, 9 ], [ 1, 2, 4, 5, 7, 8, 10 ] ] for _partition((e) => { return e % 3 === 0; }, _range(11, 1))',
+       function() {
+         assert.deepEqual(functional._partition((e) => { return e % 3 === 0; },
+                                                functional._range(11, 1)),
+                          [ [ 3, 6, 9 ], [ 1, 2, 4, 5, 7, 8, 10 ] ]);
+    });
+
+    it('returns [ [ 1, 2, 4, 5, 7, 8, 10 ], [ 3, 6, 9 ] ] for _partition((e) => { return e % 3 !== 0; }, _range(11, 1))',
+       function() {
+         assert.deepEqual(functional._partition((e) => { return e % 3 !== 0; },
+                                                functional._range(11, 1)),
+                          [ [ 1, 2, 4, 5, 7, 8, 10 ], [ 3, 6, 9 ] ]);
+    });
+
+    it('returns [ [], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ] for _partition((e) => { return e === 0; }, _range(11, 1))',
+       function() {
+         assert.deepEqual(functional._partition((e) => { return e === 0; },
+                                                functional._range(11, 1)),
+                          [ [], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ]);
+    });
+  });
+
+
   describe('#_reverse()',function() {
     it('returns [ 10..1 ] for _reverse(_range(11, 1))',
        function() {
