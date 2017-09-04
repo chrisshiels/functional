@@ -52,14 +52,14 @@ describe('functional', function() {
     it('returns [ 2,4,6,8,10 ] for _filter((e) => { return e % 2 === 0; }, _range(11, 1))',
        function() {
          assert.deepEqual(functional._filter((e) => { return e % 2 === 0; },
-                          functional._range(11, 1)),
+                                             functional._range(11, 1)),
                           [ 2, 4, 6, 8, 10 ]);
     });
 
     it('returns [ 1,3,5,7,9 ] for _filter((e) => { return e % 2 === 1; }, _range(11, 1))',
        function() {
          assert.deepEqual(functional._filter((e) => { return e % 2 === 1; },
-                          functional._range(11, 1)),
+                                             functional._range(11, 1)),
                           [ 1, 3, 5, 7, 9 ]);
     });
   });
@@ -186,7 +186,7 @@ describe('functional', function() {
 
          assert.deepEqual(functional._pipe([ listadd1,
                                              listmultiply2,
-                                              listadd1 ])(functional._range(11, 1)),
+                                             listadd1 ])(functional._range(11, 1)),
                           [ 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 ]);
     });
   });
@@ -255,7 +255,7 @@ describe('functional', function() {
          }
 
          assert.deepEqual(functional._map(functional._curry(add, 2)(10),
-                                      functional._range(11, 1)),
+                                          functional._range(11, 1)),
                           [ 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]);
     });
   });
