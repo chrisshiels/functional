@@ -35,6 +35,12 @@ describe('functional', function() {
                                          0),
                       55);
     });
+    it('returns 55 for _reduce((a, e) => { return a + e; }, _range(11, 1))',
+       function() {
+         assert.equal(functional._reduce((a, e) => { return a + e; },
+                                         functional._range(11, 1)),
+                      55);
+    });
   });
 
 

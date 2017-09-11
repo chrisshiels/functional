@@ -18,6 +18,7 @@ pipe, partial, curry and memoize.
           ✓ returns [ 1..10 ] for _range(11, 1)
         #_reduce()
           ✓ returns 55 for _reduce((a, e) => { return a + e; }, _range(11, 1), 0)
+          ✓ returns 55 for _reduce((a, e) => { return a + e; }, _range(11, 1))
         #_map()
           ✓ returns [ 2,4,6..20 ] for _map((e) => { return e * 2; }, _range(11, 1))
         #_filter()

@@ -11,11 +11,16 @@ def _range(n, m = 0):
     return _range(n - 1, m) + [ n - 1 ]
 
 
-def _reduce(f, l, v):
-  if l == []:
-    return v
+def _reduce(f, l, v = None):
+  def internal(f, l, v):
+    if l == []:
+      return v
+    else:
+      return _reduce(f, l[1:], f(v, l[0]))
+  if v == None:
+    return internal(f, l[1:], l[0])
   else:
-    return _reduce(f, l[1:], f(v, l[0]))
+    return internal(f, l, v)
 
 
 def _map(f, l):
