@@ -12,10 +12,10 @@ pipe, partial, curry and memoize.
     
     (virtualenv) host$ pytest -v
     ============================= test session starts ==============================
-    platform linux2 -- Python 2.7.13, pytest-3.2.1, py-1.4.34, pluggy-0.4.0 -- /home/chris/gu/github.com/functional/python/virtualenv/bin/python2
+    platform linux2 -- Python 2.7.13, pytest-3.2.1, py-1.4.34, pluggy-0.4.0 -- /home/chris/chris/functional/python/virtualenv/bin/python2
     cachedir: .cache
-    rootdir: /home/chris/gu/github.com/functional/python, inifile:
-    collected 18 items
+    rootdir: /home/chris/chris/functional/python, inifile:
+    collected 19 items
     
     test_functional.py::test_range PASSED
     test_functional.py::test_reduce PASSED
@@ -28,6 +28,7 @@ pipe, partial, curry and memoize.
     test_functional.py::test_zip PASSED
     test_functional.py::test_compose PASSED
     test_functional.py::test_pipe PASSED
+    test_functional.py::test_pipe2 PASSED
     test_functional.py::test_partial PASSED
     test_functional.py::test_curry PASSED
     test_functional.py::test_factorial PASSED
@@ -36,4 +37,4 @@ pipe, partial, curry and memoize.
     test_functional.py::test_primes PASSED
     test_functional.py::test_ispalindrome PASSED
     
-    ========================== 18 passed in 0.02 seconds ===========================
+    ========================== 19 passed in 0.03 seconds ===========================
