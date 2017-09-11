@@ -16,6 +16,9 @@ def test_reduce():
   assert functional._reduce(lambda a, e: a + e,
                             functional._range(11, 1), 0) == \
          55
+  assert functional._reduce(lambda a, e: a + e,
+                            functional._range(11, 1)) == \
+         55
 
 
 def test_map():

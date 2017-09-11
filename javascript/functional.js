@@ -15,11 +15,17 @@ const _range = function(n, m = 0) {
 }
 
 
-const _reduce = function(f, l, v) {
-  if (l.length === 0)
-    return v;
+const _reduce = function(f, l, v = null) {
+  const internal = function(f, l, v) {
+    if (l.length === 0)
+      return v;
+    else
+      return _reduce(f, l.slice(1), f(v, l[0]));
+  }
+  if (v === null)
+    return internal(f, l.slice(1), l[0]);
   else
-    return _reduce(f, l.slice(1), f(v, l[0]));
+    return internal(f, l, v);
 }
 
 
