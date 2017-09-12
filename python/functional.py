@@ -98,6 +98,10 @@ def _pipe(l):
   return internal
 
 
+def _pipe2(l):
+  return _reduce(_compose, _reverse(l))
+
+
 def _partial(f, *args):
   args1 = args
 

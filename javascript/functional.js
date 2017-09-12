@@ -120,6 +120,11 @@ const _pipe = function(l) {
 }
 
 
+const _pipe2 = function(l) {
+  return _reduce(_compose, _reverse(l));
+}
+
+
 const _partial = function(f, ...args) {
   let args1 = args;
   return function(...args) {
@@ -219,6 +224,7 @@ module.exports = {
   '_zip':              _zip,
   '_compose':          _compose,
   '_pipe':             _pipe,
+  '_pipe2':             _pipe2,
   '_partial':          _partial,
   '_curry':            _curry,
   '_memoize':          _memoize,

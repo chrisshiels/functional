@@ -198,6 +198,41 @@ describe('functional', function() {
   });
 
 
+  describe('#_pipe2()', function() {
+    it('returns 5 for _pipe2([ valueadd1, valuemultiply2, valueadd1 ])(1)',
+       function() {
+         const valueadd1 = function(v) {
+           return v + 1;
+         }
+
+         const valuemultiply2 = function(v) {
+           return v * 2;
+         }
+
+         assert.equal(functional._pipe2([ valueadd1,
+                                         valuemultiply2,
+                                         valueadd1 ])(1),
+                      5);
+    });
+
+    it('returns [ 5,7,9,11,13,15,17,19,21,23 ] for _pipe2([ listadd1, listmultiply2, listadd1 ])(_range(11, 1))',
+       function() {
+         const listadd1 = function(l) {
+           return functional._map((e) => { return e + 1; }, l);
+         }
+
+         const listmultiply2 = function(l) {
+           return functional._map((e) => { return e * 2; }, l);
+         }
+
+         assert.deepEqual(functional._pipe2([ listadd1,
+                                             listmultiply2,
+                                             listadd1 ])(functional._range(11, 1)),
+                          [ 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 ]);
+    });
+  });
+
+
   describe('#_partial()', function() {
     it('returns [ 11..20 ] for _map(_partial(add, 10), _range(11, 1))',
        function() {

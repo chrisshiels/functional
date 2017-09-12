@@ -108,6 +108,28 @@ def test_pipe():
          [ 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 ]
 
 
+def test_pipe2():
+  def valueadd1(v):
+    return v + 1
+
+  def valuemultiply2(v):
+    return v * 2
+
+  def listadd1(l):
+    return functional._map(lambda e: e + 1, l)
+
+  def listmultiply2(l):
+    return functional._map(lambda e: e * 2, l)
+
+  assert functional._pipe2([ valueadd1,
+                            valuemultiply2,
+                            valueadd1 ])(1) == 5
+  assert functional._pipe2([ listadd1,
+                            listmultiply2,
+                            listadd1 ])(functional._range(11, 1)) == \
+         [ 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 ]
+
+
 def test_partial():
   def add(a, b):
     return a + b

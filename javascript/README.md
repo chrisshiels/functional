@@ -7,7 +7,7 @@ pipe, partial, curry and memoize.
     host$ npm install
     host$ npm test
     
-    > functional@1.0.0 test /home/chris/gu/github.com/functional/javascript
+    > functional@1.0.0 test /home/chris/chris/functional/javascript
     > mocha
     
     
@@ -42,6 +42,9 @@ pipe, partial, curry and memoize.
         #_pipe()
           ✓ returns 5 for _pipe([ valueadd1, valuemultiply2, valueadd1 ])(1)
           ✓ returns [ 5,7,9,11,13,15,17,19,21,23 ] for _pipe([ listadd1, listmultiply2, listadd1 ])(_range(11, 1))
+        #_pipe2()
+          ✓ returns 5 for _pipe2([ valueadd1, valuemultiply2, valueadd1 ])(1)
+          ✓ returns [ 5,7,9,11,13,15,17,19,21,23 ] for _pipe2([ listadd1, listmultiply2, listadd1 ])(_range(11, 1))
         #_partial()
           ✓ returns [ 11..20 ] for _map(_partial(add, 10), _range(11, 1))
         #_curry()
@@ -60,4 +63,4 @@ pipe, partial, curry and memoize.
           ✓ returns true for ispalindrome('tattarrattat')
     
     
-      26 passing (51ms)
+      29 passing (56ms)
