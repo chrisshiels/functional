@@ -1,0 +1,161 @@
+# Work in progress ideas on generators and lazy lists.
+
+
+def generator(f, v):
+  c = {}
+  c['v'] = v
+  def internal():
+    c['v'] = f(c['v'])
+    return c['v']
+  return internal
+
+def add1(v):
+  return v + 1
+
+def multiply2(v):
+  return v * 2
+
+>>> g1 = generator(add1, 0)
+>>> g1()
+1
+>>> g1()
+2
+>>> g1()
+3
+
+>>> g2 = generator(multiply2, 1)
+>>> g2()
+2
+>>> g2()
+4
+>>> g2()
+8
+
+
+
+
+def cons(h, t = None):
+  return [ h, t ]
+
+def car(l):
+  if l == None:
+    return None
+  else:
+    return l[0]
+
+def cdr(l):
+  if callable(l[1]):
+    return l[1]()
+  else:
+    return l[1]
+
+def conslength(l):
+  if car(l) == None:
+    return 0
+  elif callable(l[1]):
+    return 0
+  else:
+    return 1 + conslength(cdr(l))
+
+
+>>> l0 = None
+>>> conslength(l0)
+0
+>>> car(l0) == None
+True
+
+
+>>> l1 = cons('a', None)
+>>> l1 == [ 'a', None ]
+>>> conslength(l1)
+1
+>>> car(l1)
+'a'
+>>> car(cdr(l1)) == None
+True
+
+
+>>> l2 = cons('a', cons('b', None))
+>>> l2 == [ 'a', [ 'b', None ] ]
+True
+>>> conslength(l2)
+2
+>>> car(l2)
+'a'
+>>> car(cdr(l2))
+'b'
+>>> car(cdr(cdr(l2))) == None
+True
+
+
+
+
+def double(v):
+  return v * 2
+
+def generatordoubles(n):
+  return generator(double, n)
+
+>>> g = generatordoubles(1)
+>>> g()
+2
+>>> g()
+4
+>>> g()
+8
+
+
+def lazydoubles(g):
+  return cons(g(), lambda: lazydoubles(g))
+
+>>> car(lazydoubles(generatordoubles(1)))
+2
+>>> car(cdr(lazydoubles(generatordoubles(1))))
+4
+>>> car(cdr(cdr(lazydoubles(generatordoubles(1)))))
+8
+
+
+
+
+def generatorfibonaccis():
+  c = {}
+  c['last2'] = 0
+  c['last1'] = 1
+  def internal():
+    ret = c['last1'] + c['last2']
+    c['last2'] = c['last1']
+    c['last1'] = ret
+    return ret
+  return internal
+
+>>> g = generatorfibonaccis()
+>>> g()
+1
+>>> g()
+2
+>>> g()
+3
+>>> g()
+5
+>>> g()
+8
+>>> g()
+13
+
+
+def lazyfibonaccis(g):
+  return cons(g(), lambda: lazyfibonaccis(g))
+
+>>> car(lazyfibonaccis(generatorfibonaccis()))
+1
+>>> car(cdr(lazyfibonaccis(generatorfibonaccis())))
+2
+>>> car(cdr(cdr(lazyfibonaccis(generatorfibonaccis()))))
+3
+>>> car(cdr(cdr(cdr(lazyfibonaccis(generatorfibonaccis())))))
+5
+>>> car(cdr(cdr(cdr(cdr(lazyfibonaccis(generatorfibonaccis()))))))
+8
+>>> car(cdr(cdr(cdr(cdr(cdr(lazyfibonaccis(generatorfibonaccis())))))))
+13
