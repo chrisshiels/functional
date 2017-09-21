@@ -51,7 +51,7 @@ def _partition(f, l):
 def _reverse(l):
   def accumulate(a, e):
     return [ e ] + a
-  return reduce(accumulate, l, [])
+  return _reduce(accumulate, l, [])
 
 
 def _sort(f, l):
