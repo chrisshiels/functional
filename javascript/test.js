@@ -7,8 +7,8 @@
 'use strict';
 
 
-var assert = require('assert');
-var functional = require('./functional');
+const assert = require('assert');
+const functional = require('./functional');
 
 
 describe('functional', function() {
@@ -49,7 +49,7 @@ describe('functional', function() {
        function() {
          assert.deepEqual(functional._map((e) => { return e * 2; },
                                           functional._range(11, 1)),
-                   [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 ]);
+                          [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 ]);
     });
   });
 
