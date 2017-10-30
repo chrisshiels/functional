@@ -7,11 +7,19 @@
 'use strict';
 
 
-const _range = function(n, m = 0) {
-  if (n === m)
-    return [];
+const _range = function(m, n = null, s = 1) {
+  const internal = function(start, stop, step) {
+    if (step === 0 ||
+        (step > 0 && start >= stop) ||
+        (step < 0 && start <= stop))
+      return [];
+    else
+      return [ start ].concat(internal(start + step, stop, step));
+  }
+  if (n === null)
+    return internal(0, m, s);
   else
-    return _range(n - 1, m).concat(n - 1)
+    return internal(m, n, s);
 }
 
 
@@ -198,7 +206,7 @@ const primes = function(n) {
       return [ l[0] ].concat(sieve(f, _filter(_partial(f, l[0]), l.slice(1))));
   }
 
-  return sieve(notdivisibleby, _range(n, 2));
+  return sieve(notdivisibleby, _range(2, n));
 }
 
 
