@@ -4,11 +4,18 @@
 # Chris Shiels.
 
 
-def _range(n, m = 0):
-  if n == m:
-    return []
+def _range(m, n = None, s = 1):
+  def internal(start, stop, step):
+    if step == 0 or \
+       (step > 0 and start >= stop) or \
+       (step < 0 and start <= stop):
+      return []
+    else:
+      return [ start ] + internal(start + step, stop, step)
+  if n == None:
+    return internal(0, m, s)
   else:
-    return _range(n - 1, m) + [ n - 1 ]
+    return internal(m, n, s)
 
 
 def _reduce(f, l, v = None):
@@ -165,7 +172,7 @@ def primes(n):
       return []
     else:
       return [ l[0] ] + sieve(f, _filter(_partial(f, l[0]), l[1:]))
-  return sieve(notdivisibleby, _range(n, 2))
+  return sieve(notdivisibleby, _range(2, n))
 
 
 def ispalindrome(s):
