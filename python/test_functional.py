@@ -5,6 +5,21 @@
 import functional
 
 
+def test_flatten():
+  assert functional._flatten([]) == \
+         []
+  assert functional._flatten([ 1, 2, 3 ]) == \
+         [ 1, 2, 3 ]
+  assert functional._flatten([ [ 1, 2 ], 3 ]) == \
+         [ 1, 2, 3 ]
+  assert functional._flatten([ 1, [ 2, 3 ] ]) == \
+         [ 1, 2, 3 ]
+  assert functional._flatten([ 1, [ 2, [ 3 ] ] ]) == \
+         [ 1, 2, 3 ]
+  assert functional._flatten([ [ [ 1 ], [ 2 ], [ 3 ] ] ]) == \
+         [ 1, 2, 3 ]
+
+
 def test_range():
   assert functional._range(0) == \
          []

@@ -7,6 +7,16 @@
 'use strict';
 
 
+const _flatten = function(l) {
+  if (l.length === 0)
+    return [];
+  else if (l[0] instanceof Array)
+    return _flatten(l[0]).concat(_flatten(l.slice(1)));
+  else
+    return [ l[0] ].concat(_flatten(l.slice(1)));
+}
+
+
 const _range = function(m, n = null, s = 1) {
   const internal = function(start, stop, step) {
     if (step === 0 ||
@@ -221,6 +231,7 @@ const ispalindrome = function(s) {
 
 
 module.exports = {
+  '_flatten':          _flatten,
   '_range':            _range,
   '_reverse':          _reverse,
   '_reduce':           _reduce,

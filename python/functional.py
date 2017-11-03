@@ -4,6 +4,15 @@
 # Chris Shiels.
 
 
+def _flatten(l):
+  if l == []:
+    return []
+  elif type(l[0]) is list:
+    return _flatten(l[0]) + _flatten(l[1:])
+  else:
+    return [ l[0] ] + _flatten(l[1:])
+
+
 def _range(m, n = None, s = 1):
   def internal(start, stop, step):
     if step == 0 or \

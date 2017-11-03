@@ -12,6 +12,45 @@ const functional = require('./functional');
 
 
 describe('functional', function() {
+  describe('#_flatten()', function() {
+    it('returns [] for _flatten([])',
+       function() {
+         assert.deepEqual(functional._flatten([]),
+                          []);
+    });
+
+    it('returns [ 1, 2, 3 ] for _flatten([ 1, 2, 3 ])',
+       function() {
+         assert.deepEqual(functional._flatten([ 1, 2, 3 ]),
+                          [ 1, 2, 3 ]);
+    });
+
+    it('returns [ 1, 2, 3 ] for _flatten([[ 1, 2 ], 3])',
+       function() {
+         assert.deepEqual(functional._flatten([[ 1, 2 ], 3]),
+                          [ 1, 2, 3 ]);
+    });
+
+    it('returns [ 1, 2, 3 ] for _flatten([1, [ 2, 3 ]])',
+       function() {
+         assert.deepEqual(functional._flatten([1, [ 2, 3 ]]),
+                          [ 1, 2, 3 ]);
+    });
+
+    it('returns [ 1, 2, 3 ] for _flatten([1, [ 2, [ 3 ] ] ])',
+       function() {
+         assert.deepEqual(functional._flatten([1, [ 2, [ 3 ] ] ]),
+                          [ 1, 2, 3 ]);
+    });
+
+    it('returns [ 1, 2, 3 ] for _flatten([ [ [ 1 ], [ 2 ], [ 3 ] ] ])',
+       function() {
+         assert.deepEqual(functional._flatten([ [ [ 1 ], [ 2 ], [ 3 ] ] ]),
+                          [ 1, 2, 3 ]);
+    });
+  });
+
+
   describe('#_range()', function() {
     it('returns [] for _range(0)',
        function() {
