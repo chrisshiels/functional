@@ -21,7 +21,7 @@ def _range(m, n = None, s = 1):
       return []
     else:
       return [ start ] + internal(start + step, stop, step)
-  if n == None:
+  if n is None:
     return internal(0, m, s)
   else:
     return internal(m, n, s)
@@ -33,7 +33,7 @@ def _reduce(f, l, v = None):
       return v
     else:
       return _reduce(f, l[1:], f(v, l[0]))
-  if v == None:
+  if v is None:
     return internal(f, l[1:], l[0])
   else:
     return internal(f, l, v)
