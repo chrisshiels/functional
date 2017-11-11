@@ -32,7 +32,7 @@ def _reduce(f, l, v = None):
     if l == []:
       return v
     else:
-      return _reduce(f, l[1:], f(v, l[0]))
+      return internal(f, l[1:], f(v, l[0]))
   if v is None:
     return internal(f, l[1:], l[0])
   else:
@@ -116,6 +116,18 @@ def _pipe(l):
 
 def _pipe2(l):
   return _reduce(_compose, _reverse(l))
+
+
+def _pipemaybe(l):
+  def accumulate(a, e):
+    if a != None:
+      return e(a)
+    else:
+      return None
+
+  def internal(v):
+    return _reduce(accumulate, l, v)
+  return internal
 
 
 def _partial(f, *args):

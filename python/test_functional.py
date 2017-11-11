@@ -157,6 +157,21 @@ def test_pipe2():
          [ 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 ]
 
 
+def test_pipemaybe():
+  def valueadd1(v):
+    return v + 1
+
+  def valuenone(v):
+    return None
+
+  assert functional._pipemaybe([ valueadd1,
+                                 valueadd1,
+                                 valueadd1 ])(0) == 3
+  assert functional._pipemaybe([ valueadd1,
+                                 valuenone,
+                                 valueadd1 ])(0) == None
+
+
 def test_partial():
   def add(a, b):
     return a + b

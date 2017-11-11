@@ -308,6 +308,37 @@ describe('functional', function() {
   });
 
 
+  describe('#_pipemaybe()', function() {
+    it('returns 3 for _pipemaybe([ valueadd1, valueadd1, valueadd1 ])(0)',
+       function() {
+         const valueadd1 = function(v) {
+           return v + 1;
+         }
+
+         assert.equal(functional._pipemaybe([ valueadd1,
+                                              valueadd1,
+                                              valueadd1 ])(0),
+                      3);
+    });
+
+    it('returns null for _pipemaybe([ valueadd1, valuenull, valueadd1 ])(0)',
+       function() {
+         const valueadd1 = function(v) {
+           return v + 1;
+         }
+
+         const valuenull = function(v) {
+           return null;
+         }
+
+         assert.equal(functional._pipemaybe([ valueadd1,
+                                              valuenull,
+                                              valueadd1 ])(0),
+                      null);
+    });
+  });
+
+
   describe('#_partial()', function() {
     it('returns [ 11..20 ] for _map(_partial(add, 10), _range(1, 11))',
        function() {
