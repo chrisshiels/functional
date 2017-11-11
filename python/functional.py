@@ -32,7 +32,7 @@ def _reduce(f, l, v = None):
     if l == []:
       return v
     else:
-      return _reduce(f, l[1:], f(v, l[0]))
+      return internal(f, l[1:], f(v, l[0]))
   if v is None:
     return internal(f, l[1:], l[0])
   else:
