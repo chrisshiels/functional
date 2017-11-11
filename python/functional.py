@@ -118,6 +118,18 @@ def _pipe2(l):
   return _reduce(_compose, _reverse(l))
 
 
+def _pipemaybe(l):
+  def accumulate(a, e):
+    if a != None:
+      return e(a)
+    else:
+      return None
+
+  def internal(v):
+    return _reduce(accumulate, l, v)
+  return internal
+
+
 def _partial(f, *args):
   args1 = args
 

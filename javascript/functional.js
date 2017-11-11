@@ -143,6 +143,19 @@ const _pipe2 = function(l) {
 }
 
 
+const _pipemaybe = function(l) {
+  const accumulate = function(a, e) {
+    if (a !== null)
+      return e(a);
+    else
+      return null;
+  }
+  return function(v) {
+    return _reduce(accumulate, l, v);
+  }
+}
+
+
 const _partial = function(f, ...args) {
   let args1 = args;
   return function(...args) {
@@ -243,7 +256,8 @@ module.exports = {
   '_zip':              _zip,
   '_compose':          _compose,
   '_pipe':             _pipe,
-  '_pipe2':             _pipe2,
+  '_pipe2':            _pipe2,
+  '_pipemaybe':        _pipemaybe,
   '_partial':          _partial,
   '_curry':            _curry,
   '_memoize':          _memoize,
