@@ -3,6 +3,7 @@
 Implementations of common functional programming functions in JavaScript and
 Python:
 
+* flatten
 * range
 * reduce
 * map
@@ -14,6 +15,7 @@ Python:
 * zip
 * compose
 * pipe
+* pipemaybe
 * partial
 * curry
 * memoize
