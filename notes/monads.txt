@@ -1,0 +1,190 @@
+# See:  https://www.stephanboyer.com/post/9/monads-part-1-a-design-pattern
+# See:  https://unpythonic.com/
+
+
+def flatten(l):
+  if l == []:
+    return []
+  elif type(l[0]) is list:
+    return flatten(l[0]) + flatten(l[1:])
+  else:
+    return [ l[0] ] + flatten(l[1:])
+
+
+
+
+# Maybe monad:
+
+def divide100(x):
+  if x == 0:
+    return None
+  else:
+    return 100 / x
+
+
+def sqrt(x):
+  if x < 0:
+    return None
+  else:
+    return x ** 0.5
+
+
+print sqrt(divide100(sqrt(10)))
+try:
+  print sqrt(divide100(sqrt(-1)))
+except TypeError as e:
+  print 'TypeError'
+
+
+def bind(x, f):
+  if x is None:
+    return None
+  else:
+    return f(x)
+
+def unit(x):
+  return x
+
+print bind(bind(bind(unit(10), sqrt), divide100), sqrt)
+print bind(bind(bind(unit(-1), sqrt), divide100), sqrt)
+
+
+class Maybe:
+  def __init__(self, x):
+    self.x = x
+  def bind(self, f):
+    if self.x is None:
+      return Maybe(None)
+    else:
+      return Maybe(f(self.x))
+  def value(self):
+    return self.x
+
+print Maybe(10).bind(sqrt).bind(divide100).bind(sqrt).value()
+print Maybe(-1).bind(sqrt).bind(divide100).bind(sqrt).value()
+
+
+def pipemaybe(l):
+  def bind(x, f):
+    if x is None:
+      return None
+    else:
+      return f(x)
+  def unit(x):
+    return x
+  def internal(x):
+    return reduce(bind, l, unit(x))
+  return internal
+
+print pipemaybe([ sqrt, divide100, sqrt ])(10)
+print pipemaybe([ sqrt, divide100, sqrt ])(-1)
+
+
+
+
+# List monad:
+
+def sqrts(x):
+  if x < 0:
+    return []
+  elif x == 0:
+    return [ 0 ]
+  else:
+    return [ x ** 0.5, -x ** 0.5 ]
+
+
+print (sqrts(4))
+try:
+  print sqrts((sqrts(4)))
+except TypeError as e:
+  print 'TypeError'
+
+
+def bind(l, f):
+  return flatten(map(lambda e: f(e), l))
+
+def unit(x):
+  return [ x ]
+
+print bind(bind(unit(4), sqrts), sqrts)
+
+
+class List:
+  def __init__(self, x):
+    if type(x) is list:
+      self.x = x
+    else:
+      self.x = [ x ]
+  def bind(self, f):
+    return List(flatten(map(lambda e: f(e), self.x)))
+  def value(self):
+    return self.x
+
+print List(4).bind(sqrts).bind(sqrts).value()
+
+
+def pipelist(l):
+  def bind(l, f):
+    return flatten(map(lambda e: f(e), l))
+  def unit(x):
+    return [ x ]
+  def internal(x):
+    return reduce(bind, l, unit(x))
+  return internal
+
+print pipelist([ sqrts, sqrts ])(4)
+
+
+
+
+# Writer monad:
+
+def verbose_u(x):
+  return (x + 4, '[verbose_u was called on ' + str(x) + ']')
+
+def verbose_v(x):
+  return (x * 2, '[verbose_v was called on ' + str(x) + ']')
+
+
+try:
+  print verbose_u(verbose_v(4))
+except TypeError as e:
+  print 'TypeError'
+
+
+def bind(x, f): 
+  result, output = f(x[0]) 
+  return (result, x[1] + output)
+
+def unit(x):
+  return (x, '')
+
+print bind(bind(unit(4), verbose_v), verbose_u)
+
+
+class Writer:
+  def __init__(self, x):
+    if type(x) is tuple:
+      self.x = x
+    else:
+      self.x = (x, '')
+  def bind(self, f):
+    result, output = f(self.x[0])
+    return Writer((result, self.x[1] + output))
+  def value(self):
+    return self.x
+
+print Writer(4).bind(verbose_v).bind(verbose_u).value()
+
+
+def pipewriter(l):
+  def bind(x, f):
+    result, output = f(x[0]) 
+    return (result, x[1] + output)
+  def unit(x):
+    return (x, '')
+  def internal(x):
+    return reduce(bind, l, unit(x))
+  return internal
+
+print pipewriter([ verbose_v, verbose_u ])(4)
