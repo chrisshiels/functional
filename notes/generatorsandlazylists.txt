@@ -1,4 +1,4 @@
-# Notes on generators and lazy lists.
+# Generators and lazy lists.
 
 
 def generator(f, v):
