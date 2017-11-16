@@ -167,8 +167,8 @@ def verbose_v(x):
 TypeError
 
 
-def bind(x, f): 
-  result, output = f(x[0]) 
+def bind(x, f):
+  result, output = f(x[0])
   return (result, x[1] + output)
 
 def unit(x):
@@ -196,7 +196,7 @@ class Writer:
 
 def pipewriter(l):
   def bind(x, f):
-    result, output = f(x[0]) 
+    result, output = f(x[0])
     return (result, x[1] + output)
   def unit(x):
     return (x, '')
