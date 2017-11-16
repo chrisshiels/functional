@@ -1,4 +1,4 @@
-# Work in progress ideas on generators and lazy lists.
+# Generators and lazy lists.
 
 
 def generator(f, v):
@@ -38,7 +38,7 @@ def cons(h, t = None):
   return [ h, t ]
 
 def car(l):
-  if l == None:
+  if l is None:
     return None
   else:
     return l[0]
@@ -50,7 +50,7 @@ def cdr(l):
     return l[1]
 
 def conslength(l):
-  if car(l) == None:
+  if car(l) is None:
     return 0
   elif callable(l[1]):
     return 0
@@ -61,7 +61,7 @@ def conslength(l):
 >>> l0 = None
 >>> conslength(l0)
 0
->>> car(l0) == None
+>>> car(l0) is None
 True
 
 
@@ -71,7 +71,7 @@ True
 1
 >>> car(l1)
 'a'
->>> car(cdr(l1)) == None
+>>> car(cdr(l1)) is None
 True
 
 
@@ -84,7 +84,7 @@ True
 'a'
 >>> car(cdr(l2))
 'b'
->>> car(cdr(cdr(l2))) == None
+>>> car(cdr(cdr(l2))) is None
 True
 
 
