@@ -170,6 +170,37 @@ describe('functional', function() {
   });
 
 
+  describe('#_split()', function() {
+    it('returns [] for _split((e) => { return e % 10 === 0; }, [])',
+       function() {
+         assert.deepEqual(functional._split((e) => { return e % 10 === 0; },
+                                            []),
+                          []);
+    });
+
+    it('returns [] for _split((e) => { return e % 1 === 0; }, _range(1, 11))',
+       function() {
+         assert.deepEqual(functional._split((e) => { return e % 1 === 0; },
+                                            functional._range(1, 11)),
+                          []);
+    });
+
+    it('returns [ [1], [3], [5], [7], [9] ] for _split((e) => { return e % 2 === 0; }, _range(1, 11))',
+       function() {
+         assert.deepEqual(functional._split((e) => { return e % 2 === 0; },
+                                            functional._range(1, 11)),
+                          [ [ 1 ], [ 3 ], [ 5 ], [ 7 ], [ 9 ] ]);
+    });
+
+    it('returns [ [1,2], [4,5], [7,8], [10] ] for _split((e) => { return e % 3 === 0; }, _range(1, 11))',
+       function() {
+         assert.deepEqual(functional._split((e) => { return e % 3 === 0; },
+                                            functional._range(1, 11)),
+                          [ [ 1, 2 ], [ 4, 5 ], [ 7, 8 ], [ 10 ] ]);
+    });
+  });
+
+
   describe('#_reverse()',function() {
     it('returns [ 10..1 ] for _reverse(_range(1, 11))',
        function() {

@@ -75,6 +75,21 @@ def test_partition():
          [ [], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ]
 
 
+def test_split():
+  assert functional._split(lambda e: e % 10 == 0,
+                           []) == \
+         []
+  assert functional._split(lambda e: e % 1 == 0,
+                           functional._range(1, 11)) == \
+         []
+  assert functional._split(lambda e: e % 2 == 0,
+                           functional._range(1, 11)) == \
+         [ [ 1 ], [ 3 ], [ 5 ], [ 7 ], [ 9 ] ]
+  assert functional._split(lambda e: e % 3 == 0,
+                           functional._range(1, 11)) == \
+         [ [ 1, 2 ], [ 4, 5 ], [ 7, 8 ], [ 10 ] ]
+
+
 def test_reverse():
   assert functional._reverse(functional._range(1, 11)) ==  \
          [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]

@@ -1,8 +1,8 @@
 # functional/python
 
 Implementations of common functional programming functions in Python:
-flatten, range, reduce, map, filter, partition, reverse, sort, unique, zip,
-compose, pipe, pipemaybe, partial, curry and memoize.
+flatten, range, reduce, map, filter, partition, split, reverse, sort, unique,
+zip, compose, pipe, pipemaybe, partial, curry and memoize.
 
     host$ virtualenv virtualenv
 
@@ -15,7 +15,7 @@ compose, pipe, pipemaybe, partial, curry and memoize.
     platform linux2 -- Python 2.7.14, pytest-3.2.1, py-1.4.34, pluggy-0.4.0 -- /home/chris/chris/functional/python/virtualenv/bin/python2
     cachedir: .cache
     rootdir: /home/chris/chris/functional/python, inifile:
-    collected 21 items
+    collected 22 items
 
     test_functional.py::test_flatten PASSED
     test_functional.py::test_range PASSED
@@ -23,6 +23,7 @@ compose, pipe, pipemaybe, partial, curry and memoize.
     test_functional.py::test_map PASSED
     test_functional.py::test_filter PASSED
     test_functional.py::test_partition PASSED
+    test_functional.py::test_split PASSED
     test_functional.py::test_reverse PASSED
     test_functional.py::test_sort PASSED
     test_functional.py::test_unique PASSED
@@ -39,4 +40,4 @@ compose, pipe, pipemaybe, partial, curry and memoize.
     test_functional.py::test_primes PASSED
     test_functional.py::test_ispalindrome PASSED
 
-    ========================== 21 passed in 0.04 seconds ===========================
+    ========================== 22 passed in 0.09 seconds ===========================

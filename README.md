@@ -9,6 +9,7 @@ Python:
 * map
 * filter
 * partition
+* split
 * reverse
 * sort
 * unique

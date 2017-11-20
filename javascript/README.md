@@ -1,8 +1,8 @@
 # functional/javascript
 
 Implementations of common functional programming functions in JavaScript:
-flatten, range, reduce, map, filter, partition, reverse, sort, unique, zip,
-compose, pipe, pipemaybe, partial, curry and memoize.
+flatten, range, reduce, map, filter, partition, split, reverse, sort, unique,
+zip, compose, pipe, pipemaybe, partial, curry and memoize.
 
     host$ npm install
     host$ npm test
@@ -41,6 +41,11 @@ compose, pipe, pipemaybe, partial, curry and memoize.
           ✓ returns [ [ 3, 6, 9 ], [ 1, 2, 4, 5, 7, 8, 10 ] ] for _partition((e) => { return e % 3 === 0; }, _range(1, 11))
           ✓ returns [ [ 1, 2, 4, 5, 7, 8, 10 ], [ 3, 6, 9 ] ] for _partition((e) => { return e % 3 !== 0; }, _range(1, 11))
           ✓ returns [ [], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ] for _partition((e) => { return e === 0; }, _range(1, 11))
+        #_split()
+          ✓ returns [] for _split((e) => { return e % 10 === 0; }, [])
+          ✓ returns [] for _split((e) => { return e % 1 === 0; }, _range(1, 11))
+          ✓ returns [ [1], [3], [5], [7], [9] ] for _split((e) => { return e % 2 === 0; }, _range(1, 11))
+          ✓ returns [ [1,2], [4,5], [7,8], [10] ] for _split((e) => { return e % 3 === 0; }, _range(1, 11))
         #_reverse()
           ✓ returns [ 10..1 ] for _reverse(_range(1, 11))
         #_sort()
@@ -79,4 +84,4 @@ compose, pipe, pipemaybe, partial, curry and memoize.
           ✓ returns true for ispalindrome('tattarrattat')
 
 
-      43 passing (48ms)
+      47 passing (32ms)

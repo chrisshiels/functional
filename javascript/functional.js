@@ -58,7 +58,10 @@ const _map = function(f, l) {
 const _filter = function(f, l) {
   const accumulate = function(a, e) {
     if (f(e))
-      return a.concat(e);
+      if (e instanceof Array)
+        return a.concat([ e ]);
+      else
+        return a.concat(e);
     else
       return a;
   }
@@ -76,6 +79,23 @@ const _partition = function(f, l) {
       return [ left, right.concat(e) ];
   }
   return _reduce(accumulate, l, [ [], [] ]);
+}
+
+
+const _split = function(f, l) {
+  const accumulate = function(a, e) {
+    if (f(e))
+      return a.concat([ [] ]);
+    else {
+      return a.slice(0, -1).concat([ a.slice(-1)[0].concat(e) ]);
+    }
+  }
+
+  const internal = function(e) {
+    return e.length !== 0;
+  }
+
+  return _filter(internal, _reduce(accumulate, l, [ [] ]));
 }
 
 
@@ -251,6 +271,7 @@ module.exports = {
   '_map':              _map,
   '_filter':           _filter,
   '_partition':        _partition,
+  '_split':            _split,
   '_sort':             _sort,
   '_unique':           _unique,
   '_zip':              _zip,

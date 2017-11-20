@@ -64,6 +64,18 @@ def _partition(f, l):
   return _reduce(accumulate, l, [ [], [] ])
 
 
+def _split(f, l):
+  def accumulate(a, e):
+    if f(e):
+      return a + [ [] ]
+    else:
+      return a[0:-1] + [ a[-1] + [ e ] ]
+
+  def internal(e):
+    return e != []
+  return _filter(internal, _reduce(accumulate, l, [ [] ]))
+
+
 def _reverse(l):
   def accumulate(a, e):
     return [ e ] + a
