@@ -130,14 +130,14 @@ describe('functional', function() {
 
 
   describe('#_filter()', function() {
-    it('returns [ 2,4,6,8,10 ] for _filter((e) => { return e % 2 === 0; }, _range(1, 11))',
+    it('returns [ 2, 4, 6, 8, 10 ] for _filter((e) => { return e % 2 === 0; }, _range(1, 11))',
        function() {
          assert.deepEqual(functional._filter((e) => { return e % 2 === 0; },
                                              functional._range(1, 11)),
                           [ 2, 4, 6, 8, 10 ]);
     });
 
-    it('returns [ 1,3,5,7,9 ] for _filter((e) => { return e % 2 === 1; }, _range(1, 11))',
+    it('returns [ 1, 3, 5, 7, 9 ] for _filter((e) => { return e % 2 === 1; }, _range(1, 11))',
        function() {
          assert.deepEqual(functional._filter((e) => { return e % 2 === 1; },
                                              functional._range(1, 11)),
@@ -185,14 +185,14 @@ describe('functional', function() {
                           []);
     });
 
-    it('returns [ [1], [3], [5], [7], [9] ] for _split((e) => { return e % 2 === 0; }, _range(1, 11))',
+    it('returns [ [ 1 ], [ 3 ], [ 5 ], [ 7 ], [ 9 ] ] for _split((e) => { return e % 2 === 0; }, _range(1, 11))',
        function() {
          assert.deepEqual(functional._split((e) => { return e % 2 === 0; },
                                             functional._range(1, 11)),
                           [ [ 1 ], [ 3 ], [ 5 ], [ 7 ], [ 9 ] ]);
     });
 
-    it('returns [ [1,2], [4,5], [7,8], [10] ] for _split((e) => { return e % 3 === 0; }, _range(1, 11))',
+    it('returns [ [ 1, 2 ], [ 4, 5 ], [ 7, 8 ], [ 10 ] ] for _split((e) => { return e % 3 === 0; }, _range(1, 11))',
        function() {
          assert.deepEqual(functional._split((e) => { return e % 3 === 0; },
                                             functional._range(1, 11)),
@@ -221,7 +221,7 @@ describe('functional', function() {
 
 
   describe('#_unique()', function() {
-    it('returns [ 5,1,4,2,3 ] for _unique([ 5, 1, 4, 2, 3, 3, 2, 4, 1, 5 ])',
+    it('returns [ 5, 1, 4, 2, 3 ] for _unique([ 5, 1, 4, 2, 3, 3, 2, 4, 1, 5 ])',
        function() {
          assert.deepEqual(functional._unique([ 5, 1, 4, 2, 3, 3, 2, 4, 1, 5 ]),
                           [ 5, 1, 4, 2, 3 ]);
@@ -286,7 +286,7 @@ describe('functional', function() {
                       5);
     });
 
-    it('returns [ 5,7,9,11,13,15,17,19,21,23 ] for _pipe([ listadd1, listmultiply2, listadd1 ])(_range(1, 11))',
+    it('returns [ 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 ] for _pipe([ listadd1, listmultiply2, listadd1 ])(_range(1, 11))',
        function() {
          const listadd1 = function(l) {
            return functional._map((e) => { return e + 1; }, l);
@@ -321,7 +321,7 @@ describe('functional', function() {
                       5);
     });
 
-    it('returns [ 5,7,9,11,13,15,17,19,21,23 ] for _pipe2([ listadd1, listmultiply2, listadd1 ])(_range(1, 11))',
+    it('returns [ 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 ] for _pipe2([ listadd1, listmultiply2, listadd1 ])(_range(1, 11))',
        function() {
          const listadd1 = function(l) {
            return functional._map((e) => { return e + 1; }, l);
@@ -440,7 +440,7 @@ describe('functional', function() {
 
 
   describe('#factorial()', function() {
-    it('returns [ 1,2,6,24,120,720,5040,40320,362880,3628800 ] for _map(factorial, _range(1, 11))',
+    it('returns [ 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 ] for _map(factorial, _range(1, 11))',
        function() {
          assert.deepEqual(functional._map(functional.factorial,
                                           functional._range(1, 11)),
