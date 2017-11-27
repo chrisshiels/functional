@@ -49,7 +49,7 @@ const _reduce = function(f, l, v = null) {
 
 const _map = function(f, l) {
   const accumulate = function(a, e) {
-    return a.concat(f(e));
+    return a.concat([ f(e) ]);
   }
   return _reduce(accumulate, l, []);
 }
@@ -58,10 +58,7 @@ const _map = function(f, l) {
 const _filter = function(f, l) {
   const accumulate = function(a, e) {
     if (f(e))
-      if (e instanceof Array)
-        return a.concat([ e ]);
-      else
-        return a.concat(e);
+      return a.concat([ e ]);
     else
       return a;
   }
@@ -74,9 +71,9 @@ const _partition = function(f, l) {
     let left, right;
     [ left, right ] = a;
     if (f(e))
-      return [ left.concat(e), right ];
+      return [ left.concat([ e ]), right ];
     else
-      return [ left, right.concat(e) ];
+      return [ left, right.concat([ e ]) ];
   }
   return _reduce(accumulate, l, [ [], [] ]);
 }
@@ -111,7 +108,7 @@ const _sort = function(f, l) {
   if (l.length === 0)
     return [];
   return _sort(f, _filter((e) => { return f(e, l[0]); }, l.slice(1)))
-         .concat(l[0])
+         .concat([ l[0] ])
          .concat(_sort(f, _filter((e) => { return !f(e, l[0]); }, l.slice(1))));
 }
 
@@ -121,7 +118,7 @@ const _unique = function(l) {
     if (a.includes(e))
       return a;
     else
-      return a.concat(e);
+      return a.concat([ e ]);
   }
   return _reduce(accumulate, l, []);
 }
@@ -129,7 +126,7 @@ const _unique = function(l) {
 
 const _zip = function(...args) {
   const accumulateheads = function(a, e) {
-    return a.concat(e[0]);
+    return a.concat([ e[0] ]);
   }
   const accumulatetails = function(a, e) {
     return a.concat([ e.slice(1) ]);

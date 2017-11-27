@@ -110,11 +110,27 @@ describe('functional', function() {
                                          0),
                       55);
     });
+
     it('returns 55 for _reduce((a, e) => { return a + e; }, _range(1, 11))',
        function() {
          assert.equal(functional._reduce((a, e) => { return a + e; },
                                          functional._range(1, 11)),
                       55);
+    });
+
+    it('returns [ 1, 2, 3, 4, 5, 6 ] for _reduce((a, e) => { return a.concat(e); }, [ [ 1 ], [ 2, 3 ], [ 4, 5, 6 ] ])',
+       function() {
+         assert.deepEqual(functional._reduce((a, e) => { return a.concat(e); },
+                                             [ [ 1 ], [ 2, 3 ], [ 4, 5, 6 ] ]),
+                          [ 1, 2, 3, 4, 5, 6 ]);
+    });
+
+    it('returns 6 for _reduce((a, e) => { return a + e.length; }, [ [ 1 ], [ 2, 3 ], [ 4, 5, 6 ] ], 0)',
+       function() {
+         assert.equal(functional._reduce((a, e) => { return a + e.length; },
+                                         [ [ 1 ], [ 2, 3 ], [ 4, 5, 6 ] ],
+	                                 0),
+                      6);
     });
   });
 
@@ -125,6 +141,13 @@ describe('functional', function() {
          assert.deepEqual(functional._map((e) => { return e * 2; },
                                           functional._range(1, 11)),
                           [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 ]);
+    });
+
+    it('returns [ [ 1 ], [ 2 ], [ 3 ] ] for _map((e) => { return e; }, [ [ 1 ], [ 2 ], [ 3 ] ])',
+       function() {
+         assert.deepEqual(functional._map((e) => { return e; },
+                                          [ [ 1 ], [ 2 ], [ 3 ] ]),
+                          [ [ 1 ], [ 2 ], [ 3 ] ]);
     });
   });
 
@@ -142,6 +165,13 @@ describe('functional', function() {
          assert.deepEqual(functional._filter((e) => { return e % 2 === 1; },
                                              functional._range(1, 11)),
                           [ 1, 3, 5, 7, 9 ]);
+    });
+
+    it('returns [ [ 1 ], [ 2 ], [ 3 ] ] for _filter((e) => { return e.length !== 0; }, [ [ 1 ], [], [ 2 ], [], [ 3 ] ])',
+       function() {
+         assert.deepEqual(functional._filter((e) => { return e.length !== 0; },
+                                          [ [ 1 ], [], [ 2 ], [], [ 3 ] ]),
+                          [ [ 1 ], [ 2 ], [ 3 ] ]);
     });
   });
 
@@ -166,6 +196,13 @@ describe('functional', function() {
          assert.deepEqual(functional._partition((e) => { return e === 0; },
                                                 functional._range(1, 11)),
                           [ [], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ]);
+    });
+
+    it('returns [ [ [ 1, 2 ], [ 1, 2, 3 ] ], [ [ 1 ] ] ] for _partition((e) => { return e.length > 1; }, [ [ 1 ], [ 1, 2 ], [ 1, 2, 3 ] ])',
+       function() {
+         assert.deepEqual(functional._partition((e) => { return e.length > 1; },
+                                                [ [ 1 ], [ 1, 2 ], [ 1, 2, 3 ] ]),
+                          [ [ [ 1, 2 ], [ 1, 2, 3 ] ], [ [ 1 ] ] ]);
     });
   });
 
@@ -207,6 +244,12 @@ describe('functional', function() {
          assert.deepEqual(functional._reverse(functional._range(1, 11)),
                           [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]);
     });
+
+    it('returns [ [ 5, 6 ], [ 3, 4 ], [ 1, 2 ] ] for _reverse([ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ])',
+       function() {
+         assert.deepEqual(functional._reverse([ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ]),
+                          [ [ 5, 6 ], [ 3, 4 ], [ 1, 2 ] ]);
+    });
   });
 
 
@@ -216,6 +259,13 @@ describe('functional', function() {
          assert.deepEqual(functional._sort((m, n) => { return m <= n; },
                                            [ 1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ]),
                           [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]);
+    });
+
+    it('returns [ [ 1 ], [ 1, 2 ],  [ 1, 2, 3 ] ] for _sort((m, n) => { return m.length <= n.length; }, [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ])',
+       function() {
+         assert.deepEqual(functional._sort((m, n) => { return m.length <= n.length; },
+                                           [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ]),
+                          [ [ 1 ], [ 1, 2 ],  [ 1, 2, 3 ] ]);
     });
   });
 

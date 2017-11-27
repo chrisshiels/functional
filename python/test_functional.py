@@ -46,12 +46,22 @@ def test_reduce():
   assert functional._reduce(lambda a, e: a + e,
                             functional._range(1, 11)) == \
          55
+  assert functional._reduce(lambda a, e: a + e,
+                            [ [ 1 ], [ 2, 3 ], [ 4, 5, 6 ] ]) == \
+         [ 1, 2, 3, 4, 5, 6 ]
+  assert functional._reduce(lambda a, e: a + len(e),
+                            [ [ 1 ], [ 2, 3 ], [ 4, 5, 6 ] ],
+                            0) == \
+         6
 
 
 def test_map():
   assert functional._map(lambda e: e * 2,
                          functional._range(1, 11)) == \
          [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 ]
+  assert functional._map(lambda e: e,
+                         [ [ 1 ], [ 2 ], [ 3 ] ]) == \
+         [ [ 1 ], [ 2 ], [ 3 ] ]
 
 
 def test_filter():
@@ -61,6 +71,9 @@ def test_filter():
   assert functional._filter(lambda e: e % 2 == 1,
                             functional._range(1, 11)) == \
          [ 1, 3, 5, 7, 9 ]
+  assert functional._filter(lambda e: len(e) != 0,
+                            [ [ 1 ], [], [ 2 ], [], [ 3 ] ]) == \
+         [ [ 1 ], [ 2 ], [ 3 ] ]
 
 
 def test_partition():
@@ -73,6 +86,10 @@ def test_partition():
   assert functional._partition(lambda e: e == 0,
                                functional._range(1, 11)) == \
          [ [], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ]
+
+  assert functional._partition(lambda e: len(e) > 1,
+                               [ [ 1 ], [ 1, 2 ], [ 1, 2, 3 ] ]) == \
+         [ [ [ 1, 2 ], [ 1, 2, 3 ] ], [ [ 1 ] ] ]
 
 
 def test_split():
@@ -93,12 +110,17 @@ def test_split():
 def test_reverse():
   assert functional._reverse(functional._range(1, 11)) ==  \
          [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]
+  assert functional._reverse([ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ]) == \
+         [ [ 5, 6 ], [ 3, 4 ], [ 1, 2 ] ]
 
 
 def test_sort():
   assert functional._sort(lambda m, n: m <= n,
                           [1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ]) == \
          functional._range(1, 11)
+  assert functional._sort(lambda m, n: len(m) <= len(n),
+                          [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ]) == \
+                          [ [ 1 ], [ 1, 2 ],  [ 1, 2, 3 ] ]
 
 
 def test_unique():
