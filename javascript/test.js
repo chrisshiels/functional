@@ -462,13 +462,13 @@ describe('functional', function() {
                           [ 'a', 'b', 'x', 'y', 'z' ]);
     });
 
-    it('returns 15 for _curry(add, 2)(10)(5) and 25 for _curry(add, 2)(20)(5)',
+    it('returns 15 for _curry(add)(10)(5) and 25 for _curry(add)(20)(5)',
        function() {
          const add = function(a, b) {
            return a + b;
          }
 
-         let cadd = functional._curry(add, 2)
+         let cadd = functional._curry(add)
 
          assert.equal(cadd(10)(5),
                       15);
@@ -476,13 +476,13 @@ describe('functional', function() {
                       25);
     });
 
-    it('returns [ 11..20 ] for _map(_curry(add, 2)(10), _range(1, 11))',
+    it('returns [ 11..20 ] for _map(_curry(add)(10), _range(1, 11))',
        function() {
          const add = function(a, b) {
            return a + b;
          }
 
-         assert.deepEqual(functional._map(functional._curry(add, 2)(10),
+         assert.deepEqual(functional._map(functional._curry(add)(10),
                                           functional._range(1, 11)),
                           [ 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]);
     });
