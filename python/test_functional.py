@@ -239,9 +239,10 @@ def test_curry():
   def add(a, b):
     return a + b
 
-  cadd = functional._curry(add, 2)
+  cadd = functional._curry(add)
   assert cadd(10)(5) == 15 and cadd(20)(5) == 25
-  assert functional._map(functional._curry(add, 2)(10),
+
+  assert functional._map(functional._curry(add)(10),
                          functional._range(1, 11)) == \
          [ 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]
 

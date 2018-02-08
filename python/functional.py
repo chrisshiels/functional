@@ -150,7 +150,9 @@ def _partial(f, *args):
   return internal
 
 
-def _curry(f, arity):
+def _curry(f, arity = 0):
+  arity = arity or f.__code__.co_argcount
+
   def internal(v):
     if arity == 1:
       return f(v)
