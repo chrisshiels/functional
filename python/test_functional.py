@@ -5,6 +5,24 @@
 import functional
 
 
+def test_all():
+  assert functional._all(lambda e: e % 2 == 0, []) == \
+         False
+  assert functional._all(lambda e: e % 2 == 0, [ 2, 4, 6, 8, 10 ]) == \
+         True
+  assert functional._all(lambda e: e % 3 == 0, [ 2, 4, 6, 8, 10 ]) == \
+         False
+
+
+def test_any():
+  assert functional._any(lambda e: e % 2 == 0, []) == \
+         False
+  assert functional._any(lambda e: e % 2 == 0, [ 2, 4, 6, 8, 10 ]) == \
+         True
+  assert functional._any(lambda e: e % 3 == 0, [ 2, 4, 6, 8, 10 ]) == \
+         True
+
+
 def test_flatten():
   assert functional._flatten([]) == \
          []

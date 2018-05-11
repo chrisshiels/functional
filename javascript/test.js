@@ -12,6 +12,64 @@ const functional = require('./functional');
 
 
 describe('functional', function() {
+  describe('#_all()', function() {
+    const divisibleby2 = function(v) {
+      return v % 2 === 0;
+    }
+
+    const divisibleby3 = function(v) {
+      return v % 3 === 0;
+    }
+
+    it('returns false for _all(divisibleby2, [])',
+       function() {
+         assert.equal(functional._all(divisibleby2, []),
+                      false);
+    });
+
+    it('returns true for _all(divisibleby2, [ 2, 4, 6, 8, 10 ])',
+       function() {
+         assert.equal(functional._all(divisibleby2, [ 2, 4, 6, 8, 10 ]),
+                      true);
+    });
+
+    it('returns false for _all(divisibleby3, [ 2, 4, 6, 8, 10 ])',
+       function() {
+         assert.equal(functional._all(divisibleby3, [ 2, 4, 6, 8, 10 ]),
+                      false);
+    });
+  });
+
+
+  describe('#_any()', function() {
+    const divisibleby2 = function(v) {
+      return v % 2 === 0;
+    }
+
+    const divisibleby3 = function(v) {
+      return v % 3 === 0;
+    }
+
+    it('returns false for _any(divisibleby2, [])',
+       function() {
+         assert.equal(functional._any(divisibleby2, []),
+                      false);
+    });
+
+    it('returns true for _any(divisibleby2, [ 2, 4, 6, 8, 10 ])',
+       function() {
+         assert.equal(functional._any(divisibleby2, [ 2, 4, 6, 8, 10 ]),
+                      true);
+    });
+
+    it('returns true for _any(divisibleby3, [ 2, 4, 6, 8, 10 ])',
+       function() {
+         assert.equal(functional._any(divisibleby3, [ 2, 4, 6, 8, 10 ]),
+                      true);
+    });
+  });
+
+
   describe('#_flatten()', function() {
     it('returns [] for _flatten([])',
        function() {
@@ -366,8 +424,8 @@ describe('functional', function() {
          }
 
          assert.equal(functional._pipe2([ valueadd1,
-                                         valuemultiply2,
-                                         valueadd1 ])(1),
+                                          valuemultiply2,
+                                          valueadd1 ])(1),
                       5);
     });
 
