@@ -3,20 +3,23 @@
 Implementations of common functional programming functions in JavaScript and
 Python:
 
-* flatten
-* range
-* reduce
-* map
-* filter
-* partition
-* split
-* reverse
-* sort
-* unique
-* zip
+* all
+* any
 * compose
+* curry
+* filter
+* flatten
+* map
+* memoize
+* partial
+* partition
+* pipe2
 * pipe
 * pipemaybe
-* partial
-* curry
-* memoize
+* range
+* reduce
+* reverse
+* sort
+* split
+* unique
+* zip

@@ -1,18 +1,26 @@
 # functional/javascript
 
 Implementations of common functional programming functions in JavaScript:
-flatten, range, reduce, map, filter, partition, split, reverse, sort, unique,
-zip, compose, pipe, pipemaybe, partial, curry and memoize.
+all, any, flatten, range, reduce, map, filter, partition, split, reverse,
+sort, unique, zip, compose, pipe, pipemaybe, partial, curry and memoize.
 
     host$ npm install
     host$ npm test
 
-    > functional@1.0.0 test /home/chris/chris/functional/javascript
+    > functional@1.0.0 test /home/chris/gu/github.com/functional/javascript
     > mocha
 
 
 
       functional
+        #_all()
+          ✓ returns false for _all(divisibleby2, [])
+          ✓ returns true for _all(divisibleby2, [ 2, 4, 6, 8, 10 ])
+          ✓ returns false for _all(divisibleby3, [ 2, 4, 6, 8, 10 ])
+        #_any()
+          ✓ returns false for _any(divisibleby2, [])
+          ✓ returns true for _any(divisibleby2, [ 2, 4, 6, 8, 10 ])
+          ✓ returns true for _any(divisibleby3, [ 2, 4, 6, 8, 10 ])
         #_flatten()
           ✓ returns [] for _flatten([])
           ✓ returns [ 1, 2, 3 ] for _flatten([ 1, 2, 3 ])
@@ -32,26 +40,33 @@ zip, compose, pipe, pipemaybe, partial, curry and memoize.
         #_reduce()
           ✓ returns 55 for _reduce((a, e) => { return a + e; }, _range(1, 11), 0)
           ✓ returns 55 for _reduce((a, e) => { return a + e; }, _range(1, 11))
+          ✓ returns [ 1, 2, 3, 4, 5, 6 ] for _reduce((a, e) => { return a.concat(e); }, [ [ 1 ], [ 2, 3 ], [ 4, 5, 6 ] ])
+          ✓ returns 6 for _reduce((a, e) => { return a + e.length; }, [ [ 1 ], [ 2, 3 ], [ 4, 5, 6 ] ], 0)
         #_map()
           ✓ returns [ 2,4,6..20 ] for _map((e) => { return e * 2; }, _range(1, 11))
+          ✓ returns [ [ 1 ], [ 2 ], [ 3 ] ] for _map((e) => { return e; }, [ [ 1 ], [ 2 ], [ 3 ] ])
         #_filter()
-          ✓ returns [ 2,4,6,8,10 ] for _filter((e) => { return e % 2 === 0; }, _range(1, 11))
-          ✓ returns [ 1,3,5,7,9 ] for _filter((e) => { return e % 2 === 1; }, _range(1, 11))
+          ✓ returns [ 2, 4, 6, 8, 10 ] for _filter((e) => { return e % 2 === 0; }, _range(1, 11))
+          ✓ returns [ 1, 3, 5, 7, 9 ] for _filter((e) => { return e % 2 === 1; }, _range(1, 11))
+          ✓ returns [ [ 1 ], [ 2 ], [ 3 ] ] for _filter((e) => { return e.length !== 0; }, [ [ 1 ], [], [ 2 ], [], [ 3 ] ])
         #_partition()
           ✓ returns [ [ 3, 6, 9 ], [ 1, 2, 4, 5, 7, 8, 10 ] ] for _partition((e) => { return e % 3 === 0; }, _range(1, 11))
           ✓ returns [ [ 1, 2, 4, 5, 7, 8, 10 ], [ 3, 6, 9 ] ] for _partition((e) => { return e % 3 !== 0; }, _range(1, 11))
           ✓ returns [ [], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ] for _partition((e) => { return e === 0; }, _range(1, 11))
+          ✓ returns [ [ [ 1, 2 ], [ 1, 2, 3 ] ], [ [ 1 ] ] ] for _partition((e) => { return e.length > 1; }, [ [ 1 ], [ 1, 2 ], [ 1, 2, 3 ] ])
         #_split()
           ✓ returns [] for _split((e) => { return e % 10 === 0; }, [])
           ✓ returns [] for _split((e) => { return e % 1 === 0; }, _range(1, 11))
-          ✓ returns [ [1], [3], [5], [7], [9] ] for _split((e) => { return e % 2 === 0; }, _range(1, 11))
-          ✓ returns [ [1,2], [4,5], [7,8], [10] ] for _split((e) => { return e % 3 === 0; }, _range(1, 11))
+          ✓ returns [ [ 1 ], [ 3 ], [ 5 ], [ 7 ], [ 9 ] ] for _split((e) => { return e % 2 === 0; }, _range(1, 11))
+          ✓ returns [ [ 1, 2 ], [ 4, 5 ], [ 7, 8 ], [ 10 ] ] for _split((e) => { return e % 3 === 0; }, _range(1, 11))
         #_reverse()
           ✓ returns [ 10..1 ] for _reverse(_range(1, 11))
+          ✓ returns [ [ 5, 6 ], [ 3, 4 ], [ 1, 2 ] ] for _reverse([ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ])
         #_sort()
           ✓ returns [ 1..10 ] for _sort((m, n) => { return m <= n; }, [ 1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ])
+          ✓ returns [ [ 1 ], [ 1, 2 ],  [ 1, 2, 3 ] ] for _sort((m, n) => { return m.length <= n.length; }, [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ])
         #_unique()
-          ✓ returns [ 5,1,4,2,3 ] for _unique([ 5, 1, 4, 2, 3, 3, 2, 4, 1, 5 ])
+          ✓ returns [ 5, 1, 4, 2, 3 ] for _unique([ 5, 1, 4, 2, 3, 3, 2, 4, 1, 5 ])
         #_zip()
           ✓ returns [ [ 1, 5 ], [ 2, 6 ], [ 3, 7 ], [ 4, 8 ] ] for _zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ])
           ✓ returns [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ] for _zip(..._zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]))
@@ -59,10 +74,10 @@ zip, compose, pipe, pipemaybe, partial, curry and memoize.
           ✓ returns 3 for _compose(valueadd1, valuemultiply2)(1)
         #_pipe()
           ✓ returns 5 for _pipe([ valueadd1, valuemultiply2, valueadd1 ])(1)
-          ✓ returns [ 5,7,9,11,13,15,17,19,21,23 ] for _pipe([ listadd1, listmultiply2, listadd1 ])(_range(1, 11))
+          ✓ returns [ 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 ] for _pipe([ listadd1, listmultiply2, listadd1 ])(_range(1, 11))
         #_pipe2()
           ✓ returns 5 for _pipe2([ valueadd1, valuemultiply2, valueadd1 ])(1)
-          ✓ returns [ 5,7,9,11,13,15,17,19,21,23 ] for _pipe2([ listadd1, listmultiply2, listadd1 ])(_range(1, 11))
+          ✓ returns [ 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 ] for _pipe2([ listadd1, listmultiply2, listadd1 ])(_range(1, 11))
         #_pipemaybe()
           ✓ returns 3 for _pipemaybe([ valueadd1, valueadd1, valueadd1 ])(0)
           ✓ returns null for _pipemaybe([ valueadd1, valuenull, valueadd1 ])(0)
@@ -70,10 +85,10 @@ zip, compose, pipe, pipemaybe, partial, curry and memoize.
           ✓ returns [ 11..20 ] for _map(_partial(add, 10), _range(1, 11))
         #_curry()
           ✓ supports multiple execution paths
-          ✓ returns 15 for _curry(add, 2)(10)(5) and 25 for _curry(add, 2)(20)(5)
-          ✓ returns [ 11..20 ] for _map(_curry(add, 2)(10), _range(1, 11))
+          ✓ returns 15 for _curry(add)(10)(5) and 25 for _curry(add)(20)(5)
+          ✓ returns [ 11..20 ] for _map(_curry(add)(10), _range(1, 11))
         #factorial()
-          ✓ returns [ 1,2,6,24,120,720,5040,40320,362880,3628800 ] for _map(factorial, _range(1, 11))
+          ✓ returns [ 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 ] for _map(factorial, _range(1, 11))
         #fibonacci()
           ✓ returns [ 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ] for _map(fibonacci, _range(1, 11))
         #memoizedfibonacci()
@@ -84,4 +99,4 @@ zip, compose, pipe, pipemaybe, partial, curry and memoize.
           ✓ returns true for ispalindrome('tattarrattat')
 
 
-      47 passing (32ms)
+      60 passing (29ms)

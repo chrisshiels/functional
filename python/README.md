@@ -1,8 +1,8 @@
 # functional/python
 
 Implementations of common functional programming functions in Python:
-flatten, range, reduce, map, filter, partition, split, reverse, sort, unique,
-zip, compose, pipe, pipemaybe, partial, curry and memoize.
+all, any, flatten, range, reduce, map, filter, partition, split, reverse,
+sort, unique, zip, compose, pipe, pipemaybe, partial, curry and memoize.
 
     host$ virtualenv virtualenv
 
@@ -12,11 +12,13 @@ zip, compose, pipe, pipemaybe, partial, curry and memoize.
 
     (virtualenv) host$ pytest -v
     ============================= test session starts ==============================
-    platform linux2 -- Python 2.7.14, pytest-3.2.1, py-1.4.34, pluggy-0.4.0 -- /home/chris/chris/functional/python/virtualenv/bin/python2
+    platform linux2 -- Python 2.7.14, pytest-3.2.1, py-1.4.34, pluggy-0.4.0 -- /home/chris/gu/github.com/functional/python/virtualenv/bin/python2
     cachedir: .cache
-    rootdir: /home/chris/chris/functional/python, inifile:
-    collected 22 items
+    rootdir: /home/chris/gu/github.com/functional/python, inifile:
+    collected 24 items
 
+    test_functional.py::test_all PASSED
+    test_functional.py::test_any PASSED
     test_functional.py::test_flatten PASSED
     test_functional.py::test_range PASSED
     test_functional.py::test_reduce PASSED
@@ -39,5 +41,5 @@ zip, compose, pipe, pipemaybe, partial, curry and memoize.
     test_functional.py::test_memoizedfibonacci PASSED
     test_functional.py::test_primes PASSED
     test_functional.py::test_ispalindrome PASSED
-
-    ========================== 22 passed in 0.09 seconds ===========================
+    
+    ========================== 24 passed in 0.10 seconds ===========================
