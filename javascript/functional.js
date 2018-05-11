@@ -7,6 +7,26 @@
 'use strict';
 
 
+const _all = function(f, l) {
+  if (l.length === 0)
+    return false;
+  else if (l.length === 1)
+    return f(l[0]);
+  else
+    return f(l[0]) && _all(f, l.slice(1));
+}
+
+
+const _any = function(f, l) {
+  if (l.length === 0)
+    return false;
+  else if (l.length === 1)
+    return f(l[0]);
+  else
+    return f(l[0]) || _any(f, l.slice(1));
+}
+
+
 const _flatten = function(l) {
   if (l.length === 0)
     return [];
@@ -261,6 +281,8 @@ const ispalindrome = function(s) {
 
 
 module.exports = {
+  '_all':              _all,
+  '_any':              _any,
   '_flatten':          _flatten,
   '_range':            _range,
   '_reverse':          _reverse,

@@ -4,6 +4,24 @@
 # Chris Shiels.
 
 
+def _all(f, l):
+  if len(l) == 0:
+    return False
+  elif len(l) == 1:
+    return f(l[0])
+  else:
+    return f(l[0]) and _all(f, l[1:])
+
+
+def _any(f, l):
+  if len(l) == 0:
+    return False
+  elif len(l) == 1:
+    return f(l[0])
+  else:
+    return f(l[0]) or _any(f, l[1:])
+
+
 def _flatten(l):
   if l == []:
     return []
