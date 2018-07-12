@@ -337,6 +337,67 @@ describe('functional', function() {
   });
 
 
+  describe('#_permutations()', function() {
+    it('returns [] for _permutations([])',
+       function() {
+         assert.deepEqual(functional._permutations([]),
+                          []);
+    });
+
+    it('returns [ [ 1 ] ] for _permutations([ 1 ])',
+       function() {
+         assert.deepEqual(functional._permutations([ 1 ]),
+                          [ [ 1 ] ]);
+    });
+
+    it('returns [ [ 1, 2 ], [ 2, 1 ] ] for _permutations([ 1, 2 ])',
+       function() {
+         assert.deepEqual(functional._permutations([ 1, 2 ]),
+                          [ [ 1, 2 ], [ 2, 1 ] ]);
+    });
+
+    it('returns [ [ 1, 2, 3 ] .. [ 3, 2, 1 ] ] for _permutations([ 1, 2, 3 ])',
+       function() {
+         assert.deepEqual(functional._permutations([ 1, 2, 3 ]),
+                          [ [ 1, 2, 3 ],
+                            [ 1, 3, 2 ],
+                            [ 2, 1, 3 ],
+                            [ 2, 3, 1 ],
+                            [ 3, 1, 2 ],
+                            [ 3, 2, 1 ] ]);
+    });
+
+    it('returns [ [ 1, 2, 3, 4 ] .. [ 4, 3, 2, 1 ] ] for _permutations([ 1, 2, 3, 4 ])',
+       function() {
+         assert.deepEqual(functional._permutations([ 1, 2, 3, 4 ]),
+                          [ [ 1, 2, 3, 4 ],
+                            [ 1, 2, 4, 3 ],
+                            [ 1, 3, 2, 4 ],
+                            [ 1, 3, 4, 2 ],
+                            [ 1, 4, 2, 3 ],
+                            [ 1, 4, 3, 2 ],
+                            [ 2, 1, 3, 4 ],
+                            [ 2, 1, 4, 3 ],
+                            [ 2, 3, 1, 4 ],
+                            [ 2, 3, 4, 1 ],
+                            [ 2, 4, 1, 3 ],
+                            [ 2, 4, 3, 1 ],
+                            [ 3, 1, 2, 4 ],
+                            [ 3, 1, 4, 2 ],
+                            [ 3, 2, 1, 4 ],
+                            [ 3, 2, 4, 1 ],
+                            [ 3, 4, 1, 2 ],
+                            [ 3, 4, 2, 1 ],
+                            [ 4, 1, 2, 3 ],
+                            [ 4, 1, 3, 2 ],
+                            [ 4, 2, 1, 3 ],
+                            [ 4, 2, 3, 1 ],
+                            [ 4, 3, 1, 2 ],
+                            [ 4, 3, 2, 1 ] ]);
+    });
+  });
+
+
   describe('#_zip()', function() {
     it('returns [ [ 1, 5 ], [ 2, 6 ], [ 3, 7 ], [ 4, 8 ] ] for _zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ])',
        function() {

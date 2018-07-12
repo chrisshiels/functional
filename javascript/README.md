@@ -1,13 +1,15 @@
 # functional/javascript
 
 Implementations of common functional programming functions in JavaScript:
-all, any, flatten, range, reduce, map, filter, partition, split, reverse,
-sort, unique, zip, compose, pipe, pipemaybe, partial, curry and memoize.
+all, any, flatten, range, reduce, map, filter, partition, permutations,
+split, reverse, sort, unique, zip, compose, pipe, pipemaybe, partial,
+curry and memoize.
+
 
     host$ npm install
     host$ npm test
 
-    > functional@1.0.0 test /home/chris/gu/github.com/functional/javascript
+    > functional@1.0.0 test /home/chris/github.com/functional/javascript
     > mocha
 
 
@@ -67,6 +69,12 @@ sort, unique, zip, compose, pipe, pipemaybe, partial, curry and memoize.
           ✓ returns [ [ 1 ], [ 1, 2 ],  [ 1, 2, 3 ] ] for _sort((m, n) => { return m.length <= n.length; }, [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ])
         #_unique()
           ✓ returns [ 5, 1, 4, 2, 3 ] for _unique([ 5, 1, 4, 2, 3, 3, 2, 4, 1, 5 ])
+        #_permutations()
+          ✓ returns [] for _permutations([])
+          ✓ returns [ [ 1 ] ] for _permutations([ 1 ])
+          ✓ returns [ [ 1, 2 ], [ 2, 1 ] ] for _permutations([ 1, 2 ])
+          ✓ returns [ [ 1, 2, 3 ] .. [ 3, 2, 1 ] ] for _permutations([ 1, 2, 3 ])
+          ✓ returns [ [ 1, 2, 3, 4 ] .. [ 4, 3, 2, 1 ] ] for _permutations([ 1, 2, 3, 4 ])
         #_zip()
           ✓ returns [ [ 1, 5 ], [ 2, 6 ], [ 3, 7 ], [ 4, 8 ] ] for _zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ])
           ✓ returns [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ] for _zip(..._zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]))
@@ -99,4 +107,4 @@ sort, unique, zip, compose, pipe, pipemaybe, partial, curry and memoize.
           ✓ returns true for ispalindrome('tattarrattat')
 
 
-      60 passing (29ms)
+      65 passing (17ms)

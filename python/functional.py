@@ -129,6 +129,20 @@ def _zip(*args):
   return [ _reduce(accumulateheads, args, []) ] + _zip(*_reduce(accumulatetails, args, []))
 
 
+def _permutations(l):
+  if len(l) == 0:
+    return []
+  elif len(l) == 1:
+    return [ l ]
+  else:
+    return _reduce(lambda a, e1: a + _map(lambda e2: [ e1 ] + e2,
+                                          _permutations(_filter(lambda e3:
+                                                                  e3 != e1,
+                                                                l))),
+                   l,
+                   [])
+
+
 def _compose(f, g):
   def internal(v):
     return f(g(v))
