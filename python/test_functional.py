@@ -158,6 +158,47 @@ def test_zip():
   assert functional._zip(*functional._zip(*a)) == a
 
 
+def test_permutations():
+  assert functional._permutations([]) == \
+         []
+  assert functional._permutations([ 1 ]) == \
+         [ [ 1 ] ]
+  assert functional._permutations([ 1, 2 ]) == \
+         [ [ 1, 2 ], [ 2, 1 ] ]
+  assert functional._permutations([ 1, 2, 3 ]) == \
+         [ [ 1, 2, 3 ],
+           [ 1, 3, 2 ],
+           [ 2, 1, 3 ],
+           [ 2, 3, 1 ],
+           [ 3, 1, 2 ],
+           [ 3, 2, 1 ] ]
+  assert functional._permutations([ 1, 2, 3, 4 ]) == \
+         [ [ 1, 2, 3, 4 ],
+           [ 1, 2, 4, 3 ],
+           [ 1, 3, 2, 4 ],
+           [ 1, 3, 4, 2 ],
+           [ 1, 4, 2, 3 ],
+           [ 1, 4, 3, 2 ],
+           [ 2, 1, 3, 4 ],
+           [ 2, 1, 4, 3 ],
+           [ 2, 3, 1, 4 ],
+           [ 2, 3, 4, 1 ],
+           [ 2, 4, 1, 3 ],
+           [ 2, 4, 3, 1 ],
+           [ 3, 1, 2, 4 ],
+           [ 3, 1, 4, 2 ],
+           [ 3, 2, 1, 4 ],
+           [ 3, 2, 4, 1 ],
+           [ 3, 4, 1, 2 ],
+           [ 3, 4, 2, 1 ],
+           [ 4, 1, 2, 3 ],
+           [ 4, 1, 3, 2 ],
+           [ 4, 2, 1, 3 ],
+           [ 4, 2, 3, 1 ],
+           [ 4, 3, 1, 2 ],
+           [ 4, 3, 2, 1 ] ]
+
+
 def test_compose():
   def valueadd1(v):
     return v + 1

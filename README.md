@@ -13,6 +13,7 @@ Python:
 * memoize
 * partial
 * partition
+* permutations
 * pipe2
 * pipe
 * pipemaybe

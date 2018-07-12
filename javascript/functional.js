@@ -158,6 +158,23 @@ const _zip = function(...args) {
 }
 
 
+const _permutations = function(l) {
+  if (l.length === 0)
+    return [];
+  else if (l.length === 1)
+    return [ l ];
+  else
+    return _reduce((a, e1) =>
+	             { return a.concat(_map((e2) =>
+			                      { return [ e1 ].concat(e2) },
+	                                    _permutations(_filter((e3) =>
+						            { return e3 != e1 },
+						          l)))) },
+		   l,
+	           []);
+}
+
+
 const _compose = function(f, g) {
   return function(x) {
     return f(g(x));
@@ -294,6 +311,7 @@ module.exports = {
   '_sort':             _sort,
   '_unique':           _unique,
   '_zip':              _zip,
+  '_permutations':     _permutations,
   '_compose':          _compose,
   '_pipe':             _pipe,
   '_pipe2':            _pipe2,
