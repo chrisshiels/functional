@@ -231,15 +231,12 @@ def memoizedfibonacci(n):
 
 
 def primes(n):
-  def notdivisibleby(y, x):
-    return x % y != 0
-
-  def sieve(f, l):
+  def sieve(l):
     if l == []:
       return []
     else:
-      return [ l[0] ] + sieve(f, _filter(_partial(f, l[0]), l[1:]))
-  return sieve(notdivisibleby, _range(2, n))
+      return [ l[0] ] + sieve(_filter(lambda e: e % l[0] != 0, l[1:]))
+  return sieve(_range(2, n))
 
 
 def ispalindrome(s):
