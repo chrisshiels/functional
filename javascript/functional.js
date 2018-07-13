@@ -272,18 +272,15 @@ const memoizedfibonacci = function(n) {
 
 
 const primes = function(n) {
-  const notdivisibleby = function(y, x) {
-    return x % y !== 0;
-  }
-
-  const sieve = function(f, l) {
+  const sieve = function(l) {
     if (l.length === 0)
       return [];
     else
-      return [ l[0] ].concat(sieve(f, _filter(_partial(f, l[0]), l.slice(1))));
+      return [ l[0] ].concat(sieve(_filter((e) => { return e % l[0] != 0 },
+                                           l.slice(1))));
   }
 
-  return sieve(notdivisibleby, _range(2, n));
+  return sieve(_range(2, n));
 }
 
 
