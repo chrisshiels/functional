@@ -266,8 +266,8 @@ const memoizedfibonacci = function(n) {
     else
       return f(f, n - 1) + f(f, n - 2);
   }
-  let f = _memoize(internal)
-  return f(f, n)
+  let f = _memoize(internal);
+  return f(f, n);
 }
 
 

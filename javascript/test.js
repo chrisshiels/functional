@@ -568,8 +568,8 @@ describe('functional', function() {
            return a;
          }
 
-         let cargs = functional._curry(args, 5)
-         let cargsab = cargs('a')('b')
+         let cargs = functional._curry(args, 5);
+         let cargsab = cargs('a')('b');
 
          assert.deepEqual(cargsab('c')('d')('e'),
                           [ 'a', 'b', 'c', 'd', 'e' ]);
@@ -587,7 +587,7 @@ describe('functional', function() {
            return a + b;
          }
 
-         let cadd = functional._curry(add)
+         let cadd = functional._curry(add);
 
          assert.equal(cadd(10)(5),
                       15);
