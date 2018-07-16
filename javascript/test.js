@@ -337,6 +337,29 @@ describe('functional', function() {
   });
 
 
+  describe('#_zip()', function() {
+    it('returns [ [ 1, 5 ], [ 2, 6 ], [ 3, 7 ], [ 4, 8 ] ] for _zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ])',
+       function() {
+         let a = [ [ 1, 2, 3, 4 ],
+                   [ 5, 6, 7, 8 ] ];
+         let a1 = [ [ 1, 5 ],
+                    [ 2, 6 ],
+                    [ 3, 7 ],
+                    [ 4, 8 ] ];
+         assert.deepEqual(functional._zip(...a),
+                          a1);
+    });
+
+    it('returns [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ] for _zip(..._zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]))',
+       function() {
+         let a = [ [ 1, 2, 3, 4 ],
+                   [ 5, 6, 7, 8 ] ];
+         assert.deepEqual(functional._zip(...functional._zip(...a)),
+                          a);
+    });
+  });
+
+
   describe('#_permutations()', function() {
     it('returns [] for _permutations([])',
        function() {
@@ -394,29 +417,6 @@ describe('functional', function() {
                             [ 4, 2, 3, 1 ],
                             [ 4, 3, 1, 2 ],
                             [ 4, 3, 2, 1 ] ]);
-    });
-  });
-
-
-  describe('#_zip()', function() {
-    it('returns [ [ 1, 5 ], [ 2, 6 ], [ 3, 7 ], [ 4, 8 ] ] for _zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ])',
-       function() {
-         let a = [ [ 1, 2, 3, 4 ],
-                   [ 5, 6, 7, 8 ] ];
-         let a1 = [ [ 1, 5 ],
-                    [ 2, 6 ],
-                    [ 3, 7 ],
-                    [ 4, 8 ] ];
-         assert.deepEqual(functional._zip(...a),
-                          a1);
-    });
-
-    it('returns [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ] for _zip(..._zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]))',
-       function() {
-         let a = [ [ 1, 2, 3, 4 ],
-                   [ 5, 6, 7, 8 ] ];
-         assert.deepEqual(functional._zip(...functional._zip(...a)),
-                          a);
     });
   });
 
