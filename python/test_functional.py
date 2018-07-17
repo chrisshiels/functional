@@ -138,7 +138,7 @@ def test_sort():
          functional.range(1, 11)
   assert functional.sort(lambda m, n: len(m) <= len(n),
                          [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ]) == \
-                         [ [ 1 ], [ 1, 2 ],  [ 1, 2, 3 ] ]
+         [ [ 1 ], [ 1, 2 ],  [ 1, 2, 3 ] ]
 
 
 def test_unique():
