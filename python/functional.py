@@ -4,34 +4,34 @@
 # Chris Shiels.
 
 
-def _all(f, l):
+def all(f, l):
   if len(l) == 0:
     return False
   elif len(l) == 1:
     return f(l[0])
   else:
-    return f(l[0]) and _all(f, l[1:])
+    return f(l[0]) and all(f, l[1:])
 
 
-def _any(f, l):
+def any(f, l):
   if len(l) == 0:
     return False
   elif len(l) == 1:
     return f(l[0])
   else:
-    return f(l[0]) or _any(f, l[1:])
+    return f(l[0]) or any(f, l[1:])
 
 
-def _flatten(l):
+def flatten(l):
   if l == []:
     return []
   elif type(l[0]) is list:
-    return _flatten(l[0]) + _flatten(l[1:])
+    return flatten(l[0]) + flatten(l[1:])
   else:
-    return [ l[0] ] + _flatten(l[1:])
+    return [ l[0] ] + flatten(l[1:])
 
 
-def _range(m, n = None, s = 1):
+def range(m, n = None, s = 1):
   def internal(start, stop, step):
     if step == 0 or \
        (step > 0 and start >= stop) or \
@@ -45,7 +45,7 @@ def _range(m, n = None, s = 1):
     return internal(m, n, s)
 
 
-def _reduce(f, l, v = None):
+def reduce(f, l, v = None):
   def internal(f, l, v):
     if l == []:
       return v
@@ -57,32 +57,32 @@ def _reduce(f, l, v = None):
     return internal(f, l, v)
 
 
-def _map(f, l):
+def map(f, l):
   def accumulate(a, e):
     return a + [ f(e) ]
-  return _reduce(accumulate, l, [])
+  return reduce(accumulate, l, [])
 
 
-def _filter(f, l):
+def filter(f, l):
   def accumulate(a, e):
     if f(e):
       return a + [ e ]
     else:
       return a
-  return _reduce(accumulate, l, [])
+  return reduce(accumulate, l, [])
 
 
-def _partition(f, l):
+def partition(f, l):
   def accumulate(a, e):
     left, right = a
     if f(e):
       return [ left + [ e ], right ]
     else:
       return [ left, right + [ e ] ]
-  return _reduce(accumulate, l, [ [], [] ])
+  return reduce(accumulate, l, [ [], [] ])
 
 
-def _split(f, l):
+def split(f, l):
   def accumulate(a, e):
     if f(e):
       return a + [ [] ]
@@ -91,34 +91,34 @@ def _split(f, l):
 
   def internal(e):
     return e != []
-  return _filter(internal, _reduce(accumulate, l, [ [] ]))
+  return filter(internal, reduce(accumulate, l, [ [] ]))
 
 
-def _reverse(l):
+def reverse(l):
   def accumulate(a, e):
     return [ e ] + a
-  return _reduce(accumulate, l, [])
+  return reduce(accumulate, l, [])
 
 
-def _sort(f, l):
+def sort(f, l):
   if l == []:
     return []
   else:
-    return _sort(f, _filter(lambda e: f(e, l[0]), l[1:])) + \
+    return sort(f, filter(lambda e: f(e, l[0]), l[1:])) + \
            [ l[0] ] + \
-           _sort(f, _filter(lambda e: not f(e, l[0]), l[1:]))
+           sort(f, filter(lambda e: not f(e, l[0]), l[1:]))
 
 
-def _unique(l):
+def unique(l):
   def accumulate(a, e):
     if e in a:
       return a
     else:
       return a + [ e ]
-  return _reduce(accumulate, l, [])
+  return reduce(accumulate, l, [])
 
 
-def _zip(*args):
+def zip(*args):
   def accumulateheads(a, e):
     return a + [ e[0] ]
   def accumulatetails(a, e):
@@ -126,43 +126,43 @@ def _zip(*args):
   args = list(args)
   if args[0] == []:
     return []
-  return [ _reduce(accumulateheads, args, []) ] + _zip(*_reduce(accumulatetails, args, []))
+  return [ reduce(accumulateheads, args, []) ] + \
+             zip(*reduce(accumulatetails, args, []))
 
 
-def _permutations(l):
+def permutations(l):
   if len(l) == 0:
     return []
   elif len(l) == 1:
     return [ l ]
   else:
-    return _reduce(lambda a, e1: a + _map(lambda e2: [ e1 ] + e2,
-                                          _permutations(_filter(lambda e3:
-                                                                  e3 != e1,
-                                                                l))),
-                   l,
-                   [])
+    return reduce(lambda a, e1: a + map(lambda e2: [ e1 ] + e2,
+                                        permutations(filter(lambda e3: e3 != e1,
+                                                            l))),
+                  l,
+                  [])
 
 
-def _compose(f, g):
+def compose(f, g):
   def internal(v):
     return f(g(v))
   return internal
 
 
-def _pipe(l):
+def pipe(l):
   def accumulate(a, e):
     return e(a)
 
   def internal(v):
-    return _reduce(accumulate, l, v)
+    return reduce(accumulate, l, v)
   return internal
 
 
-def _pipe2(l):
-  return _reduce(_compose, _reverse(l))
+def pipe2(l):
+  return reduce(compose, reverse(l))
 
 
-def _pipemaybe(l):
+def pipemaybe(l):
   def accumulate(a, e):
     if a != None:
       return e(a)
@@ -170,11 +170,11 @@ def _pipemaybe(l):
       return None
 
   def internal(v):
-    return _reduce(accumulate, l, v)
+    return reduce(accumulate, l, v)
   return internal
 
 
-def _partial(f, *args):
+def partial(f, *args):
   args1 = args
 
   def internal(*args):
@@ -182,18 +182,18 @@ def _partial(f, *args):
   return internal
 
 
-def _curry(f, arity = 0):
+def curry(f, arity = 0):
   arity = arity or f.__code__.co_argcount
 
   def internal(v):
     if arity == 1:
       return f(v)
     else:
-      return _curry(_partial(f, v), arity - 1)
+      return curry(partial(f, v), arity - 1)
   return internal
 
 
-def _memoize(f):
+def memoize(f):
   cache = {}
 
   def internal(*args):
@@ -226,7 +226,7 @@ def memoizedfibonacci(n):
       return 1
     else:
       return f(f, n - 1) + f(f, n - 2)
-  f = _memoize(internal)
+  f = memoize(internal)
   return f(f, n)
 
 
@@ -235,8 +235,8 @@ def primes(n):
     if l == []:
       return []
     else:
-      return [ l[0] ] + sieve(_filter(lambda e: e % l[0] != 0, l[1:]))
-  return sieve(_range(2, n))
+      return [ l[0] ] + sieve(filter(lambda e: e % l[0] != 0, l[1:]))
+  return sieve(range(2, n))
 
 
 def ispalindrome(s):
