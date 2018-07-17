@@ -7,37 +7,37 @@
 'use strict';
 
 
-const _all = function(f, l) {
+const all = function(f, l) {
   if (l.length === 0)
     return false;
   else if (l.length === 1)
     return f(l[0]);
   else
-    return f(l[0]) && _all(f, l.slice(1));
+    return f(l[0]) && all(f, l.slice(1));
 }
 
 
-const _any = function(f, l) {
+const any = function(f, l) {
   if (l.length === 0)
     return false;
   else if (l.length === 1)
     return f(l[0]);
   else
-    return f(l[0]) || _any(f, l.slice(1));
+    return f(l[0]) || any(f, l.slice(1));
 }
 
 
-const _flatten = function(l) {
+const flatten = function(l) {
   if (l.length === 0)
     return [];
   else if (l[0] instanceof Array)
-    return _flatten(l[0]).concat(_flatten(l.slice(1)));
+    return flatten(l[0]).concat(flatten(l.slice(1)));
   else
-    return [ l[0] ].concat(_flatten(l.slice(1)));
+    return [ l[0] ].concat(flatten(l.slice(1)));
 }
 
 
-const _range = function(m, n = null, s = 1) {
+const range = function(m, n = null, s = 1) {
   const internal = function(start, stop, step) {
     if (step === 0 ||
         (step > 0 && start >= stop) ||
@@ -53,7 +53,7 @@ const _range = function(m, n = null, s = 1) {
 }
 
 
-const _reduce = function(f, l, v = null) {
+const reduce = function(f, l, v = null) {
   const internal = function(f, l, v) {
     if (l.length === 0)
       return v;
@@ -67,26 +67,26 @@ const _reduce = function(f, l, v = null) {
 }
 
 
-const _map = function(f, l) {
+const map = function(f, l) {
   const accumulate = function(a, e) {
     return a.concat([ f(e) ]);
   }
-  return _reduce(accumulate, l, []);
+  return reduce(accumulate, l, []);
 }
 
 
-const _filter = function(f, l) {
+const filter = function(f, l) {
   const accumulate = function(a, e) {
     if (f(e))
       return a.concat([ e ]);
     else
       return a;
   }
-  return _reduce(accumulate, l, []);
+  return reduce(accumulate, l, []);
 }
 
 
-const _partition = function(f, l) {
+const partition = function(f, l) {
   const accumulate = function(a, e) {
     let left, right;
     [ left, right ] = a;
@@ -95,11 +95,11 @@ const _partition = function(f, l) {
     else
       return [ left, right.concat([ e ]) ];
   }
-  return _reduce(accumulate, l, [ [], [] ]);
+  return reduce(accumulate, l, [ [], [] ]);
 }
 
 
-const _split = function(f, l) {
+const split = function(f, l) {
   const accumulate = function(a, e) {
     if (f(e))
       return a.concat([ [] ]);
@@ -112,39 +112,39 @@ const _split = function(f, l) {
     return e.length !== 0;
   }
 
-  return _filter(internal, _reduce(accumulate, l, [ [] ]));
+  return filter(internal, reduce(accumulate, l, [ [] ]));
 }
 
 
-const _reverse = function(l) {
+const reverse = function(l) {
   const accumulate = function(a, e) {
     return [ e ].concat(a);
   }
-  return _reduce(accumulate, l, []);
+  return reduce(accumulate, l, []);
 }
 
 
-const _sort = function(f, l) {
+const sort = function(f, l) {
   if (l.length === 0)
     return [];
-  return _sort(f, _filter((e) => { return f(e, l[0]); }, l.slice(1)))
-         .concat([ l[0] ])
-         .concat(_sort(f, _filter((e) => { return !f(e, l[0]); }, l.slice(1))));
+  return sort(f, filter((e) => { return f(e, l[0]); }, l.slice(1)))
+           .concat([ l[0] ])
+           .concat(sort(f, filter((e) => { return !f(e, l[0]); }, l.slice(1))));
 }
 
 
-const _unique = function(l) {
+const unique = function(l) {
   const accumulate = function(a, e) {
     if (a.includes(e))
       return a;
     else
       return a.concat([ e ]);
   }
-  return _reduce(accumulate, l, []);
+  return reduce(accumulate, l, []);
 }
 
 
-const _zip = function(...args) {
+const zip = function(...args) {
   const accumulateheads = function(a, e) {
     return a.concat([ e[0] ]);
   }
@@ -153,51 +153,51 @@ const _zip = function(...args) {
   }
   if (args[0].length === 0)
     return [];
-  return [ _reduce(accumulateheads, args, []) ]
-           .concat(_zip(...(_reduce(accumulatetails, args, []))));
+  return [ reduce(accumulateheads, args, []) ]
+           .concat(zip(...(reduce(accumulatetails, args, []))));
 }
 
 
-const _permutations = function(l) {
+const permutations = function(l) {
   if (l.length === 0)
     return [];
   else if (l.length === 1)
     return [ l ];
   else
-    return _reduce((a, e1) =>
-	             { return a.concat(_map((e2) =>
-			                      { return [ e1 ].concat(e2) },
-	                                    _permutations(_filter((e3) =>
-						            { return e3 != e1 },
-						          l)))) },
+    return reduce((a, e1) =>
+	            { return a.concat(map((e2) =>
+		                        { return [ e1 ].concat(e2) },
+	                                    permutations(filter((e3) =>
+						           { return e3 != e1 },
+						         l)))) },
 		   l,
 	           []);
 }
 
 
-const _compose = function(f, g) {
+const compose = function(f, g) {
   return function(x) {
     return f(g(x));
   }
 }
 
 
-const _pipe = function(l) {
+const pipe = function(l) {
   const accumulate = function(a, e) {
     return e(a);
   }
   return function(v) {
-    return _reduce(accumulate, l, v);
+    return reduce(accumulate, l, v);
   }
 }
 
 
-const _pipe2 = function(l) {
-  return _reduce(_compose, _reverse(l));
+const pipe2 = function(l) {
+  return reduce(compose, reverse(l));
 }
 
 
-const _pipemaybe = function(l) {
+const pipemaybe = function(l) {
   const accumulate = function(a, e) {
     if (a !== null)
       return e(a);
@@ -205,12 +205,12 @@ const _pipemaybe = function(l) {
       return null;
   }
   return function(v) {
-    return _reduce(accumulate, l, v);
+    return reduce(accumulate, l, v);
   }
 }
 
 
-const _partial = function(f, ...args) {
+const partial = function(f, ...args) {
   let args1 = args;
   return function(...args) {
     return f.apply(null, args1.concat(args));
@@ -218,19 +218,19 @@ const _partial = function(f, ...args) {
 }
 
 
-const _curry = function(f, arity) {
+const curry = function(f, arity) {
   arity = arity || f.length;
 
   return function(v) {
     if (arity === 1)
       return f(v);
     else
-      return _curry(_partial(f, v), arity - 1);
+      return curry(partial(f, v), arity - 1);
   }
 }
 
 
-const _memoize = function(f) {
+const memoize = function(f) {
   let cache = {};
 
   return function(...args) {
@@ -266,8 +266,8 @@ const memoizedfibonacci = function(n) {
     else
       return f(f, n - 1) + f(f, n - 2);
   }
-  let f = _memoize(internal)
-  return f(f, n)
+  let f = memoize(internal);
+  return f(f, n);
 }
 
 
@@ -276,11 +276,11 @@ const primes = function(n) {
     if (l.length === 0)
       return [];
     else
-      return [ l[0] ].concat(sieve(_filter((e) => { return e % l[0] != 0 },
-                                           l.slice(1))));
+      return [ l[0] ].concat(sieve(filter((e) => { return e % l[0] != 0 },
+                                          l.slice(1))));
   }
 
-  return sieve(_range(2, n));
+  return sieve(range(2, n));
 }
 
 
@@ -295,27 +295,27 @@ const ispalindrome = function(s) {
 
 
 module.exports = {
-  '_all':              _all,
-  '_any':              _any,
-  '_flatten':          _flatten,
-  '_range':            _range,
-  '_reverse':          _reverse,
-  '_reduce':           _reduce,
-  '_map':              _map,
-  '_filter':           _filter,
-  '_partition':        _partition,
-  '_split':            _split,
-  '_sort':             _sort,
-  '_unique':           _unique,
-  '_zip':              _zip,
-  '_permutations':     _permutations,
-  '_compose':          _compose,
-  '_pipe':             _pipe,
-  '_pipe2':            _pipe2,
-  '_pipemaybe':        _pipemaybe,
-  '_partial':          _partial,
-  '_curry':            _curry,
-  '_memoize':          _memoize,
+  'all':               all,
+  'any':               any,
+  'flatten':           flatten,
+  'range':             range,
+  'reduce':            reduce,
+  'map':               map,
+  'filter':            filter,
+  'partition':         partition,
+  'split':             split,
+  'reverse':           reverse,
+  'sort':              sort,
+  'unique':            unique,
+  'zip':               zip,
+  'permutations':      permutations,
+  'compose':           compose,
+  'pipe':              pipe,
+  'pipe2':             pipe2,
+  'pipemaybe':         pipemaybe,
+  'partial':           partial,
+  'curry':             curry,
+  'memoize':           memoize,
   'factorial':         factorial,
   'fibonacci':         fibonacci,
   'memoizedfibonacci': memoizedfibonacci,

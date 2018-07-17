@@ -12,7 +12,7 @@ const functional = require('./functional');
 
 
 describe('functional', function() {
-  describe('#_all()', function() {
+  describe('#all()', function() {
     const divisibleby2 = function(v) {
       return v % 2 === 0;
     }
@@ -21,27 +21,27 @@ describe('functional', function() {
       return v % 3 === 0;
     }
 
-    it('returns false for _all(divisibleby2, [])',
+    it('returns false for all(divisibleby2, [])',
        function() {
-         assert.equal(functional._all(divisibleby2, []),
+         assert.equal(functional.all(divisibleby2, []),
                       false);
     });
 
-    it('returns true for _all(divisibleby2, [ 2, 4, 6, 8, 10 ])',
+    it('returns true for all(divisibleby2, [ 2, 4, 6, 8, 10 ])',
        function() {
-         assert.equal(functional._all(divisibleby2, [ 2, 4, 6, 8, 10 ]),
+         assert.equal(functional.all(divisibleby2, [ 2, 4, 6, 8, 10 ]),
                       true);
     });
 
-    it('returns false for _all(divisibleby3, [ 2, 4, 6, 8, 10 ])',
+    it('returns false for all(divisibleby3, [ 2, 4, 6, 8, 10 ])',
        function() {
-         assert.equal(functional._all(divisibleby3, [ 2, 4, 6, 8, 10 ]),
+         assert.equal(functional.all(divisibleby3, [ 2, 4, 6, 8, 10 ]),
                       false);
     });
   });
 
 
-  describe('#_any()', function() {
+  describe('#any()', function() {
     const divisibleby2 = function(v) {
       return v % 2 === 0;
     }
@@ -50,315 +50,338 @@ describe('functional', function() {
       return v % 3 === 0;
     }
 
-    it('returns false for _any(divisibleby2, [])',
+    it('returns false for any(divisibleby2, [])',
        function() {
-         assert.equal(functional._any(divisibleby2, []),
+         assert.equal(functional.any(divisibleby2, []),
                       false);
     });
 
-    it('returns true for _any(divisibleby2, [ 2, 4, 6, 8, 10 ])',
+    it('returns true for any(divisibleby2, [ 2, 4, 6, 8, 10 ])',
        function() {
-         assert.equal(functional._any(divisibleby2, [ 2, 4, 6, 8, 10 ]),
+         assert.equal(functional.any(divisibleby2, [ 2, 4, 6, 8, 10 ]),
                       true);
     });
 
-    it('returns true for _any(divisibleby3, [ 2, 4, 6, 8, 10 ])',
+    it('returns true for any(divisibleby3, [ 2, 4, 6, 8, 10 ])',
        function() {
-         assert.equal(functional._any(divisibleby3, [ 2, 4, 6, 8, 10 ]),
+         assert.equal(functional.any(divisibleby3, [ 2, 4, 6, 8, 10 ]),
                       true);
     });
   });
 
 
-  describe('#_flatten()', function() {
-    it('returns [] for _flatten([])',
+  describe('#flatten()', function() {
+    it('returns [] for flatten([])',
        function() {
-         assert.deepEqual(functional._flatten([]),
+         assert.deepEqual(functional.flatten([]),
                           []);
     });
 
-    it('returns [ 1, 2, 3 ] for _flatten([ 1, 2, 3 ])',
+    it('returns [ 1, 2, 3 ] for flatten([ 1, 2, 3 ])',
        function() {
-         assert.deepEqual(functional._flatten([ 1, 2, 3 ]),
+         assert.deepEqual(functional.flatten([ 1, 2, 3 ]),
                           [ 1, 2, 3 ]);
     });
 
-    it('returns [ 1, 2, 3 ] for _flatten([[ 1, 2 ], 3])',
+    it('returns [ 1, 2, 3 ] for flatten([[ 1, 2 ], 3])',
        function() {
-         assert.deepEqual(functional._flatten([[ 1, 2 ], 3]),
+         assert.deepEqual(functional.flatten([[ 1, 2 ], 3]),
                           [ 1, 2, 3 ]);
     });
 
-    it('returns [ 1, 2, 3 ] for _flatten([1, [ 2, 3 ]])',
+    it('returns [ 1, 2, 3 ] for flatten([1, [ 2, 3 ]])',
        function() {
-         assert.deepEqual(functional._flatten([1, [ 2, 3 ]]),
+         assert.deepEqual(functional.flatten([1, [ 2, 3 ]]),
                           [ 1, 2, 3 ]);
     });
 
-    it('returns [ 1, 2, 3 ] for _flatten([1, [ 2, [ 3 ] ] ])',
+    it('returns [ 1, 2, 3 ] for flatten([1, [ 2, [ 3 ] ] ])',
        function() {
-         assert.deepEqual(functional._flatten([1, [ 2, [ 3 ] ] ]),
+         assert.deepEqual(functional.flatten([1, [ 2, [ 3 ] ] ]),
                           [ 1, 2, 3 ]);
     });
 
-    it('returns [ 1, 2, 3 ] for _flatten([ [ [ 1 ], [ 2 ], [ 3 ] ] ])',
+    it('returns [ 1, 2, 3 ] for flatten([ [ [ 1 ], [ 2 ], [ 3 ] ] ])',
        function() {
-         assert.deepEqual(functional._flatten([ [ [ 1 ], [ 2 ], [ 3 ] ] ]),
+         assert.deepEqual(functional.flatten([ [ [ 1 ], [ 2 ], [ 3 ] ] ]),
                           [ 1, 2, 3 ]);
     });
   });
 
 
-  describe('#_range()', function() {
-    it('returns [] for _range(0)',
+  describe('#range()', function() {
+    it('returns [] for range(0)',
        function() {
-         assert.deepEqual(functional._range(0),
+         assert.deepEqual(functional.range(0),
                           []);
     });
 
-    it('returns [ 0..9 ] for _range(10)',
+    it('returns [ 0..9 ] for range(10)',
        function() {
-         assert.deepEqual(functional._range(10),
+         assert.deepEqual(functional.range(10),
                           [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
     });
 
-    it('returns [ 0..9 ] for _range(0, 10)',
+    it('returns [ 0..9 ] for range(0, 10)',
        function() {
-         assert.deepEqual(functional._range(0, 10),
+         assert.deepEqual(functional.range(0, 10),
                           [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
     });
 
-    it('returns [ 0..9 ] for _range(0, 10, 1)',
+    it('returns [ 0..9 ] for range(0, 10, 1)',
        function() {
-         assert.deepEqual(functional._range(0, 10, 1),
+         assert.deepEqual(functional.range(0, 10, 1),
                           [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
     });
 
-    it('returns [ 0,2,4,6,8 ] for _range(0, 10, 2)',
+    it('returns [ 0,2,4,6,8 ] for range(0, 10, 2)',
        function() {
-         assert.deepEqual(functional._range(0, 10, 2),
+         assert.deepEqual(functional.range(0, 10, 2),
                           [ 0, 2, 4, 6, 8 ]);
     });
 
-    it('returns [ 0,3,6,9 ] for _range(0, 10, 3)',
+    it('returns [ 0,3,6,9 ] for range(0, 10, 3)',
        function() {
-         assert.deepEqual(functional._range(0, 10, 3),
+         assert.deepEqual(functional.range(0, 10, 3),
                           [ 0, 3, 6, 9 ]);
     });
 
-    it('returns [ 10..1 ] for _range(10, 0, -1)',
+    it('returns [ 10..1 ] for range(10, 0, -1)',
        function() {
-         assert.deepEqual(functional._range(10, 0, -1),
+         assert.deepEqual(functional.range(10, 0, -1),
                           [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]);
     });
 
-    it('returns [ 1..10 ] for _range(1, 11)',
+    it('returns [ 1..10 ] for range(1, 11)',
        function() {
-         assert.deepEqual(functional._range(1, 11),
+         assert.deepEqual(functional.range(1, 11),
                           [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]);
     });
   });
 
 
-  describe('#_reduce()', function() {
-    it('returns 55 for _reduce((a, e) => { return a + e; }, _range(1, 11), 0)',
+  describe('#reduce()', function() {
+    it('returns 55 for reduce((a, e) => { return a + e; }, range(1, 11), 0)',
        function() {
-         assert.equal(functional._reduce((a, e) => { return a + e; },
-                                         functional._range(1, 11),
-                                         0),
+         assert.equal(functional.reduce((a, e) => { return a + e; },
+                                        functional.range(1, 11),
+                                        0),
                       55);
     });
 
-    it('returns 55 for _reduce((a, e) => { return a + e; }, _range(1, 11))',
+    it('returns 55 for reduce((a, e) => { return a + e; }, range(1, 11))',
        function() {
-         assert.equal(functional._reduce((a, e) => { return a + e; },
-                                         functional._range(1, 11)),
+         assert.equal(functional.reduce((a, e) => { return a + e; },
+                                        functional.range(1, 11)),
                       55);
     });
 
-    it('returns [ 1, 2, 3, 4, 5, 6 ] for _reduce((a, e) => { return a.concat(e); }, [ [ 1 ], [ 2, 3 ], [ 4, 5, 6 ] ])',
+    it('returns [ 1, 2, 3, 4, 5, 6 ] for reduce((a, e) => { return a.concat(e); }, [ [ 1 ], [ 2, 3 ], [ 4, 5, 6 ] ])',
        function() {
-         assert.deepEqual(functional._reduce((a, e) => { return a.concat(e); },
-                                             [ [ 1 ], [ 2, 3 ], [ 4, 5, 6 ] ]),
+         assert.deepEqual(functional.reduce((a, e) => { return a.concat(e); },
+                                            [ [ 1 ], [ 2, 3 ], [ 4, 5, 6 ] ]),
                           [ 1, 2, 3, 4, 5, 6 ]);
     });
 
-    it('returns 6 for _reduce((a, e) => { return a + e.length; }, [ [ 1 ], [ 2, 3 ], [ 4, 5, 6 ] ], 0)',
+    it('returns 6 for reduce((a, e) => { return a + e.length; }, [ [ 1 ], [ 2, 3 ], [ 4, 5, 6 ] ], 0)',
        function() {
-         assert.equal(functional._reduce((a, e) => { return a + e.length; },
-                                         [ [ 1 ], [ 2, 3 ], [ 4, 5, 6 ] ],
-	                                 0),
+         assert.equal(functional.reduce((a, e) => { return a + e.length; },
+                                        [ [ 1 ], [ 2, 3 ], [ 4, 5, 6 ] ],
+	                                0),
                       6);
     });
   });
 
 
-  describe('#_map()', function() {
-    it('returns [ 2,4,6..20 ] for _map((e) => { return e * 2; }, _range(1, 11))',
+  describe('#map()', function() {
+    it('returns [ 2,4,6..20 ] for map((e) => { return e * 2; }, range(1, 11))',
        function() {
-         assert.deepEqual(functional._map((e) => { return e * 2; },
-                                          functional._range(1, 11)),
+         assert.deepEqual(functional.map((e) => { return e * 2; },
+                                         functional.range(1, 11)),
                           [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 ]);
     });
 
-    it('returns [ [ 1 ], [ 2 ], [ 3 ] ] for _map((e) => { return e; }, [ [ 1 ], [ 2 ], [ 3 ] ])',
+    it('returns [ [ 1 ], [ 2 ], [ 3 ] ] for map((e) => { return e; }, [ [ 1 ], [ 2 ], [ 3 ] ])',
        function() {
-         assert.deepEqual(functional._map((e) => { return e; },
-                                          [ [ 1 ], [ 2 ], [ 3 ] ]),
+         assert.deepEqual(functional.map((e) => { return e; },
+                                         [ [ 1 ], [ 2 ], [ 3 ] ]),
                           [ [ 1 ], [ 2 ], [ 3 ] ]);
     });
   });
 
 
-  describe('#_filter()', function() {
-    it('returns [ 2, 4, 6, 8, 10 ] for _filter((e) => { return e % 2 === 0; }, _range(1, 11))',
+  describe('#filter()', function() {
+    it('returns [ 2, 4, 6, 8, 10 ] for filter((e) => { return e % 2 === 0; }, range(1, 11))',
        function() {
-         assert.deepEqual(functional._filter((e) => { return e % 2 === 0; },
-                                             functional._range(1, 11)),
+         assert.deepEqual(functional.filter((e) => { return e % 2 === 0; },
+                                            functional.range(1, 11)),
                           [ 2, 4, 6, 8, 10 ]);
     });
 
-    it('returns [ 1, 3, 5, 7, 9 ] for _filter((e) => { return e % 2 === 1; }, _range(1, 11))',
+    it('returns [ 1, 3, 5, 7, 9 ] for filter((e) => { return e % 2 === 1; }, range(1, 11))',
        function() {
-         assert.deepEqual(functional._filter((e) => { return e % 2 === 1; },
-                                             functional._range(1, 11)),
+         assert.deepEqual(functional.filter((e) => { return e % 2 === 1; },
+                                            functional.range(1, 11)),
                           [ 1, 3, 5, 7, 9 ]);
     });
 
-    it('returns [ [ 1 ], [ 2 ], [ 3 ] ] for _filter((e) => { return e.length !== 0; }, [ [ 1 ], [], [ 2 ], [], [ 3 ] ])',
+    it('returns [ [ 1 ], [ 2 ], [ 3 ] ] for filter((e) => { return e.length !== 0; }, [ [ 1 ], [], [ 2 ], [], [ 3 ] ])',
        function() {
-         assert.deepEqual(functional._filter((e) => { return e.length !== 0; },
-                                          [ [ 1 ], [], [ 2 ], [], [ 3 ] ]),
+         assert.deepEqual(functional.filter((e) => { return e.length !== 0; },
+                                            [ [ 1 ], [], [ 2 ], [], [ 3 ] ]),
                           [ [ 1 ], [ 2 ], [ 3 ] ]);
     });
   });
 
 
-  describe('#_partition()', function() {
-    it('returns [ [ 3, 6, 9 ], [ 1, 2, 4, 5, 7, 8, 10 ] ] for _partition((e) => { return e % 3 === 0; }, _range(1, 11))',
+  describe('#partition()', function() {
+    it('returns [ [ 3, 6, 9 ], [ 1, 2, 4, 5, 7, 8, 10 ] ] for partition((e) => { return e % 3 === 0; }, range(1, 11))',
        function() {
-         assert.deepEqual(functional._partition((e) => { return e % 3 === 0; },
-                                                functional._range(1, 11)),
+         assert.deepEqual(functional.partition((e) => { return e % 3 === 0; },
+                                               functional.range(1, 11)),
                           [ [ 3, 6, 9 ], [ 1, 2, 4, 5, 7, 8, 10 ] ]);
     });
 
-    it('returns [ [ 1, 2, 4, 5, 7, 8, 10 ], [ 3, 6, 9 ] ] for _partition((e) => { return e % 3 !== 0; }, _range(1, 11))',
+    it('returns [ [ 1, 2, 4, 5, 7, 8, 10 ], [ 3, 6, 9 ] ] for partition((e) => { return e % 3 !== 0; }, range(1, 11))',
        function() {
-         assert.deepEqual(functional._partition((e) => { return e % 3 !== 0; },
-                                                functional._range(1, 11)),
+         assert.deepEqual(functional.partition((e) => { return e % 3 !== 0; },
+                                               functional.range(1, 11)),
                           [ [ 1, 2, 4, 5, 7, 8, 10 ], [ 3, 6, 9 ] ]);
     });
 
-    it('returns [ [], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ] for _partition((e) => { return e === 0; }, _range(1, 11))',
+    it('returns [ [], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ] for partition((e) => { return e === 0; }, range(1, 11))',
        function() {
-         assert.deepEqual(functional._partition((e) => { return e === 0; },
-                                                functional._range(1, 11)),
+         assert.deepEqual(functional.partition((e) => { return e === 0; },
+                                               functional.range(1, 11)),
                           [ [], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ]);
     });
 
-    it('returns [ [ [ 1, 2 ], [ 1, 2, 3 ] ], [ [ 1 ] ] ] for _partition((e) => { return e.length > 1; }, [ [ 1 ], [ 1, 2 ], [ 1, 2, 3 ] ])',
+    it('returns [ [ [ 1, 2 ], [ 1, 2, 3 ] ], [ [ 1 ] ] ] for partition((e) => { return e.length > 1; }, [ [ 1 ], [ 1, 2 ], [ 1, 2, 3 ] ])',
        function() {
-         assert.deepEqual(functional._partition((e) => { return e.length > 1; },
-                                                [ [ 1 ], [ 1, 2 ], [ 1, 2, 3 ] ]),
+         assert.deepEqual(functional.partition((e) => { return e.length > 1; },
+                                               [ [ 1 ], [ 1, 2 ], [ 1, 2, 3 ] ]),
                           [ [ [ 1, 2 ], [ 1, 2, 3 ] ], [ [ 1 ] ] ]);
     });
   });
 
 
-  describe('#_split()', function() {
-    it('returns [] for _split((e) => { return e % 10 === 0; }, [])',
+  describe('#split()', function() {
+    it('returns [] for split((e) => { return e % 10 === 0; }, [])',
        function() {
-         assert.deepEqual(functional._split((e) => { return e % 10 === 0; },
-                                            []),
+         assert.deepEqual(functional.split((e) => { return e % 10 === 0; },
+                                           []),
                           []);
     });
 
-    it('returns [] for _split((e) => { return e % 1 === 0; }, _range(1, 11))',
+    it('returns [] for split((e) => { return e % 1 === 0; }, range(1, 11))',
        function() {
-         assert.deepEqual(functional._split((e) => { return e % 1 === 0; },
-                                            functional._range(1, 11)),
+         assert.deepEqual(functional.split((e) => { return e % 1 === 0; },
+                                           functional.range(1, 11)),
                           []);
     });
 
-    it('returns [ [ 1 ], [ 3 ], [ 5 ], [ 7 ], [ 9 ] ] for _split((e) => { return e % 2 === 0; }, _range(1, 11))',
+    it('returns [ [ 1 ], [ 3 ], [ 5 ], [ 7 ], [ 9 ] ] for split((e) => { return e % 2 === 0; }, range(1, 11))',
        function() {
-         assert.deepEqual(functional._split((e) => { return e % 2 === 0; },
-                                            functional._range(1, 11)),
+         assert.deepEqual(functional.split((e) => { return e % 2 === 0; },
+                                           functional.range(1, 11)),
                           [ [ 1 ], [ 3 ], [ 5 ], [ 7 ], [ 9 ] ]);
     });
 
-    it('returns [ [ 1, 2 ], [ 4, 5 ], [ 7, 8 ], [ 10 ] ] for _split((e) => { return e % 3 === 0; }, _range(1, 11))',
+    it('returns [ [ 1, 2 ], [ 4, 5 ], [ 7, 8 ], [ 10 ] ] for split((e) => { return e % 3 === 0; }, range(1, 11))',
        function() {
-         assert.deepEqual(functional._split((e) => { return e % 3 === 0; },
-                                            functional._range(1, 11)),
+         assert.deepEqual(functional.split((e) => { return e % 3 === 0; },
+                                           functional.range(1, 11)),
                           [ [ 1, 2 ], [ 4, 5 ], [ 7, 8 ], [ 10 ] ]);
     });
   });
 
 
-  describe('#_reverse()',function() {
-    it('returns [ 10..1 ] for _reverse(_range(1, 11))',
+  describe('#reverse()',function() {
+    it('returns [ 10..1 ] for reverse(range(1, 11))',
        function() {
-         assert.deepEqual(functional._reverse(functional._range(1, 11)),
+         assert.deepEqual(functional.reverse(functional.range(1, 11)),
                           [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]);
     });
 
-    it('returns [ [ 5, 6 ], [ 3, 4 ], [ 1, 2 ] ] for _reverse([ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ])',
+    it('returns [ [ 5, 6 ], [ 3, 4 ], [ 1, 2 ] ] for reverse([ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ])',
        function() {
-         assert.deepEqual(functional._reverse([ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ]),
+         assert.deepEqual(functional.reverse([ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ]),
                           [ [ 5, 6 ], [ 3, 4 ], [ 1, 2 ] ]);
     });
   });
 
 
-  describe('#_sort()', function() {
-    it('returns [ 1..10 ] for _sort((m, n) => { return m <= n; }, [ 1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ])',
+  describe('#sort()', function() {
+    it('returns [ 1..10 ] for sort((m, n) => { return m <= n; }, [ 1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ])',
        function() {
-         assert.deepEqual(functional._sort((m, n) => { return m <= n; },
-                                           [ 1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ]),
+         assert.deepEqual(functional.sort((m, n) => { return m <= n; },
+                                          [ 1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ]),
                           [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]);
     });
 
-    it('returns [ [ 1 ], [ 1, 2 ],  [ 1, 2, 3 ] ] for _sort((m, n) => { return m.length <= n.length; }, [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ])',
+    it('returns [ [ 1 ], [ 1, 2 ],  [ 1, 2, 3 ] ] for sort((m, n) => { return m.length <= n.length; }, [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ])',
        function() {
-         assert.deepEqual(functional._sort((m, n) => { return m.length <= n.length; },
-                                           [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ]),
+         assert.deepEqual(functional.sort((m, n) => { return m.length <= n.length; },
+                                          [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ]),
                           [ [ 1 ], [ 1, 2 ],  [ 1, 2, 3 ] ]);
     });
   });
 
 
-  describe('#_unique()', function() {
-    it('returns [ 5, 1, 4, 2, 3 ] for _unique([ 5, 1, 4, 2, 3, 3, 2, 4, 1, 5 ])',
+  describe('#unique()', function() {
+    it('returns [ 5, 1, 4, 2, 3 ] for unique([ 5, 1, 4, 2, 3, 3, 2, 4, 1, 5 ])',
        function() {
-         assert.deepEqual(functional._unique([ 5, 1, 4, 2, 3, 3, 2, 4, 1, 5 ]),
+         assert.deepEqual(functional.unique([ 5, 1, 4, 2, 3, 3, 2, 4, 1, 5 ]),
                           [ 5, 1, 4, 2, 3 ]);
     });
   });
 
 
-  describe('#_permutations()', function() {
-    it('returns [] for _permutations([])',
+  describe('#zip()', function() {
+    it('returns [ [ 1, 5 ], [ 2, 6 ], [ 3, 7 ], [ 4, 8 ] ] for zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ])',
        function() {
-         assert.deepEqual(functional._permutations([]),
+         let a = [ [ 1, 2, 3, 4 ],
+                   [ 5, 6, 7, 8 ] ];
+         let a1 = [ [ 1, 5 ],
+                    [ 2, 6 ],
+                    [ 3, 7 ],
+                    [ 4, 8 ] ];
+         assert.deepEqual(functional.zip(...a),
+                          a1);
+    });
+
+    it('returns [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ] for zip(...zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]))',
+       function() {
+         let a = [ [ 1, 2, 3, 4 ],
+                   [ 5, 6, 7, 8 ] ];
+         assert.deepEqual(functional.zip(...functional.zip(...a)),
+                          a);
+    });
+  });
+
+
+  describe('#permutations()', function() {
+    it('returns [] for permutations([])',
+       function() {
+         assert.deepEqual(functional.permutations([]),
                           []);
     });
 
-    it('returns [ [ 1 ] ] for _permutations([ 1 ])',
+    it('returns [ [ 1 ] ] for permutations([ 1 ])',
        function() {
-         assert.deepEqual(functional._permutations([ 1 ]),
+         assert.deepEqual(functional.permutations([ 1 ]),
                           [ [ 1 ] ]);
     });
 
-    it('returns [ [ 1, 2 ], [ 2, 1 ] ] for _permutations([ 1, 2 ])',
+    it('returns [ [ 1, 2 ], [ 2, 1 ] ] for permutations([ 1, 2 ])',
        function() {
-         assert.deepEqual(functional._permutations([ 1, 2 ]),
+         assert.deepEqual(functional.permutations([ 1, 2 ]),
                           [ [ 1, 2 ], [ 2, 1 ] ]);
     });
 
-    it('returns [ [ 1, 2, 3 ] .. [ 3, 2, 1 ] ] for _permutations([ 1, 2, 3 ])',
+    it('returns [ [ 1, 2, 3 ] .. [ 3, 2, 1 ] ] for permutations([ 1, 2, 3 ])',
        function() {
-         assert.deepEqual(functional._permutations([ 1, 2, 3 ]),
+         assert.deepEqual(functional.permutations([ 1, 2, 3 ]),
                           [ [ 1, 2, 3 ],
                             [ 1, 3, 2 ],
                             [ 2, 1, 3 ],
@@ -367,9 +390,9 @@ describe('functional', function() {
                             [ 3, 2, 1 ] ]);
     });
 
-    it('returns [ [ 1, 2, 3, 4 ] .. [ 4, 3, 2, 1 ] ] for _permutations([ 1, 2, 3, 4 ])',
+    it('returns [ [ 1, 2, 3, 4 ] .. [ 4, 3, 2, 1 ] ] for permutations([ 1, 2, 3, 4 ])',
        function() {
-         assert.deepEqual(functional._permutations([ 1, 2, 3, 4 ]),
+         assert.deepEqual(functional.permutations([ 1, 2, 3, 4 ]),
                           [ [ 1, 2, 3, 4 ],
                             [ 1, 2, 4, 3 ],
                             [ 1, 3, 2, 4 ],
@@ -398,31 +421,8 @@ describe('functional', function() {
   });
 
 
-  describe('#_zip()', function() {
-    it('returns [ [ 1, 5 ], [ 2, 6 ], [ 3, 7 ], [ 4, 8 ] ] for _zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ])',
-       function() {
-         let a = [ [ 1, 2, 3, 4 ],
-                   [ 5, 6, 7, 8 ] ];
-         let a1 = [ [ 1, 5 ],
-                    [ 2, 6 ],
-                    [ 3, 7 ],
-                    [ 4, 8 ] ];
-         assert.deepEqual(functional._zip(...a),
-                          a1);
-    });
-
-    it('returns [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ] for _zip(..._zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]))',
-       function() {
-         let a = [ [ 1, 2, 3, 4 ],
-                   [ 5, 6, 7, 8 ] ];
-         assert.deepEqual(functional._zip(...functional._zip(...a)),
-                          a);
-    });
-  });
-
-
-  describe('#_compose()', function() {
-    it('returns 3 for _compose(valueadd1, valuemultiply2)(1)',
+  describe('#compose()', function() {
+    it('returns 3 for compose(valueadd1, valuemultiply2)(1)',
        function() {
          const valueadd1 = function(v) {
            return v + 1;
@@ -432,14 +432,14 @@ describe('functional', function() {
            return v * 2;
          }
 
-         assert.equal(functional._compose(valueadd1, valuemultiply2)(1),
+         assert.equal(functional.compose(valueadd1, valuemultiply2)(1),
                       3);
     });
   });
 
 
-  describe('#_pipe()', function() {
-    it('returns 5 for _pipe([ valueadd1, valuemultiply2, valueadd1 ])(1)',
+  describe('#pipe()', function() {
+    it('returns 5 for pipe([ valueadd1, valuemultiply2, valueadd1 ])(1)',
        function() {
          const valueadd1 = function(v) {
            return v + 1;
@@ -449,79 +449,79 @@ describe('functional', function() {
            return v * 2;
          }
 
-         assert.equal(functional._pipe([ valueadd1,
+         assert.equal(functional.pipe([ valueadd1,
+                                        valuemultiply2,
+                                        valueadd1 ])(1),
+                      5);
+    });
+
+    it('returns [ 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 ] for pipe([ listadd1, listmultiply2, listadd1 ])(range(1, 11))',
+       function() {
+         const listadd1 = function(l) {
+           return functional.map((e) => { return e + 1; }, l);
+         }
+
+         const listmultiply2 = function(l) {
+           return functional.map((e) => { return e * 2; }, l);
+         }
+
+         assert.deepEqual(functional.pipe([ listadd1,
+                                            listmultiply2,
+                                            listadd1 ])(functional.range(1, 11)),
+                          [ 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 ]);
+    });
+  });
+
+
+  describe('#pipe2()', function() {
+    it('returns 5 for pipe2([ valueadd1, valuemultiply2, valueadd1 ])(1)',
+       function() {
+         const valueadd1 = function(v) {
+           return v + 1;
+         }
+
+         const valuemultiply2 = function(v) {
+           return v * 2;
+         }
+
+         assert.equal(functional.pipe2([ valueadd1,
                                          valuemultiply2,
                                          valueadd1 ])(1),
                       5);
     });
 
-    it('returns [ 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 ] for _pipe([ listadd1, listmultiply2, listadd1 ])(_range(1, 11))',
+    it('returns [ 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 ] for pipe2([ listadd1, listmultiply2, listadd1 ])(range(1, 11))',
        function() {
          const listadd1 = function(l) {
-           return functional._map((e) => { return e + 1; }, l);
+           return functional.map((e) => { return e + 1; }, l);
          }
 
          const listmultiply2 = function(l) {
-           return functional._map((e) => { return e * 2; }, l);
+           return functional.map((e) => { return e * 2; }, l);
          }
 
-         assert.deepEqual(functional._pipe([ listadd1,
-                                             listmultiply2,
-                                             listadd1 ])(functional._range(1, 11)),
+         assert.deepEqual(functional.pipe2([ listadd1,
+                                            listmultiply2,
+                                            listadd1 ])(functional.range(1, 11)),
                           [ 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 ]);
     });
   });
 
 
-  describe('#_pipe2()', function() {
-    it('returns 5 for _pipe2([ valueadd1, valuemultiply2, valueadd1 ])(1)',
+  describe('#pipemaybe()', function() {
+    it('returns 3 for pipemaybe([ valueadd1, valueadd1, valueadd1 ])(0)',
        function() {
          const valueadd1 = function(v) {
            return v + 1;
          }
 
-         const valuemultiply2 = function(v) {
-           return v * 2;
-         }
-
-         assert.equal(functional._pipe2([ valueadd1,
-                                          valuemultiply2,
-                                          valueadd1 ])(1),
-                      5);
-    });
-
-    it('returns [ 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 ] for _pipe2([ listadd1, listmultiply2, listadd1 ])(_range(1, 11))',
-       function() {
-         const listadd1 = function(l) {
-           return functional._map((e) => { return e + 1; }, l);
-         }
-
-         const listmultiply2 = function(l) {
-           return functional._map((e) => { return e * 2; }, l);
-         }
-
-         assert.deepEqual(functional._pipe2([ listadd1,
-                                             listmultiply2,
-                                             listadd1 ])(functional._range(1, 11)),
-                          [ 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 ]);
-    });
-  });
-
-
-  describe('#_pipemaybe()', function() {
-    it('returns 3 for _pipemaybe([ valueadd1, valueadd1, valueadd1 ])(0)',
-       function() {
-         const valueadd1 = function(v) {
-           return v + 1;
-         }
-
-         assert.equal(functional._pipemaybe([ valueadd1,
-                                              valueadd1,
-                                              valueadd1 ])(0),
+         assert.equal(functional.pipemaybe([ valueadd1,
+                                             valueadd1,
+                                             valueadd1 ])(0),
                       3);
     });
 
-    it('returns null for _pipemaybe([ valueadd1, valuenull, valueadd1 ])(0)',
+    it('returns null for pipemaybe([ valueadd1, valuenull, valueadd1 ])(0)',
        function() {
          const valueadd1 = function(v) {
            return v + 1;
@@ -531,16 +531,16 @@ describe('functional', function() {
            return null;
          }
 
-         assert.equal(functional._pipemaybe([ valueadd1,
-                                              valuenull,
-                                              valueadd1 ])(0),
+         assert.equal(functional.pipemaybe([ valueadd1,
+                                             valuenull,
+                                             valueadd1 ])(0),
                       null);
     });
   });
 
 
-  describe('#_partial()', function() {
-    it('returns [ 11..20 ] for _map(_partial(add, 10), _range(1, 11))',
+  describe('#partial()', function() {
+    it('returns [ 11..20 ] for map(partial(add, 10), range(1, 11))',
        function() {
          const add = function(a, b) {
            return a + b;
@@ -550,26 +550,26 @@ describe('functional', function() {
            return add(x, 10);
          }
 
-         assert.deepEqual(functional._map(add10,
-                                          functional._range(1, 11)),
+         assert.deepEqual(functional.map(add10,
+                                         functional.range(1, 11)),
                           [ 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]);
 
-         assert.deepEqual(functional._map(functional._partial(add, 10),
-                                          functional._range(1, 11)),
+         assert.deepEqual(functional.map(functional.partial(add, 10),
+                                         functional.range(1, 11)),
                           [ 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]);
     });
   });
 
 
-  describe('#_curry()', function() {
+  describe('#curry()', function() {
     it('supports multiple execution paths',
        function() {
          const args = function(...a) {
            return a;
          }
 
-         let cargs = functional._curry(args, 5)
-         let cargsab = cargs('a')('b')
+         let cargs = functional.curry(args, 5);
+         let cargsab = cargs('a')('b');
 
          assert.deepEqual(cargsab('c')('d')('e'),
                           [ 'a', 'b', 'c', 'd', 'e' ]);
@@ -581,13 +581,13 @@ describe('functional', function() {
                           [ 'a', 'b', 'x', 'y', 'z' ]);
     });
 
-    it('returns 15 for _curry(add)(10)(5) and 25 for _curry(add)(20)(5)',
+    it('returns 15 for curry(add)(10)(5) and 25 for curry(add)(20)(5)',
        function() {
          const add = function(a, b) {
            return a + b;
          }
 
-         let cadd = functional._curry(add)
+         let cadd = functional.curry(add);
 
          assert.equal(cadd(10)(5),
                       15);
@@ -595,34 +595,34 @@ describe('functional', function() {
                       25);
     });
 
-    it('returns [ 11..20 ] for _map(_curry(add)(10), _range(1, 11))',
+    it('returns [ 11..20 ] for map(curry(add)(10), range(1, 11))',
        function() {
          const add = function(a, b) {
            return a + b;
          }
 
-         assert.deepEqual(functional._map(functional._curry(add)(10),
-                                          functional._range(1, 11)),
+         assert.deepEqual(functional.map(functional.curry(add)(10),
+                                         functional.range(1, 11)),
                           [ 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]);
     });
   });
 
 
   describe('#factorial()', function() {
-    it('returns [ 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 ] for _map(factorial, _range(1, 11))',
+    it('returns [ 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 ] for map(factorial, range(1, 11))',
        function() {
-         assert.deepEqual(functional._map(functional.factorial,
-                                          functional._range(1, 11)),
+         assert.deepEqual(functional.map(functional.factorial,
+                                         functional.range(1, 11)),
                           [ 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 ]);
     });
   });
 
 
   describe('#fibonacci()', function() {
-    it('returns [ 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ] for _map(fibonacci, _range(1, 11))',
+    it('returns [ 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ] for map(fibonacci, range(1, 11))',
        function() {
-         assert.deepEqual(functional._map(functional.fibonacci,
-                                          functional._range(1, 11)),
+         assert.deepEqual(functional.map(functional.fibonacci,
+                                         functional.range(1, 11)),
                           [ 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ]);
     });
   });
