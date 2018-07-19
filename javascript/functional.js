@@ -210,10 +210,9 @@ const pipemaybe = function(l) {
 }
 
 
-const partial = function(f, ...args) {
-  let args1 = args;
-  return function(...args) {
-    return f.apply(null, args1.concat(args));
+const partial = function(f, ...args1) {
+  return function(...args2) {
+    return f(...args1.concat(args2));
   }
 }
 
