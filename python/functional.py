@@ -174,11 +174,9 @@ def pipemaybe(l):
   return internal
 
 
-def partial(f, *args):
-  args1 = args
-
-  def internal(*args):
-    return f(*(args1 + args))
+def partial(f, *args1):
+  def internal(*args2):
+    return f(*(args1 + args2))
   return internal
 
 
