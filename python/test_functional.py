@@ -206,7 +206,7 @@ def test_compose():
   def valuemultiply2(v):
     return v * 2
 
-  assert functional.compose(valueadd1, valuemultiply2)(1) == 3
+  assert functional.compose(valueadd1, valuemultiply2)(1) == 4
 
 
 def test_pipe():
