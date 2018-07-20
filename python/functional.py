@@ -143,9 +143,9 @@ def permutations(l):
                   [])
 
 
-def compose(f, g):
+def compose(f1, f2):
   def internal(v):
-    return f(g(v))
+    return f2(f1(v))
   return internal
 
 
@@ -159,7 +159,7 @@ def pipe(l):
 
 
 def pipe2(l):
-  return reduce(compose, reverse(l))
+  return reduce(compose, l)
 
 
 def pipemaybe(l):

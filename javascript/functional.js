@@ -175,9 +175,9 @@ const permutations = function(l) {
 }
 
 
-const compose = function(f, g) {
-  return function(x) {
-    return f(g(x));
+const compose = function(f1, f2) {
+  return function(v) {
+    return f2(f1(v));
   }
 }
 
@@ -193,7 +193,7 @@ const pipe = function(l) {
 
 
 const pipe2 = function(l) {
-  return reduce(compose, reverse(l));
+  return reduce(compose, l);
 }
 
 

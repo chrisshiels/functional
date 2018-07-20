@@ -433,7 +433,7 @@ describe('functional', function() {
          }
 
          assert.equal(functional.compose(valueadd1, valuemultiply2)(1),
-                      3);
+                      4);
     });
   });
 
