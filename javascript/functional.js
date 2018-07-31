@@ -234,10 +234,9 @@ const memoize = function(f) {
 
   return function(...args) {
     let key = JSON.stringify(args);
-    if (key in cache)
-      return cache[key];
-    else
-      return cache[key] = f(...args);
+    if (!(key in cache))
+      cache[key] = f(...args);
+    return cache[key];
   }
 }
 
@@ -259,14 +258,14 @@ const fibonacci = function(n) {
 
 
 const memoizedfibonacci = function(n) {
-  const internal = function(f, n) {
+  let fibonacci = function(n) {
     if (n <= 1)
       return 1;
     else
-      return f(f, n - 1) + f(f, n - 2);
+      return fibonacci(n - 1) + fibonacci(n - 2);
   }
-  let f = memoize(internal);
-  return f(f, n);
+  fibonacci = memoize(fibonacci);
+  return fibonacci(n);
 }
 
 

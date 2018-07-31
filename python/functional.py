@@ -196,11 +196,9 @@ def memoize(f):
 
   def internal(*args):
     key = str(args)
-    if key in cache:
-      return cache[key]
-    else:
+    if not key in cache:
       cache[key] = f(*args)
-      return cache[key]
+    return cache[key]
   return internal
 
 
@@ -219,13 +217,13 @@ def fibonacci(n):
 
 
 def memoizedfibonacci(n):
-  def internal(f, n):
+  def fibonacci(n):
     if n <= 1:
       return 1
     else:
-      return f(f, n - 1) + f(f, n - 2)
-  f = memoize(internal)
-  return f(f, n)
+      return fibonacci(n - 1) + fibonacci(n - 2)
+  fibonacci = memoize(fibonacci)
+  return fibonacci(n)
 
 
 def primes(n):
