@@ -15,18 +15,18 @@ def flatten(l):
 
 # Maybe monad:
 
-def divide100(x):
-  if x == 0:
+def divide100(v):
+  if v == 0:
     return None
   else:
-    return 100 / x
+    return 100 / v
 
 
-def sqrt(x):
-  if x < 0:
+def sqrt(v):
+  if v < 0:
     return None
   else:
-    return x ** 0.5
+    return v ** 0.5
 
 
 >>> print sqrt(divide100(sqrt(10)))
@@ -38,14 +38,14 @@ def sqrt(x):
 TypeError
 
 
-def bind(x, f):
-  if x is None:
+def bind(v, f):
+  if v is None:
     return None
   else:
-    return f(x)
+    return f(v)
 
-def unit(x):
-  return x
+def unit(v):
+  return v
 
 >>> print bind(bind(bind(unit(10), sqrt), divide100), sqrt)
 5.6234132519
@@ -54,15 +54,15 @@ None
 
 
 class Maybe:
-  def __init__(self, x):
-    self.x = x
+  def __init__(self, v):
+    self.v = v
   def bind(self, f):
-    if self.x is None:
+    if self.v is None:
       return Maybe(None)
     else:
-      return Maybe(f(self.x))
+      return Maybe(f(self.v))
   def value(self):
-    return self.x
+    return self.v
 
 >>> print Maybe(10).bind(sqrt).bind(divide100).bind(sqrt).value()
 5.6234132519
@@ -71,15 +71,15 @@ None
 
 
 def pipemaybe(l):
-  def bind(x, f):
-    if x is None:
+  def bind(v, f):
+    if v is None:
       return None
     else:
-      return f(x)
-  def unit(x):
-    return x
-  def internal(x):
-    return reduce(bind, l, unit(x))
+      return f(v)
+  def unit(v):
+    return v
+  def internal(v):
+    return reduce(bind, l, unit(v))
   return internal
 
 >>> print pipemaybe([ sqrt, divide100, sqrt ])(10)
@@ -92,13 +92,13 @@ None
 
 # List monad:
 
-def sqrts(x):
-  if x < 0:
+def sqrts(v):
+  if v < 0:
     return []
-  elif x == 0:
+  elif v == 0:
     return [ 0 ]
   else:
-    return [ x ** 0.5, -x ** 0.5 ]
+    return [ v ** 0.5, -v ** 0.5 ]
 
 
 >>> print (sqrts(4))
@@ -114,23 +114,23 @@ TypeError
 def bind(l, f):
   return flatten(map(lambda e: f(e), l))
 
-def unit(x):
-  return [ x ]
+def unit(v):
+  return [ v ]
 
 >>> print bind(bind(unit(4), sqrts), sqrts)
 [1.4142135623730951, -1.4142135623730951]
 
 
 class List:
-  def __init__(self, x):
-    if type(x) is list:
-      self.x = x
+  def __init__(self, v):
+    if type(v) is list:
+      self.v = v
     else:
-      self.x = [ x ]
+      self.v = [ v ]
   def bind(self, f):
-    return List(flatten(map(lambda e: f(e), self.x)))
+    return List(flatten(map(lambda e: f(e), self.v)))
   def value(self):
-    return self.x
+    return self.v
 
 >>> print List(4).bind(sqrts).bind(sqrts).value()
 [1.4142135623730951, -1.4142135623730951]
@@ -139,10 +139,10 @@ class List:
 def pipelist(l):
   def bind(l, f):
     return flatten(map(lambda e: f(e), l))
-  def unit(x):
-    return [ x ]
-  def internal(x):
-    return reduce(bind, l, unit(x))
+  def unit(v):
+    return [ v ]
+  def internal(v):
+    return reduce(bind, l, unit(v))
   return internal
 
 >>> print pipelist([ sqrts, sqrts ])(4)
@@ -153,11 +153,11 @@ def pipelist(l):
 
 # Writer monad:
 
-def verbose_u(x):
-  return (x + 4, '[verbose_u was called on ' + str(x) + ']')
+def verbose_u(v):
+  return (v + 4, '[verbose_u was called on ' + str(v) + ']')
 
-def verbose_v(x):
-  return (x * 2, '[verbose_v was called on ' + str(x) + ']')
+def verbose_v(v):
+  return (v * 2, '[verbose_v was called on ' + str(v) + ']')
 
 
 >>> try:
@@ -167,41 +167,41 @@ def verbose_v(x):
 TypeError
 
 
-def bind(x, f):
-  result, output = f(x[0])
-  return (result, x[1] + output)
+def bind(v, f):
+  result, output = f(v[0])
+  return (result, v[1] + output)
 
-def unit(x):
-  return (x, '')
+def unit(v):
+  return (v, '')
 
 >>> print bind(bind(unit(4), verbose_v), verbose_u)
 (12, '[verbose_v was called on 4][verbose_u was called on 8]')
 
 
 class Writer:
-  def __init__(self, x):
-    if type(x) is tuple:
-      self.x = x
+  def __init__(self, v):
+    if type(v) is tuple:
+      self.v = v
     else:
-      self.x = (x, '')
+      self.v = (v, '')
   def bind(self, f):
-    result, output = f(self.x[0])
-    return Writer((result, self.x[1] + output))
+    result, output = f(self.v[0])
+    return Writer((result, self.v[1] + output))
   def value(self):
-    return self.x
+    return self.v
 
 >>> print Writer(4).bind(verbose_v).bind(verbose_u).value()
 (12, '[verbose_v was called on 4][verbose_u was called on 8]')
 
 
 def pipewriter(l):
-  def bind(x, f):
-    result, output = f(x[0])
-    return (result, x[1] + output)
-  def unit(x):
-    return (x, '')
-  def internal(x):
-    return reduce(bind, l, unit(x))
+  def bind(v, f):
+    result, output = f(v[0])
+    return (result, v[1] + output)
+  def unit(v):
+    return (v, '')
+  def internal(v):
+    return reduce(bind, l, unit(v))
   return internal
 
 >>> print pipewriter([ verbose_v, verbose_u ])(4)
