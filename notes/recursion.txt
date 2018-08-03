@@ -1,0 +1,187 @@
+# Trampoline.
+def trampoline(f):
+  def internal(*args):
+    v = f(*args)
+    while callable(v):
+      v = v()
+    return v
+  return internal
+
+
+# Iterative implementation.
+def factorial(n):
+  def factorial(n, a = 1):
+    while n > 1:
+      (n, a) = (n - 1, n * a)
+    return a
+  return factorial(n)
+
+
+# Recursive implementation.
+# Elegant but susceptible to stack overflow.
+def factorial(n):
+  if n <= 1:
+    return 1
+  else:
+    return n * factorial(n - 1)
+
+
+# Tail recursive implementation with accumulator.
+# Still susceptible to stack overflow.
+# Note similarities with iterative implementation above.
+def factorial(n):
+  def factorial(n, a = 1):
+    if n <= 1:
+      return a
+    else:
+      return factorial(n - 1, n * a)
+  return factorial(n)
+
+
+# Tail recursive implementation with accumulator, thunk and trampoline.
+# Not susceptible to stack overflow.
+def factorial(n):
+  def factorial(n, a = 1):
+    if n <= 1:
+      return a
+    else:
+      return lambda: factorial(n - 1, n * a)
+  return trampoline(factorial)(n)
+
+
+# Tail recursive implementation with nested callbacks.
+# Still susceptible to stack overflow.
+def factorial(n):
+  def factorial(n, c = lambda v: v):
+    if n <= 1:
+      return c(1)
+    else:
+      return factorial(n - 1, lambda v: c(n * v))
+  return factorial(n)
+
+
+# Tail recursive implementation with nested callbacks, thunk and trampoline.
+# Not susceptible to stack overflow.
+def factorial(n):
+  def factorial(n, c = lambda v: v):
+    if n <= 1:
+      return c(1)
+    else:
+      return lambda: factorial(n - 1, lambda v: lambda: c(n * v))
+  return trampoline(factorial)(n)
+
+
+# Iterative implementation.
+def fibonacci(n):
+  def fibonacci(n, a = 1, b = 0):
+    while n > 1:
+      (n, a, b) = (n - 1, a + b, a)
+    return a
+  return fibonacci(n)
+
+
+# Recursive implementation.
+# Elegant but susceptible to stack overflow.
+def fibonacci(n):
+  if n <= 2:
+    return 1
+  else:
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+
+# Tail recursive implementation with accumulators.
+# Still susceptible to stack overflow.
+# Note similarities with iterative implementation above.
+def fibonacci(n):
+  def fibonacci(n, a = 1, b = 0):
+    if n <= 1:
+      return a
+    else:
+      return fibonacci(n - 1, a + b, a)
+  return fibonacci(n)
+
+
+# Tail recursive implementation with accumulators, thunk and trampoline.
+# Not susceptible to stack overflow.
+def fibonacci(n):
+  def fibonacci(n, a = 1, b = 0):
+    if n <= 1:
+      return a
+    else:
+      return lambda: fibonacci(n - 1, a + b, a)
+  return trampoline(fibonacci)(n)
+
+
+# Tail recursive implementation with nested callbacks.
+# Still susceptible to stack overflow.
+def fibonacci(n):
+  def fibonacci(n, c = lambda v: v):
+    if n <= 2:
+      return c(1)
+    else:
+      return fibonacci(n - 1,
+                       lambda v1: fibonacci(n - 2,
+                                            lambda v2: c(v1 + v2)))
+  return fibonacci(n)
+
+
+# Tail recursive implementation with nested callbacks, thunks and trampoline.
+# Not susceptible to stack overflow but slow algorithm.
+def fibonacci(n):
+  def fibonacci(n, c = lambda v: v):
+    if n <= 2:
+      return c(1)
+    else:
+      return lambda: fibonacci(n - 1,
+                               lambda v1:
+                                 lambda: fibonacci(n - 2,
+                                                   lambda v2:
+                                                     lambda: c(v1 + v2)))
+  return trampoline(fibonacci)(n)
+
+
+# Recursive implementation.
+# Elegant but susceptible to stack overflow.
+def sort(f, l):
+  if l == []:
+    return []
+  else:
+    return sort(f, filter(lambda e: f(e, l[0]), l[1:])) + \
+           [ l[0] ] + \
+           sort(f, filter(lambda e: not f(e, l[0]), l[1:]))
+
+
+# Tail recursive implementation with nested callbacks.
+# Still susceptible to stack overflow.
+def sort(f, l):
+  def sort(f, l, c = lambda v: v):
+    if l == []:
+      return c([])
+    else:
+      return sort(f,
+                  filter(lambda e: f(e, l[0]), l[1:]),
+                  lambda v1:
+                    sort(f,
+                         filter(lambda e: not f(e, l[0]), l[1:]),
+                         lambda v2:
+                           c(v1 + [ l[0] ] + v2)))
+  return sort(f, l)
+
+
+# Tail recursive implementation with nested callbacks, thunks and trampoline.
+# Not susceptible to stack overflow.
+def sort(f, l):
+  def sort(f, l, c = lambda v: v):
+    if l == []:
+      return c([])
+    else:
+      return lambda: \
+               sort(f,
+                    filter(lambda e: f(e, l[0]), l[1:]),
+                    lambda v1:
+                      lambda:
+                        sort(f,
+                             filter(lambda e: not f(e, l[0]), l[1:]),
+                             lambda v2:
+                               lambda: c(v1 + [ l[0] ] + v2)))
+  return trampoline(sort)(f, l)
