@@ -49,13 +49,40 @@ def all_callbacks(f, l):
 all = all_callbacks
 
 
-def any(f, l):
-  if len(l) == 0:
-    return False
-  elif len(l) == 1:
-    return f(l[0])
-  else:
-    return f(l[0]) or any(f, l[1:])
+def any_recursive(f, l):
+  def any(f, l):
+    if len(l) == 0:
+      return False
+    elif len(l) == 1:
+      return f(l[0])
+    else:
+      return f(l[0]) or any(f, l[1:])
+  return any(f, l)
+
+
+def any_accumulator(f, l):
+  def any(f, l, a = True):
+    if len(l) == 0:
+      return False
+    elif len(l) == 1:
+      return a
+    else:
+      return lambda: any(f, l[1:], f(l[0]) or a)
+  return trampoline(any)(f, l)
+
+
+def any_callbacks(f, l):
+  def any(f, l, c = lambda v: v):
+    if len(l) == 0:
+      return c(False)
+    elif len(l) == 1:
+      return c(f(l[0]))
+    else:
+      return lambda: any(f, l[1:], lambda v: lambda: c(f(l[0]) or v))
+  return trampoline(any)(f, l)
+
+
+any = any_callbacks
 
 
 def flatten(l):

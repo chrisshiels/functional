@@ -60,14 +60,46 @@ const all_callbacks = function(f, l) {
 const all = all_callbacks;
 
 
-const any = function(f, l) {
-  if (l.length === 0)
-    return false;
-  else if (l.length === 1)
-    return f(l[0]);
-  else
-    return f(l[0]) || any(f, l.slice(1));
+const any_recursive = function(f, l) {
+  const any = function(f, l) {
+    if (l.length === 0)
+      return false;
+    else if (l.length === 1)
+      return f(l[0]);
+    else
+      return f(l[0]) || any(f, l.slice(1));
+  }
+  return any(f, l);
 }
+
+
+const any_accumulator = function(f, l) {
+  const any = function(f, l, a = true) {
+    if (l.length === 0)
+      return false;
+    else if (l.length === 1)
+      return a;
+    else
+      return () => any(f, l.slice(1), f(l[0]) || a);
+  }
+  return trampoline(any)(f, l);
+}
+
+
+const any_callbacks = function(f, l) {
+  const any = function(f, l, c = (v) => v) {
+    if (l.length === 0)
+      return c(false);
+    else if (l.length === 1)
+      return c(f(l[0]));
+    else
+      return () => any(f, l.slice(1), (v) => () => c(f(l[0]) || v));
+  }
+  return trampoline(any)(f, l);
+}
+
+
+const any = any_callbacks;
 
 
 const flatten = function(l) {
@@ -340,6 +372,9 @@ module.exports = {
   'all_accumulator':   all_accumulator,
   'all_callbacks':     all_callbacks,
   'all':               all,
+  'any_recursive':     any_recursive,
+  'any_accumulator':   any_accumulator,
+  'any_callbacks':     any_callbacks,
   'any':               any,
   'flatten':           flatten,
   'range':             range,

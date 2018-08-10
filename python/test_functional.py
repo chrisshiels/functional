@@ -52,12 +52,47 @@ def test_all_callbacks():
          True
 
 
-def test_any():
-  assert functional.any(lambda e: e % 2 == 0, []) == \
+def test_any_recursive():
+  assert functional.any_recursive(lambda e: e % 2 == 0,
+                                  []) == \
          False
-  assert functional.any(lambda e: e % 2 == 0, [ 2, 4, 6, 8, 10 ]) == \
+  assert functional.any_recursive(lambda e: e % 2 == 0,
+                                  [ 2, 4, 6, 8, 10 ]) == \
          True
-  assert functional.any(lambda e: e % 3 == 0, [ 2, 4, 6, 8, 10 ]) == \
+  assert functional.any_recursive(lambda e: e % 3 == 0,
+                                  [ 2, 4, 6, 8, 10 ]) == \
+         True
+  with pytest.raises(RuntimeError):
+    functional.any_recursive(lambda e: e, [ False ] * 1000)
+
+
+def test_any_accumulator():
+  assert functional.any_accumulator(lambda e: e % 2 == 0,
+                                    []) == \
+         False
+  assert functional.any_accumulator(lambda e: e % 2 == 0,
+                                    [ 2, 4, 6, 8, 10 ]) == \
+         True
+  assert functional.any_accumulator(lambda e: e % 3 == 0,
+                                    [ 2, 4, 6, 8, 10 ]) == \
+         True
+  assert functional.any_accumulator(lambda e: e,
+                                    [ True ] * 1000) == \
+         True
+
+
+def test_any_callbacks():
+  assert functional.any_callbacks(lambda e: e % 2 == 0,
+                                  []) == \
+         False
+  assert functional.any_callbacks(lambda e: e % 2 == 0,
+                                  [ 2, 4, 6, 8, 10 ]) == \
+         True
+  assert functional.any_callbacks(lambda e: e % 3 == 0,
+                                  [ 2, 4, 6, 8, 10 ]) == \
+         True
+  assert functional.any_callbacks(lambda e: e,
+                                  [ True ] * 1000) == \
          True
 
 
