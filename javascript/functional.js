@@ -7,6 +7,17 @@
 'use strict';
 
 
+const trampoline = function(f) {
+  const internal = function(...args) {
+    let v = f(...args);
+    while (v instanceof Function)
+      v = v();
+    return v;
+  }
+  return internal;
+}
+
+
 const all = function(f, l) {
   if (l.length === 0)
     return false;

@@ -4,6 +4,15 @@
 # Chris Shiels.
 
 
+def trampoline(f):
+  def internal(*args):
+    v = f(*args)
+    while callable(v):
+      v = v()
+    return v
+  return internal
+
+
 def all(f, l):
   if len(l) == 0:
     return False
