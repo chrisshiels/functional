@@ -96,19 +96,55 @@ def test_any_callbacks():
          True
 
 
-def test_flatten():
-  assert functional.flatten([]) == \
+def test_flatten_recursive():
+  assert functional.flatten_recursive([]) == \
          []
-  assert functional.flatten([ 1, 2, 3 ]) == \
+  assert functional.flatten_recursive([ 1, 2, 3 ]) == \
          [ 1, 2, 3 ]
-  assert functional.flatten([ [ 1, 2 ], 3 ]) == \
+  assert functional.flatten_recursive([ [ 1, 2 ], 3 ]) == \
          [ 1, 2, 3 ]
-  assert functional.flatten([ 1, [ 2, 3 ] ]) == \
+  assert functional.flatten_recursive([ 1, [ 2, 3 ] ]) == \
          [ 1, 2, 3 ]
-  assert functional.flatten([ 1, [ 2, [ 3 ] ] ]) == \
+  assert functional.flatten_recursive([ 1, [ 2, [ 3 ] ] ]) == \
          [ 1, 2, 3 ]
-  assert functional.flatten([ [ [ 1 ], [ 2 ], [ 3 ] ] ]) == \
+  assert functional.flatten_recursive([ [ [ 1 ], [ 2 ], [ 3 ] ] ]) == \
          [ 1, 2, 3 ]
+  with pytest.raises(RuntimeError):
+    functional.flatten_recursive([ [ 1 ] ] * 1000)
+
+
+def test_flatten_accumulator():
+  assert functional.flatten_accumulator([]) == \
+         []
+  assert functional.flatten_accumulator([ 1, 2, 3 ]) == \
+         [ 1, 2, 3 ]
+  assert functional.flatten_accumulator([ [ 1, 2 ], 3 ]) == \
+         [ 1, 2, 3 ]
+  assert functional.flatten_accumulator([ 1, [ 2, 3 ] ]) == \
+         [ 1, 2, 3 ]
+  assert functional.flatten_accumulator([ 1, [ 2, [ 3 ] ] ]) == \
+         [ 1, 2, 3 ]
+  assert functional.flatten_accumulator([ [ [ 1 ], [ 2 ], [ 3 ] ] ]) == \
+         [ 1, 2, 3 ]
+  assert functional.flatten_accumulator([ [ 1 ] ] * 1000) == \
+         [ 1 ] * 1000
+
+
+def test_flatten_callbacks():
+  assert functional.flatten_callbacks([]) == \
+         []
+  assert functional.flatten_callbacks([ 1, 2, 3 ]) == \
+         [ 1, 2, 3 ]
+  assert functional.flatten_callbacks([ [ 1, 2 ], 3 ]) == \
+         [ 1, 2, 3 ]
+  assert functional.flatten_callbacks([ 1, [ 2, 3 ] ]) == \
+         [ 1, 2, 3 ]
+  assert functional.flatten_callbacks([ 1, [ 2, [ 3 ] ] ]) == \
+         [ 1, 2, 3 ]
+  assert functional.flatten_callbacks([ [ [ 1 ], [ 2 ], [ 3 ] ] ]) == \
+         [ 1, 2, 3 ]
+  assert functional.flatten_callbacks([ [ 1 ] ] * 1000) == \
+         [ 1 ] * 1000
 
 
 def test_range():

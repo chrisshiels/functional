@@ -85,13 +85,40 @@ def any_callbacks(f, l):
 any = any_callbacks
 
 
-def flatten(l):
-  if l == []:
-    return []
-  elif type(l[0]) is list:
-    return flatten(l[0]) + flatten(l[1:])
-  else:
-    return [ l[0] ] + flatten(l[1:])
+def flatten_recursive(l):
+  def flatten(l):
+    if l == []:
+      return []
+    elif type(l[0]) is list:
+      return flatten(l[0]) + flatten(l[1:])
+    else:
+      return [ l[0] ] + flatten(l[1:])
+  return flatten(l)
+
+
+def flatten_accumulator(l):
+  def flatten(l, a = []):
+    if l == []:
+      return a
+    elif type(l[0]) is list:
+      return lambda: flatten(l[0] + l[1:], a)
+    else:
+      return lambda: flatten(l[1:], a + [ l[0] ])
+  return trampoline(flatten)(l)
+
+
+def flatten_callbacks(l):
+  def flatten(l, c = lambda v: v):
+    if l == []:
+      return c([])
+    elif type(l[0]) is list:
+      return lambda: flatten(l[0] + l[1:], lambda v: lambda: c(v))
+    else:
+      return lambda: flatten(l[1:], lambda v: lambda: c([ l[0] ] + v))
+  return trampoline(flatten)(l)
+
+
+flatten = flatten_callbacks
 
 
 def range(m, n = None, s = 1):

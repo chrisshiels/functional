@@ -102,14 +102,46 @@ const any_callbacks = function(f, l) {
 const any = any_callbacks;
 
 
-const flatten = function(l) {
-  if (l.length === 0)
-    return [];
-  else if (l[0] instanceof Array)
-    return flatten(l[0]).concat(flatten(l.slice(1)));
-  else
-    return [ l[0] ].concat(flatten(l.slice(1)));
+const flatten_recursive = function(l) {
+  const flatten = function(l) {
+    if (l.length === 0)
+      return [];
+    else if (l[0] instanceof Array)
+      return flatten(l[0]).concat(flatten(l.slice(1)));
+    else
+      return [ l[0] ].concat(flatten(l.slice(1)));
+  }
+  return flatten(l);
 }
+
+
+const flatten_accumulator = function(l) {
+  const flatten = function(l, a = []) {
+    if (l.length === 0)
+      return a;
+    else if (l[0] instanceof Array)
+      return () => flatten(l[0].concat(l.slice(1)), a);
+    else
+      return () => flatten(l.slice(1), a.concat([ l[0] ]));
+  }
+  return trampoline(flatten)(l);
+}
+
+
+const flatten_callbacks = function(l) {
+  const flatten = function(l, c = (v) => v) {
+    if (l.length === 0)
+      return c([]);
+    else if (l[0] instanceof Array)
+      return () => flatten(l[0].concat(l.slice(1)), (v) => () => c(v));
+    else
+      return () => flatten(l.slice(1), (v) => () => c([ l[0] ].concat(v)));
+  }
+  return trampoline(flatten)(l);
+}
+
+
+const flatten = flatten_callbacks;
 
 
 const range = function(m, n = null, s = 1) {
@@ -368,36 +400,39 @@ const ispalindrome = function(s) {
 
 
 module.exports = {
-  'all_recursive':     all_recursive,
-  'all_accumulator':   all_accumulator,
-  'all_callbacks':     all_callbacks,
-  'all':               all,
-  'any_recursive':     any_recursive,
-  'any_accumulator':   any_accumulator,
-  'any_callbacks':     any_callbacks,
-  'any':               any,
-  'flatten':           flatten,
-  'range':             range,
-  'reduce':            reduce,
-  'map':               map,
-  'filter':            filter,
-  'partition':         partition,
-  'split':             split,
-  'reverse':           reverse,
-  'sort':              sort,
-  'unique':            unique,
-  'zip':               zip,
-  'permutations':      permutations,
-  'compose':           compose,
-  'pipe':              pipe,
-  'pipe2':             pipe2,
-  'pipemaybe':         pipemaybe,
-  'partial':           partial,
-  'curry':             curry,
-  'memoize':           memoize,
-  'factorial':         factorial,
-  'fibonacci':         fibonacci,
-  'memoizedfibonacci': memoizedfibonacci,
-  'primes':            primes,
-  'ispalindrome':      ispalindrome
+  'all_recursive':       all_recursive,
+  'all_accumulator':     all_accumulator,
+  'all_callbacks':       all_callbacks,
+  'all':                 all,
+  'any_recursive':       any_recursive,
+  'any_accumulator':     any_accumulator,
+  'any_callbacks':       any_callbacks,
+  'any':                 any,
+  'flatten_recursive':   flatten_recursive,
+  'flatten_accumulator': flatten_accumulator,
+  'flatten_callbacks':   flatten_callbacks,
+  'flatten':             flatten,
+  'range':               range,
+  'reduce':              reduce,
+  'map':                 map,
+  'filter':              filter,
+  'partition':           partition,
+  'split':               split,
+  'reverse':             reverse,
+  'sort':                sort,
+  'unique':              unique,
+  'zip':                 zip,
+  'permutations':        permutations,
+  'compose':             compose,
+  'pipe':                pipe,
+  'pipe2':               pipe2,
+  'pipemaybe':           pipemaybe,
+  'partial':             partial,
+  'curry':               curry,
+  'memoize':             memoize,
+  'factorial':           factorial,
+  'fibonacci':           fibonacci,
+  'memoizedfibonacci':   memoizedfibonacci,
+  'primes':              primes,
+  'ispalindrome':        ispalindrome
 };

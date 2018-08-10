@@ -204,40 +204,124 @@ describe('functional', function() {
   });
 
 
-  describe('#flatten()', function() {
-    it('returns [] for flatten([])',
+  describe('#flatten_recursive()', function() {
+    it('returns [] for flatten_recursive([])',
        function() {
-         assert.deepEqual(functional.flatten([]),
+         assert.deepEqual(functional.flatten_recursive([]),
                           []);
     });
 
-    it('returns [ 1, 2, 3 ] for flatten([ 1, 2, 3 ])',
+    it('returns [ 1, 2, 3 ] for flatten_recursive([ 1, 2, 3 ])',
        function() {
-         assert.deepEqual(functional.flatten([ 1, 2, 3 ]),
+         assert.deepEqual(functional.flatten_recursive([ 1, 2, 3 ]),
                           [ 1, 2, 3 ]);
     });
 
-    it('returns [ 1, 2, 3 ] for flatten([[ 1, 2 ], 3])',
+    it('returns [ 1, 2, 3 ] for flatten_recursive([[ 1, 2 ], 3])',
        function() {
-         assert.deepEqual(functional.flatten([[ 1, 2 ], 3]),
+         assert.deepEqual(functional.flatten_recursive([[ 1, 2 ], 3]),
                           [ 1, 2, 3 ]);
     });
 
-    it('returns [ 1, 2, 3 ] for flatten([1, [ 2, 3 ]])',
+    it('returns [ 1, 2, 3 ] for flatten_recursive([1, [ 2, 3 ]])',
        function() {
-         assert.deepEqual(functional.flatten([1, [ 2, 3 ]]),
+         assert.deepEqual(functional.flatten_recursive([1, [ 2, 3 ]]),
                           [ 1, 2, 3 ]);
     });
 
-    it('returns [ 1, 2, 3 ] for flatten([1, [ 2, [ 3 ] ] ])',
+    it('returns [ 1, 2, 3 ] for flatten_recursive([1, [ 2, [ 3 ] ] ])',
        function() {
-         assert.deepEqual(functional.flatten([1, [ 2, [ 3 ] ] ]),
+         assert.deepEqual(functional.flatten_recursive([1, [ 2, [ 3 ] ] ]),
                           [ 1, 2, 3 ]);
     });
 
-    it('returns [ 1, 2, 3 ] for flatten([ [ [ 1 ], [ 2 ], [ 3 ] ] ])',
+    it('returns [ 1, 2, 3 ] for flatten_recursive([ [ [ 1 ], [ 2 ], [ 3 ] ] ])',
        function() {
-         assert.deepEqual(functional.flatten([ [ [ 1 ], [ 2 ], [ 3 ] ] ]),
+         assert.deepEqual(functional.flatten_recursive([ [ [ 1 ],
+                                                           [ 2 ],
+                                                           [ 3 ] ] ]),
+                          [ 1, 2, 3 ]);
+    });
+  });
+
+
+  describe('#flatten_accumulator()', function() {
+    it('returns [] for flatten_accumulator([])',
+       function() {
+         assert.deepEqual(functional.flatten_accumulator([]),
+                          []);
+    });
+
+    it('returns [ 1, 2, 3 ] for flatten_accumulator([ 1, 2, 3 ])',
+       function() {
+         assert.deepEqual(functional.flatten_accumulator([ 1, 2, 3 ]),
+                          [ 1, 2, 3 ]);
+    });
+
+    it('returns [ 1, 2, 3 ] for flatten_accumulator([[ 1, 2 ], 3])',
+       function() {
+         assert.deepEqual(functional.flatten_accumulator([[ 1, 2 ], 3]),
+                          [ 1, 2, 3 ]);
+    });
+
+    it('returns [ 1, 2, 3 ] for flatten_accumulator([1, [ 2, 3 ]])',
+       function() {
+         assert.deepEqual(functional.flatten_accumulator([1, [ 2, 3 ]]),
+                          [ 1, 2, 3 ]);
+    });
+
+    it('returns [ 1, 2, 3 ] for flatten_accumulator([1, [ 2, [ 3 ] ] ])',
+       function() {
+         assert.deepEqual(functional.flatten_accumulator([1, [ 2, [ 3 ] ] ]),
+                          [ 1, 2, 3 ]);
+    });
+
+    it('returns [ 1, 2, 3 ] for flatten_accumulator([ [ [ 1 ], [ 2 ], [ 3 ] ] ])',
+       function() {
+         assert.deepEqual(functional.flatten_accumulator([ [ [ 1 ],
+                                                             [ 2 ],
+                                                             [ 3 ] ] ]),
+                          [ 1, 2, 3 ]);
+    });
+  });
+
+
+  describe('#flatten_callbacks()', function() {
+    it('returns [] for flatten_callbacks([])',
+       function() {
+         assert.deepEqual(functional.flatten_callbacks([]),
+                          []);
+    });
+
+    it('returns [ 1, 2, 3 ] for flatten_callbacks([ 1, 2, 3 ])',
+       function() {
+         assert.deepEqual(functional.flatten_callbacks([ 1, 2, 3 ]),
+                          [ 1, 2, 3 ]);
+    });
+
+    it('returns [ 1, 2, 3 ] for flatten_callbacks([[ 1, 2 ], 3])',
+       function() {
+         assert.deepEqual(functional.flatten_callbacks([[ 1, 2 ], 3]),
+                          [ 1, 2, 3 ]);
+    });
+
+    it('returns [ 1, 2, 3 ] for flatten_callbacks([1, [ 2, 3 ]])',
+       function() {
+         assert.deepEqual(functional.flatten_callbacks([1, [ 2, 3 ]]),
+                          [ 1, 2, 3 ]);
+    });
+
+    it('returns [ 1, 2, 3 ] for flatten_callbacks([1, [ 2, [ 3 ] ] ])',
+       function() {
+         assert.deepEqual(functional.flatten_callbacks([1, [ 2, [ 3 ] ] ]),
+                          [ 1, 2, 3 ]);
+    });
+
+    it('returns [ 1, 2, 3 ] for flatten_callbacks([ [ [ 1 ], [ 2 ], [ 3 ] ] ])',
+       function() {
+         assert.deepEqual(functional.flatten_callbacks([ [ [ 1 ],
+                                                           [ 2 ],
+                                                           [ 3 ] ] ]),
                           [ 1, 2, 3 ]);
     });
   });
