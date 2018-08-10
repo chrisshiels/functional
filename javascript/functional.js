@@ -18,14 +18,46 @@ const trampoline = function(f) {
 }
 
 
-const all = function(f, l) {
-  if (l.length === 0)
-    return false;
-  else if (l.length === 1)
-    return f(l[0]);
-  else
-    return f(l[0]) && all(f, l.slice(1));
+const all_recursive = function(f, l) {
+  const all = function(f, l) {
+    if (l.length === 0)
+      return false;
+    else if (l.length === 1)
+      return f(l[0]);
+    else
+      return f(l[0]) && all(f, l.slice(1));
+  }
+  return all(f, l);
 }
+
+
+const all_accumulator = function(f, l) {
+  const all = function(f, l, a = true) {
+    if (l.length === 0)
+      return false;
+    else if (l.length === 1)
+      return a;
+    else
+      return () => all(f, l.slice(1), f(l[0]) && a);
+  }
+  return trampoline(all)(f, l);
+}
+
+
+const all_callbacks = function(f, l) {
+  const all = function(f, l, c = (v) => v) {
+    if (l.length === 0)
+      return c(false);
+    else if (l.length === 1)
+      return c(f(l[0]));
+    else
+      return () => all(f, l.slice(1), (v) => () => c(f(l[0]) && v));
+  }
+  return trampoline(all)(f, l);
+}
+
+
+const all = all_callbacks;
 
 
 const any = function(f, l) {
@@ -304,6 +336,9 @@ const ispalindrome = function(s) {
 
 
 module.exports = {
+  'all_recursive':     all_recursive,
+  'all_accumulator':   all_accumulator,
+  'all_callbacks':     all_callbacks,
   'all':               all,
   'any':               any,
   'flatten':           flatten,

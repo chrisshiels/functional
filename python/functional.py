@@ -13,13 +13,40 @@ def trampoline(f):
   return internal
 
 
-def all(f, l):
-  if len(l) == 0:
-    return False
-  elif len(l) == 1:
-    return f(l[0])
-  else:
-    return f(l[0]) and all(f, l[1:])
+def all_recursive(f, l):
+  def all(f, l):
+    if len(l) == 0:
+      return False
+    elif len(l) == 1:
+      return f(l[0])
+    else:
+      return f(l[0]) and all(f, l[1:])
+  return all(f, l)
+
+
+def all_accumulator(f, l):
+  def all(f, l, a = True):
+    if len(l) == 0:
+      return False
+    elif len(l) == 1:
+      return a
+    else:
+      return lambda: all(f, l[1:], f(l[0]) and a)
+  return trampoline(all)(f, l)
+
+
+def all_callbacks(f, l):
+  def all(f, l, c = lambda v: v):
+    if len(l) == 0:
+      return c(False)
+    elif len(l) == 1:
+      return c(f(l[0]))
+    else:
+      return lambda: all(f, l[1:], lambda v: lambda: c(f(l[0]) and v))
+  return trampoline(all)(f, l)
+
+
+all = all_callbacks
 
 
 def any(f, l):

@@ -2,16 +2,54 @@
 # Chris Shiels.
 
 
+import pytest
+
+
 import functional
 
 
-def test_all():
-  assert functional.all(lambda e: e % 2 == 0, []) == \
+def test_all_recursive():
+  assert functional.all_recursive(lambda e: e % 2 == 0,
+                                  []) == \
          False
-  assert functional.all(lambda e: e % 2 == 0, [ 2, 4, 6, 8, 10 ]) == \
+  assert functional.all_recursive(lambda e: e % 2 == 0,
+                                  [ 2, 4, 6, 8, 10 ]) == \
          True
-  assert functional.all(lambda e: e % 3 == 0, [ 2, 4, 6, 8, 10 ]) == \
+  assert functional.all_recursive(lambda e: e % 3 == 0,
+                                  [ 2, 4, 6, 8, 10 ]) == \
          False
+  with pytest.raises(RuntimeError):
+    functional.all_recursive(lambda e: e, [ True ] * 1000)
+
+
+def test_all_accumulator():
+  assert functional.all_accumulator(lambda e: e % 2 == 0,
+                                    []) == \
+         False
+  assert functional.all_accumulator(lambda e: e % 2 == 0,
+                                    [ 2, 4, 6, 8, 10 ]) == \
+         True
+  assert functional.all_accumulator(lambda e: e % 3 == 0,
+                                    [ 2, 4, 6, 8, 10 ]) == \
+         False
+  assert functional.all_accumulator(lambda e: e,
+                                    [ True ] * 1000) == \
+         True
+
+
+def test_all_callbacks():
+  assert functional.all_callbacks(lambda e: e % 2 == 0,
+                                  []) == \
+         False
+  assert functional.all_callbacks(lambda e: e % 2 == 0,
+                                  [ 2, 4, 6, 8, 10 ]) == \
+         True
+  assert functional.all_callbacks(lambda e: e % 3 == 0,
+                                  [ 2, 4, 6, 8, 10 ]) == \
+         False
+  assert functional.all_callbacks(lambda e: e,
+                                  [ True ] * 1000) == \
+         True
 
 
 def test_any():

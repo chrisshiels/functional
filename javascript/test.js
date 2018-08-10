@@ -12,7 +12,7 @@ const functional = require('./functional');
 
 
 describe('functional', function() {
-  describe('#all()', function() {
+  describe('#all_recursive()', function() {
     const divisibleby2 = function(v) {
       return v % 2 === 0;
     }
@@ -21,21 +21,88 @@ describe('functional', function() {
       return v % 3 === 0;
     }
 
-    it('returns false for all(divisibleby2, [])',
-       function() {
-         assert.equal(functional.all(divisibleby2, []),
-                      false);
+    it('returns false for all_recursive(divisibleby2, [])',
+      function() {
+        assert.equal(functional.all_recursive(divisibleby2,
+                                              []),
+                     false);
     });
 
-    it('returns true for all(divisibleby2, [ 2, 4, 6, 8, 10 ])',
+    it('returns true for all_recursive(divisibleby2, [ 2, 4, 6, 8, 10 ])',
        function() {
-         assert.equal(functional.all(divisibleby2, [ 2, 4, 6, 8, 10 ]),
+         assert.equal(functional.all_recursive(divisibleby2,
+                                               [ 2, 4, 6, 8, 10 ]),
                       true);
     });
 
-    it('returns false for all(divisibleby3, [ 2, 4, 6, 8, 10 ])',
+    it('returns false for all_recursive(divisibleby3, [ 2, 4, 6, 8, 10 ])',
        function() {
-         assert.equal(functional.all(divisibleby3, [ 2, 4, 6, 8, 10 ]),
+         assert.equal(functional.all_recursive(divisibleby3,
+                                               [ 2, 4, 6, 8, 10 ]),
+                      false);
+    });
+  });
+
+
+  describe('#all_accumulator()', function() {
+    const divisibleby2 = function(v) {
+      return v % 2 === 0;
+    }
+
+    const divisibleby3 = function(v) {
+      return v % 3 === 0;
+    }
+
+    it('returns false for all_accumulator(divisibleby2, [])',
+       function() {
+         assert.equal(functional.all_accumulator(divisibleby2,
+                                                 []),
+                      false);
+    });
+
+    it('returns true for all_accumulator(divisibleby2, [ 2, 4, 6, 8, 10 ])',
+       function() {
+         assert.equal(functional.all_accumulator(divisibleby2,
+                                                 [ 2, 4, 6, 8, 10 ]),
+                      true);
+    });
+
+    it('returns false for all_accumulator(divisibleby3, [ 2, 4, 6, 8, 10 ])',
+       function() {
+         assert.equal(functional.all_accumulator(divisibleby3,
+                                                 [ 2, 4, 6, 8, 10 ]),
+                      false);
+    });
+  });
+
+
+  describe('#all_callbacks()', function() {
+    const divisibleby2 = function(v) {
+      return v % 2 === 0;
+    }
+
+    const divisibleby3 = function(v) {
+      return v % 3 === 0;
+    }
+
+    it('returns false for all_callbacks(divisibleby2, [])',
+       function() {
+         assert.equal(functional.all_callbacks(divisibleby2,
+                                               []),
+                      false);
+    });
+
+    it('returns true for all_callbacks(divisibleby2, [ 2, 4, 6, 8, 10 ])',
+       function() {
+         assert.equal(functional.all_callbacks(divisibleby2,
+                                               [ 2, 4, 6, 8, 10 ]),
+                      true);
+    });
+
+    it('returns false for all_callbacks(divisibleby3, [ 2, 4, 6, 8, 10 ])',
+       function() {
+         assert.equal(functional.all_callbacks(divisibleby3,
+                                               [ 2, 4, 6, 8, 10 ]),
                       false);
     });
   });
