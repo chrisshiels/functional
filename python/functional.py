@@ -235,13 +235,35 @@ def reverse(l):
   return reduce(accumulate, l, [])
 
 
-def sort(f, l):
-  if l == []:
-    return []
-  else:
-    return sort(f, filter(lambda e: f(e, l[0]), l[1:])) + \
-           [ l[0] ] + \
-           sort(f, filter(lambda e: not f(e, l[0]), l[1:]))
+def sort_recursive(f, l):
+  def sort(f, l):
+    if l == []:
+      return []
+    else:
+      return sort(f, filter(lambda e: f(e, l[0]), l[1:])) + \
+             [ l[0] ] + \
+             sort(f, filter(lambda e: not f(e, l[0]), l[1:]))
+  return sort(f, l)
+
+
+def sort_callbacks(f, l):
+  def sort(f, l, c = lambda v: v):
+    if l == []:
+      return c([])
+    else:
+      return lambda: \
+               sort(f,
+                    filter(lambda e: f(e, l[0]), l[1:]),
+                    lambda v1:
+                      lambda:
+                        sort(f,
+                             filter(lambda e: not f(e, l[0]), l[1:]),
+                             lambda v2:
+                               lambda: c(v1 + [ l[0] ] + v2)))
+  return trampoline(sort)(f, l)
+
+
+sort = sort_callbacks
 
 
 def unique(l):

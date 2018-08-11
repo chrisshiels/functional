@@ -643,19 +643,50 @@ describe('functional', function() {
   });
 
 
-  describe('#sort()', function() {
-    it('returns [ 1..10 ] for sort((m, n) => { return m <= n; }, [ 1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ])',
+  describe('#sort_recursive()', function() {
+    it('returns [ 1..10 ] for sort_recursive((m, n) => m <= n, [ 1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ])',
        function() {
-         assert.deepEqual(functional.sort((m, n) => { return m <= n; },
-                                          [ 1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ]),
+         assert.deepEqual(functional.sort_recursive((m, n) => m <= n,
+                                                    [ 1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ]),
                           [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]);
     });
 
-    it('returns [ [ 1 ], [ 1, 2 ],  [ 1, 2, 3 ] ] for sort((m, n) => { return m.length <= n.length; }, [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ])',
+    it('returns [ [ 1 ], [ 1, 2 ], [ 1, 2, 3 ] ] for sort_recursive((m, n) => m.length <= n.length, [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ])',
        function() {
-         assert.deepEqual(functional.sort((m, n) => { return m.length <= n.length; },
-                                          [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ]),
+         assert.deepEqual(functional.sort_recursive((m, n) => m.length <= n.length,
+                                                    [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ]),
                           [ [ 1 ], [ 1, 2 ],  [ 1, 2, 3 ] ]);
+    });
+
+    it('returns [ 1..1000 ] for sort_recursive((m, n) => m <= n, range(10, 0, -1))',
+       function() {
+         assert.deepEqual(functional.sort_recursive((m, n) => m <= n,
+                                                     functional.range(1000, 0, -1)),
+                          functional.range(1, 1001));
+    });
+  });
+
+
+  describe('#sort_callbacks()', function() {
+    it('returns [ 1..10 ] for sort_callbacks((m, n) => m <= n, [ 1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ])',
+       function() {
+         assert.deepEqual(functional.sort_callbacks((m, n) => m <= n,
+                                                    [ 1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ]),
+                          [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]);
+    });
+
+    it('returns [ [ 1 ], [ 1, 2 ], [ 1, 2, 3 ] ] for sort_callbacks((m, n) => m.length <= n.length, [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ])',
+       function() {
+         assert.deepEqual(functional.sort_callbacks((m, n) => m.length <= n.length,
+                                                    [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ]),
+                          [ [ 1 ], [ 1, 2 ],  [ 1, 2, 3 ] ]);
+    });
+
+    it('returns [ 1..1000 ] for sort_callbacks((m, n) => m <= n, range(10, 0, -1))',
+       function() {
+         assert.deepEqual(functional.sort_callbacks((m, n) => m <= n,
+                                                    functional.range(1000, 0, -1)),
+                          functional.range(1, 1001));
     });
   });
 

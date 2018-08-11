@@ -287,13 +287,40 @@ const reverse = function(l) {
 }
 
 
-const sort = function(f, l) {
-  if (l.length === 0)
-    return [];
-  return sort(f, filter((e) => { return f(e, l[0]); }, l.slice(1)))
-           .concat([ l[0] ])
-           .concat(sort(f, filter((e) => { return !f(e, l[0]); }, l.slice(1))));
+const sort_recursive = function(f, l) {
+  const sort = function(f, l) {
+    if (l.length === 0)
+      return [];
+    return sort(f, filter((e) => { return f(e, l[0]); },
+                          l.slice(1)))
+             .concat([ l[0] ])
+             .concat(sort(f, filter((e) => { return !f(e, l[0]); },
+                                    l.slice(1))));
+  }
+  return sort(f, l);
 }
+
+
+const sort_callbacks = function(f, l) {
+  const sort = function(f, l, c = (v) => v) {
+    if (l.length === 0)
+      return c([])
+    else
+      return () =>
+               sort(f,
+                    filter((e) => f(e, l[0]), l.slice(1)),
+                    (v1) =>
+                      () =>
+                        sort(f,
+                             filter((e) => !f(e, l[0]), l.slice(1)),
+                             (v2) =>
+                               c(v1.concat([ l[0] ]).concat(v2))))
+  }
+  return trampoline(sort)(f, l);
+}
+
+
+const sort = sort_callbacks;
 
 
 const unique = function(l) {
@@ -480,6 +507,8 @@ module.exports = {
   'partition':           partition,
   'split':               split,
   'reverse':             reverse,
+  'sort_recursive':      sort_recursive,
+  'sort_callbacks':      sort_callbacks,
   'sort':                sort,
   'unique':              unique,
   'zip':                 zip,

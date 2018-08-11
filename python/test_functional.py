@@ -286,13 +286,28 @@ def test_reverse():
          [ [ 5, 6 ], [ 3, 4 ], [ 1, 2 ] ]
 
 
-def test_sort():
-  assert functional.sort(lambda m, n: m <= n,
-                         [1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ]) == \
+def test_sort_recursive():
+  assert functional.sort_recursive(lambda m, n: m <= n,
+                                   [1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ]) == \
          functional.range(1, 11)
-  assert functional.sort(lambda m, n: len(m) <= len(n),
-                         [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ]) == \
+  assert functional.sort_recursive(lambda m, n: len(m) <= len(n),
+                                   [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ]) == \
          [ [ 1 ], [ 1, 2 ],  [ 1, 2, 3 ] ]
+  with pytest.raises(RuntimeError):
+    functional.sort_recursive(lambda m, n: m <= n,
+                              range(1000, 0, -1))
+
+
+def test_sort_callbacks():
+  assert functional.sort_callbacks(lambda m, n: m <= n,
+                                   [1, 10, 2, 9, 3, 8, 4, 7, 5, 6 ]) == \
+         functional.range(1, 11)
+  assert functional.sort_callbacks(lambda m, n: len(m) <= len(n),
+                                   [ [ 1, 2, 3], [ 1, 2 ], [ 1 ] ]) == \
+         [ [ 1 ], [ 1, 2 ],  [ 1, 2, 3 ] ]
+  assert functional.sort_callbacks(lambda m, n: m <= n,
+                                   range(1000, 0, -1)) == \
+         range(1, 1001)
 
 
 def test_unique():
