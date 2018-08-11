@@ -144,20 +144,70 @@ const flatten_callbacks = function(l) {
 const flatten = flatten_callbacks;
 
 
-const range = function(m, n = null, s = 1) {
-  const internal = function(start, stop, step) {
-    if (step === 0 ||
-        (step > 0 && start >= stop) ||
-        (step < 0 && start <= stop))
-      return [];
+const range_recursive = function(m, n = null, s = 1) {
+  const range = function(m, n = null, s = 1) {
+    const internal = function(start, stop, step) {
+      if (step === 0 ||
+          (step > 0 && start >= stop) ||
+          (step < 0 && start <= stop))
+        return [];
+      else
+        return [ start ].concat(internal(start + step, stop, step));
+    }
+    if (n === null)
+      return internal(0, m, s);
     else
-      return [ start ].concat(internal(start + step, stop, step));
+      return internal(m, n, s);
   }
-  if (n === null)
-    return internal(0, m, s);
-  else
-    return internal(m, n, s);
+  return range(m, n, s);
 }
+
+
+const range_accumulator = function(m, n = null, s = 1) {
+  const range = function(m, n = null, s = 1) {
+    const internal = function(start, stop, step, a = []) {
+      if (step === 0 ||
+          (step > 0 && start >= stop) ||
+          (step < 0 && start <= stop))
+        return a;
+      else
+        return () => internal(start + step,
+                              stop,
+                              step,
+                              a.concat([ start ]));
+    }
+    if (n === null)
+      return internal(0, m, s);
+    else
+      return internal(m, n, s);
+  }
+  return trampoline(range)(m, n, s);
+}
+
+
+const range_callbacks = function(m, n = null, s = 1) {
+  const range = function(m, n = null, s = 1) {
+    const internal = function(start, stop, step, c = (v) => v) {
+      if (step === 0 ||
+          (step > 0 && start >= stop) ||
+          (step < 0 && start <= stop))
+        return c([]);
+      else
+        return () => internal(start + step,
+                              stop,
+                              step,
+                              (v) => () => c([ start ].concat(v)));
+    }
+    if (n === null)
+      return internal(0, m, s);
+    else
+      return internal(m, n, s);
+  }
+  return trampoline(range)(m, n, s);
+}
+
+
+const range = range_callbacks;
 
 
 const reduce = function(f, l, v = null) {
@@ -412,6 +462,9 @@ module.exports = {
   'flatten_accumulator': flatten_accumulator,
   'flatten_callbacks':   flatten_callbacks,
   'flatten':             flatten,
+  'range_recursive':     range_recursive,
+  'range_accumulator':   range_accumulator,
+  'range_callbacks':     range_callbacks,
   'range':               range,
   'reduce':              reduce,
   'map':                 map,

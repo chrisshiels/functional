@@ -327,52 +327,154 @@ describe('functional', function() {
   });
 
 
-  describe('#range()', function() {
-    it('returns [] for range(0)',
+  describe('#range_recursive()', function() {
+    it('returns [] for range_recursive(0)',
        function() {
-         assert.deepEqual(functional.range(0),
+         assert.deepEqual(functional.range_recursive(0),
                           []);
     });
 
-    it('returns [ 0..9 ] for range(10)',
+    it('returns [ 0..9 ] for range_recursive(10)',
        function() {
-         assert.deepEqual(functional.range(10),
+         assert.deepEqual(functional.range_recursive(10),
                           [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
     });
 
-    it('returns [ 0..9 ] for range(0, 10)',
+    it('returns [ 0..9 ] for range_recursive(0, 10)',
        function() {
-         assert.deepEqual(functional.range(0, 10),
+         assert.deepEqual(functional.range_recursive(0, 10),
                           [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
     });
 
-    it('returns [ 0..9 ] for range(0, 10, 1)',
+    it('returns [ 0..9 ] for range_recursive(0, 10, 1)',
        function() {
-         assert.deepEqual(functional.range(0, 10, 1),
+         assert.deepEqual(functional.range_recursive(0, 10, 1),
                           [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
     });
 
-    it('returns [ 0,2,4,6,8 ] for range(0, 10, 2)',
+    it('returns [ 0,2,4,6,8 ] for range_recursive(0, 10, 2)',
        function() {
-         assert.deepEqual(functional.range(0, 10, 2),
+         assert.deepEqual(functional.range_recursive(0, 10, 2),
                           [ 0, 2, 4, 6, 8 ]);
     });
 
-    it('returns [ 0,3,6,9 ] for range(0, 10, 3)',
+    it('returns [ 0,3,6,9 ] for range_recursive(0, 10, 3)',
        function() {
-         assert.deepEqual(functional.range(0, 10, 3),
+         assert.deepEqual(functional.range_recursive(0, 10, 3),
                           [ 0, 3, 6, 9 ]);
     });
 
-    it('returns [ 10..1 ] for range(10, 0, -1)',
+    it('returns [ 10..1 ] for range_recursive(10, 0, -1)',
        function() {
-         assert.deepEqual(functional.range(10, 0, -1),
+         assert.deepEqual(functional.range_recursive(10, 0, -1),
                           [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]);
     });
 
-    it('returns [ 1..10 ] for range(1, 11)',
+    it('returns [ 1..10 ] for range_recursive(1, 11)',
        function() {
-         assert.deepEqual(functional.range(1, 11),
+         assert.deepEqual(functional.range_recursive(1, 11),
+                          [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]);
+    });
+  });
+
+
+  describe('#range_accumulator()', function() {
+    it('returns [] for range_accumulator(0)',
+       function() {
+         assert.deepEqual(functional.range_accumulator(0),
+                          []);
+    });
+
+    it('returns [ 0..9 ] for range_accumulator(10)',
+       function() {
+         assert.deepEqual(functional.range_accumulator(10),
+                          [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
+    });
+
+    it('returns [ 0..9 ] for range_accumulator(0, 10)',
+       function() {
+         assert.deepEqual(functional.range_accumulator(0, 10),
+                          [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
+    });
+
+    it('returns [ 0..9 ] for range_accumulator(0, 10, 1)',
+       function() {
+         assert.deepEqual(functional.range_accumulator(0, 10, 1),
+                          [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
+    });
+
+    it('returns [ 0,2,4,6,8 ] for range_accumulator(0, 10, 2)',
+       function() {
+         assert.deepEqual(functional.range_accumulator(0, 10, 2),
+                          [ 0, 2, 4, 6, 8 ]);
+    });
+
+    it('returns [ 0,3,6,9 ] for range_accumulator(0, 10, 3)',
+       function() {
+         assert.deepEqual(functional.range_accumulator(0, 10, 3),
+                          [ 0, 3, 6, 9 ]);
+    });
+
+    it('returns [ 10..1 ] for range_accumulator(10, 0, -1)',
+       function() {
+         assert.deepEqual(functional.range_accumulator(10, 0, -1),
+                          [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]);
+    });
+
+    it('returns [ 1..10 ] for range_accumulator(1, 11)',
+       function() {
+         assert.deepEqual(functional.range_accumulator(1, 11),
+                          [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]);
+    });
+  });
+
+
+  describe('#range_callbacks()', function() {
+    it('returns [] for range_callbacks(0)',
+       function() {
+         assert.deepEqual(functional.range_callbacks(0),
+                          []);
+    });
+
+    it('returns [ 0..9 ] for range_callbacks(10)',
+       function() {
+         assert.deepEqual(functional.range_callbacks(10),
+                          [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
+    });
+
+    it('returns [ 0..9 ] for range_callbacks(0, 10)',
+       function() {
+         assert.deepEqual(functional.range_callbacks(0, 10),
+                          [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
+    });
+
+    it('returns [ 0..9 ] for range_callbacks(0, 10, 1)',
+       function() {
+         assert.deepEqual(functional.range_callbacks(0, 10, 1),
+                          [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
+    });
+
+    it('returns [ 0,2,4,6,8 ] for range_callbacks(0, 10, 2)',
+       function() {
+         assert.deepEqual(functional.range_callbacks(0, 10, 2),
+                          [ 0, 2, 4, 6, 8 ]);
+    });
+
+    it('returns [ 0,3,6,9 ] for range_callbacks(0, 10, 3)',
+       function() {
+         assert.deepEqual(functional.range_callbacks(0, 10, 3),
+                          [ 0, 3, 6, 9 ]);
+    });
+
+    it('returns [ 10..1 ] for range_callbacks(10, 0, -1)',
+       function() {
+         assert.deepEqual(functional.range_callbacks(10, 0, -1),
+                          [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]);
+    });
+
+    it('returns [ 1..10 ] for range_callbacks(1, 11)',
+       function() {
+         assert.deepEqual(functional.range_callbacks(1, 11),
                           [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]);
     });
   });

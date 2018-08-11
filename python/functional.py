@@ -121,18 +121,58 @@ def flatten_callbacks(l):
 flatten = flatten_callbacks
 
 
-def range(m, n = None, s = 1):
-  def internal(start, stop, step):
-    if step == 0 or \
-       (step > 0 and start >= stop) or \
-       (step < 0 and start <= stop):
-      return []
+def range_recursive(m, n = None, s = 1):
+  def range(m, n = None, s = 1):
+    def internal(start, stop, step):
+      if step == 0 or \
+         (step > 0 and start >= stop) or \
+         (step < 0 and start <= stop):
+        return []
+      else:
+        return [ start ] + internal(start + step, stop, step)
+    if n is None:
+      return internal(0, m, s)
     else:
-      return [ start ] + internal(start + step, stop, step)
-  if n is None:
-    return internal(0, m, s)
-  else:
-    return internal(m, n, s)
+      return internal(m, n, s)
+  return range(m, n, s)
+
+
+def range_accumulator(m, n = None, s = 1):
+  def range(m, n = None, s = 1):
+    def internal(start, stop, step, a = []):
+      if step == 0 or \
+         (step > 0 and start >= stop) or \
+         (step < 0 and start <= stop):
+        return a
+      else:
+        return lambda: internal(start + step, stop, step, a + [ start ])
+    if n is None:
+      return internal(0, m, s)
+    else:
+      return internal(m, n, s)
+  return trampoline(range)(m, n, s)
+
+
+def range_callbacks(m, n = None, s = 1):
+  def range(m, n = None, s = 1):
+    def internal(start, stop, step, c = lambda v: v):
+      if step == 0 or \
+         (step > 0 and start >= stop) or \
+         (step < 0 and start <= stop):
+        return c([])
+      else:
+        return lambda: internal(start + step,
+                                stop,
+                                step,
+                                lambda v: lambda: c([ start ] + v))
+    if n is None:
+      return internal(0, m, s)
+    else:
+      return internal(m, n, s)
+  return trampoline(range)(m, n, s)
+
+
+range = range_callbacks
 
 
 def reduce(f, l, v = None):

@@ -147,23 +147,65 @@ def test_flatten_callbacks():
          [ 1 ] * 1000
 
 
-def test_range():
-  assert functional.range(0) == \
+def test_range_recursive():
+  assert functional.range_recursive(0) == \
          []
-  assert functional.range(10) == \
+  assert functional.range_recursive(10) == \
          [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
-  assert functional.range(0, 10) == \
+  assert functional.range_recursive(0, 10) == \
          [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
-  assert functional.range(0, 10, 1) == \
+  assert functional.range_recursive(0, 10, 1) == \
          [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
-  assert functional.range(0, 10, 2) == \
+  assert functional.range_recursive(0, 10, 2) == \
          [ 0, 2, 4, 6, 8 ]
-  assert functional.range(0, 10, 3) == \
+  assert functional.range_recursive(0, 10, 3) == \
          [ 0, 3, 6, 9 ]
-  assert functional.range(10, 0, -1) == \
+  assert functional.range_recursive(10, 0, -1) == \
          [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]
-  assert functional.range(1, 11) == \
+  assert functional.range_recursive(1, 11) == \
          [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+  with pytest.raises(RuntimeError):
+    functional.range_recursive(1, 1001)
+
+
+def test_range_accumulator():
+  assert functional.range_accumulator(0) == \
+         []
+  assert functional.range_accumulator(10) == \
+         [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+  assert functional.range_accumulator(0, 10) == \
+         [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+  assert functional.range_accumulator(0, 10, 1) == \
+         [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+  assert functional.range_accumulator(0, 10, 2) == \
+         [ 0, 2, 4, 6, 8 ]
+  assert functional.range_accumulator(0, 10, 3) == \
+         [ 0, 3, 6, 9 ]
+  assert functional.range_accumulator(10, 0, -1) == \
+         [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]
+  assert functional.range_accumulator(1, 11) == \
+         [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+  assert len(functional.range_accumulator(1, 1001)) == 1000
+
+
+def test_range_callbacks():
+  assert functional.range_callbacks(0) == \
+         []
+  assert functional.range_callbacks(10) == \
+         [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+  assert functional.range_callbacks(0, 10) == \
+         [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+  assert functional.range_callbacks(0, 10, 1) == \
+         [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+  assert functional.range_callbacks(0, 10, 2) == \
+         [ 0, 2, 4, 6, 8 ]
+  assert functional.range_callbacks(0, 10, 3) == \
+         [ 0, 3, 6, 9 ]
+  assert functional.range_callbacks(10, 0, -1) == \
+         [ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]
+  assert functional.range_callbacks(1, 11) == \
+         [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+  assert len(functional.range_callbacks(1, 1001)) == 1000
 
 
 def test_reduce():
