@@ -175,16 +175,21 @@ def range_callbacks(m, n = None, s = 1):
 range = range_callbacks
 
 
-def reduce(f, l, v = None):
-  def internal(f, l, v):
-    if l == []:
-      return v
+def reduce_accumulator(f, l, v = None):
+  def reduce(f, l, v = None):
+    def internal(f, l, v):
+      if l == []:
+        return v
+      else:
+        return lambda: internal(f, l[1:], f(v, l[0]))
+    if v is None:
+      return internal(f, l[1:], l[0])
     else:
-      return internal(f, l[1:], f(v, l[0]))
-  if v is None:
-    return internal(f, l[1:], l[0])
-  else:
-    return internal(f, l, v)
+      return internal(f, l, v)
+  return trampoline(reduce)(f, l, v)
+
+
+reduce = reduce_accumulator
 
 
 def map(f, l):
@@ -288,8 +293,9 @@ def pipe(l):
   return internal
 
 
-def pipe2(l):
-  return reduce(compose, l)
+# Note pipe2 is not compatible with the trampoline implementation of reduce.
+#def pipe2(l):
+#  return reduce(compose, l)
 
 
 def pipemaybe(l):

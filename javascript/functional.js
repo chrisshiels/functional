@@ -210,18 +210,24 @@ const range_callbacks = function(m, n = null, s = 1) {
 const range = range_callbacks;
 
 
-const reduce = function(f, l, v = null) {
-  const internal = function(f, l, v) {
-    if (l.length === 0)
-      return v;
+const reduce_accumulator = function(f, l, v = null) {
+  const reduce = function(f, l, v = null) {
+    const internal = function(f, l, v) {
+      if (l.length === 0)
+        return v;
+      else
+        return () => internal(f, l.slice(1), f(v, l[0]));
+    }
+    if (v === null)
+      return internal(f, l.slice(1), l[0]);
     else
-      return internal(f, l.slice(1), f(v, l[0]));
+      return internal(f, l, v);
   }
-  if (v === null)
-    return internal(f, l.slice(1), l[0]);
-  else
-    return internal(f, l, v);
+  return trampoline(reduce)(f, l, v);
 }
+
+
+const reduce = reduce_accumulator;
 
 
 const map = function(f, l) {
@@ -349,9 +355,10 @@ const pipe = function(l) {
 }
 
 
-const pipe2 = function(l) {
-  return reduce(compose, l);
-}
+// Note pipe2 is not compatible with the trampoline implementation of reduce.
+// const pipe2 = function(l) {
+//   return reduce(compose, l);
+// }
 
 
 const pipemaybe = function(l) {
@@ -466,6 +473,7 @@ module.exports = {
   'range_accumulator':   range_accumulator,
   'range_callbacks':     range_callbacks,
   'range':               range,
+  'reduce_accumulator':  reduce_accumulator,
   'reduce':              reduce,
   'map':                 map,
   'filter':              filter,
@@ -478,7 +486,7 @@ module.exports = {
   'permutations':        permutations,
   'compose':             compose,
   'pipe':                pipe,
-  'pipe2':               pipe2,
+  //'pipe2':               pipe2,
   'pipemaybe':           pipemaybe,
   'partial':             partial,
   'curry':               curry,
