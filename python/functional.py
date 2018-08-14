@@ -360,11 +360,34 @@ def memoize(f):
   return internal
 
 
-def factorial(n):
-  if n <= 1:
-    return 1
-  else:
-    return n * factorial(n - 1)
+def factorial_recursive(n):
+  def factorial(n):
+    if n <= 1:
+      return 1
+    else:
+      return n * factorial(n - 1)
+  return factorial(n)
+
+
+def factorial_accumulator(n):
+  def factorial(n, a = 1):
+    if n <= 1:
+      return a
+    else:
+      return lambda: factorial(n - 1, n * a)
+  return trampoline(factorial)(n)
+
+
+def factorial_callbacks(n):
+  def factorial(n, c = lambda v: v):
+    if n <= 1:
+      return c(1)
+    else:
+      return lambda: factorial(n - 1, lambda v: lambda: c(n * v))
+  return trampoline(factorial)(n)
+
+
+factorial = factorial_callbacks
 
 
 def fibonacci(n):

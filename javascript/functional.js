@@ -432,12 +432,40 @@ const memoize = function(f) {
 }
 
 
-const factorial = function(n) {
-  if (n <= 1)
-    return 1;
-  else
-    return n * factorial(n - 1);
+const factorial_recursive = function(n) {
+  const factorial = function(n) {
+    if (n <= 1)
+      return 1;
+    else
+      return n * factorial(n - 1);
+  }
+  return factorial(n);
 }
+
+
+const factorial_accumulator = function(n) {
+  const factorial = function(n, a = 1) {
+    if (n <= 1)
+      return a;
+    else
+      return () => factorial(n - 1, n * a);
+  }
+  return trampoline(factorial)(n);
+}
+
+
+const factorial_callbacks = function(n) {
+  const factorial = function(n, c = (v) => v) {
+    if (n <= 1)
+      return c(1);
+    else
+      return () => factorial(n - 1, (v) => () => c(n * v));
+  }
+  return trampoline(factorial)(n);
+}
+
+
+const factorial = factorial_callbacks;
 
 
 const fibonacci = function(n) {
@@ -484,45 +512,48 @@ const ispalindrome = function(s) {
 
 
 module.exports = {
-  'all_recursive':       all_recursive,
-  'all_accumulator':     all_accumulator,
-  'all_callbacks':       all_callbacks,
-  'all':                 all,
-  'any_recursive':       any_recursive,
-  'any_accumulator':     any_accumulator,
-  'any_callbacks':       any_callbacks,
-  'any':                 any,
-  'flatten_recursive':   flatten_recursive,
-  'flatten_accumulator': flatten_accumulator,
-  'flatten_callbacks':   flatten_callbacks,
-  'flatten':             flatten,
-  'range_recursive':     range_recursive,
-  'range_accumulator':   range_accumulator,
-  'range_callbacks':     range_callbacks,
-  'range':               range,
-  'reduce_accumulator':  reduce_accumulator,
-  'reduce':              reduce,
-  'map':                 map,
-  'filter':              filter,
-  'partition':           partition,
-  'split':               split,
-  'reverse':             reverse,
-  'sort_recursive':      sort_recursive,
-  'sort_callbacks':      sort_callbacks,
-  'sort':                sort,
-  'unique':              unique,
-  'zip':                 zip,
-  'permutations':        permutations,
-  'compose':             compose,
-  'pipe':                pipe,
+  'all_recursive':         all_recursive,
+  'all_accumulator':       all_accumulator,
+  'all_callbacks':         all_callbacks,
+  'all':                   all,
+  'any_recursive':         any_recursive,
+  'any_accumulator':       any_accumulator,
+  'any_callbacks':         any_callbacks,
+  'any':                   any,
+  'flatten_recursive':     flatten_recursive,
+  'flatten_accumulator':   flatten_accumulator,
+  'flatten_callbacks':     flatten_callbacks,
+  'flatten':               flatten,
+  'range_recursive':       range_recursive,
+  'range_accumulator':     range_accumulator,
+  'range_callbacks':       range_callbacks,
+  'range':                 range,
+  'reduce_accumulator':    reduce_accumulator,
+  'reduce':                reduce,
+  'map':                   map,
+  'filter':                filter,
+  'partition':             partition,
+  'split':                 split,
+  'reverse':               reverse,
+  'sort_recursive':        sort_recursive,
+  'sort_callbacks':        sort_callbacks,
+  'sort':                  sort,
+  'unique':                unique,
+  'zip':                   zip,
+  'permutations':          permutations,
+  'compose':               compose,
+  'pipe':                  pipe,
   //'pipe2':               pipe2,
-  'pipemaybe':           pipemaybe,
-  'partial':             partial,
-  'curry':               curry,
-  'memoize':             memoize,
-  'factorial':           factorial,
-  'fibonacci':           fibonacci,
-  'memoizedfibonacci':   memoizedfibonacci,
-  'primes':              primes,
-  'ispalindrome':        ispalindrome
+  'pipemaybe':             pipemaybe,
+  'partial':               partial,
+  'curry':                 curry,
+  'memoize':               memoize,
+  'factorial_recursive':   factorial_recursive,
+  'factorial_accumulator': factorial_accumulator,
+  'factorial_callbacks':   factorial_callbacks,
+  'factorial':             factorial,
+  'fibonacci':             fibonacci,
+  'memoizedfibonacci':     memoizedfibonacci,
+  'primes':                primes,
+  'ispalindrome':          ispalindrome
 };

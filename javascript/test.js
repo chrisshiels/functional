@@ -972,12 +972,56 @@ describe('functional', function() {
   });
 
 
-  describe('#factorial()', function() {
-    it('returns [ 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 ] for map(factorial, range(1, 11))',
+  describe('#factorial_recursive()', function() {
+    it('returns [ 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 ] for map(factorial_recursive, range(1, 11))',
        function() {
-         assert.deepEqual(functional.map(functional.factorial,
+         assert.deepEqual(functional.map(functional.factorial_recursive,
                                          functional.range(1, 11)),
                           [ 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 ]);
+    });
+
+    // Note JavaScript seems to treat any factorial greater than 170! as
+    // Infinity.
+    it('returns 7.257415615307994e+306 for factorial_recursive(170)',
+       function() {
+         assert.equal(functional.factorial_recursive(170),
+                      7.257415615307994e+306);
+    });
+  });
+
+
+  describe('#factorial_accumulator()', function() {
+    it('returns [ 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 ] for map(factorial_accumulator, range(1, 11))',
+       function() {
+         assert.deepEqual(functional.map(functional.factorial_accumulator,
+                                         functional.range(1, 11)),
+                          [ 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 ]);
+    });
+
+    // Note JavaScript seems to treat any factorial greater than 170! as
+    // Infinity.
+    it('returns 7.257415615308004e+306 for factorial_accumulator(170)',
+       function() {
+         assert.equal(functional.factorial_accumulator(170),
+                      7.257415615308004e+306);
+    });
+  });
+
+
+  describe('#factorial_callbacks()', function() {
+    it('returns [ 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 ] for map(factorial_callbacks, range(1, 11))',
+       function() {
+         assert.deepEqual(functional.map(functional.factorial_callbacks,
+                                         functional.range(1, 11)),
+                          [ 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 ]);
+    });
+
+    // Note JavaScript seems to treat any factorial greater than 170! as
+    // Infinity.
+    it('returns 7.257415615307994e+306 for factorial_callbacks(170)',
+       function() {
+         assert.equal(functional.factorial_callbacks(170),
+                      7.257415615307994e+306);
     });
   });
 
