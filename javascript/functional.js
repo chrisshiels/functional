@@ -468,12 +468,44 @@ const factorial_callbacks = function(n) {
 const factorial = factorial_callbacks;
 
 
-const fibonacci = function(n) {
-  if (n <= 1)
-    return 1;
-  else
-    return fibonacci(n - 1) + fibonacci(n - 2);
+const fibonacci_recursive = function(n) {
+  const fibonacci = function(n) {
+    if (n <= 2)
+      return 1;
+    else
+      return fibonacci(n - 1) + fibonacci(n - 2);
+  }
+  return fibonacci(n);
 }
+
+
+const fibonacci_accumulator = function(n) {
+  const fibonacci = function(n, a = 1, b = 0) {
+    if (n <= 1)
+      return a;
+    else
+      return () => fibonacci(n - 1, a + b, a);
+  }
+  return trampoline(fibonacci)(n);
+}
+
+
+const fibonacci_callbacks = function(n) {
+  const fibonacci = function(n, c = (v) => v) {
+    if (n <= 2)
+      return c(1);
+    else
+      return () => fibonacci(n - 1,
+                             (v1) =>
+                               () => fibonacci(n - 2,
+                                               (v2) =>
+                                                 () => c(v1 + v2)));
+  }
+  return trampoline(fibonacci)(n);
+}
+
+
+const fibonacci = fibonacci_callbacks;
 
 
 const memoizedfibonacci = function(n) {
@@ -552,6 +584,9 @@ module.exports = {
   'factorial_accumulator': factorial_accumulator,
   'factorial_callbacks':   factorial_callbacks,
   'factorial':             factorial,
+  'fibonacci_recursive':   fibonacci_recursive,
+  'fibonacci_accumulator': fibonacci_accumulator,
+  'fibonacci_callbacks':   fibonacci_callbacks,
   'fibonacci':             fibonacci,
   'memoizedfibonacci':     memoizedfibonacci,
   'primes':                primes,

@@ -1026,12 +1026,32 @@ describe('functional', function() {
   });
 
 
-  describe('#fibonacci()', function() {
-    it('returns [ 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ] for map(fibonacci, range(1, 11))',
+  describe('#fibonacci_recursive()', function() {
+    it('returns [ 1, 1, 2, 3, 5, 8, 13, 21, 34, 55 ] for map(fibonacci_recursive, range(1, 11))',
        function() {
-         assert.deepEqual(functional.map(functional.fibonacci,
+         assert.deepEqual(functional.map(functional.fibonacci_recursive,
                                          functional.range(1, 11)),
-                          [ 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ]);
+                          [ 1, 1, 2, 3, 5, 8, 13, 21, 34, 55 ]);
+    });
+  });
+
+
+  describe('#fibonacci_accumulator()', function() {
+    it('returns [ 1, 1, 2, 3, 5, 8, 13, 21, 34, 55 ] for map(fibonacci_accumulator, range(1, 11))',
+       function() {
+         assert.deepEqual(functional.map(functional.fibonacci_accumulator,
+                                         functional.range(1, 11)),
+                          [ 1, 1, 2, 3, 5, 8, 13, 21, 34, 55 ]);
+    });
+  });
+
+
+  describe('#fibonacci_callbacks()', function() {
+    it('returns [ 1, 1, 2, 3, 5, 8, 13, 21, 34, 55 ] for map(fibonacci_callbacks, range(1, 11))',
+       function() {
+         assert.deepEqual(functional.map(functional.fibonacci_callbacks,
+                                         functional.range(1, 11)),
+                          [ 1, 1, 2, 3, 5, 8, 13, 21, 34, 55 ]);
     });
   });
 

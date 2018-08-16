@@ -390,11 +390,38 @@ def factorial_callbacks(n):
 factorial = factorial_callbacks
 
 
-def fibonacci(n):
-  if n <= 1:
-    return 1
-  else:
-    return fibonacci(n - 1) + fibonacci(n - 2)
+def fibonacci_recursive(n):
+  def fibonacci(n):
+    if n <= 2:
+      return 1
+    else:
+      return fibonacci(n - 1) + fibonacci(n - 2)
+  return fibonacci(n)
+
+
+def fibonacci_accumulator(n):
+  def fibonacci(n, a = 1, b = 0):
+    if n <= 1:
+      return a
+    else:
+      return lambda: fibonacci(n - 1, a + b, a)
+  return trampoline(fibonacci)(n)
+
+
+def fibonacci_callbacks(n):
+  def fibonacci(n, c = lambda v: v):
+    if n <= 2:
+      return c(1)
+    else:
+      return lambda: fibonacci(n - 1,
+                               lambda v1:
+                                 lambda: fibonacci(n - 2,
+                                                   lambda v2:
+                                                     lambda: c(v1 + v2)))
+  return trampoline(fibonacci)(n)
+
+
+fibonacci = fibonacci_callbacks
 
 
 def memoizedfibonacci(n):
