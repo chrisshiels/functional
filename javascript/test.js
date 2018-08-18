@@ -1067,10 +1067,28 @@ describe('functional', function() {
   });
 
 
-  describe('#primes()', function() {
-    it('returns [ 2, 3, 5, 7, 11, 13, 17, 19 ] for primes(20)',
+  describe('#primes_recursive()', function() {
+    it('returns [ 2, 3, 5, 7, 11, 13, 17, 19 ] for primes_recursive(20)',
        function() {
-         assert.deepEqual(functional.primes(20),
+         assert.deepEqual(functional.primes_recursive(20),
+                          [ 2, 3, 5, 7, 11, 13, 17, 19 ]);
+    });
+  });
+
+
+  describe('#primes_accumulator()', function() {
+    it('returns [ 2, 3, 5, 7, 11, 13, 17, 19 ] for primes_accumulator(20)',
+       function() {
+         assert.deepEqual(functional.primes_accumulator(20),
+                          [ 2, 3, 5, 7, 11, 13, 17, 19 ]);
+    });
+  });
+
+
+  describe('#primes_callbacks()', function() {
+    it('returns [ 2, 3, 5, 7, 11, 13, 17, 19 ] for primes_callbacks(20)',
+       function() {
+         assert.deepEqual(functional.primes_callbacks(20),
                           [ 2, 3, 5, 7, 11, 13, 17, 19 ]);
     });
   });

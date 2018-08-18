@@ -520,17 +520,54 @@ const memoizedfibonacci = function(n) {
 }
 
 
-const primes = function(n) {
-  const sieve = function(l) {
-    if (l.length === 0)
-      return [];
-    else
-      return [ l[0] ].concat(sieve(filter((e) => { return e % l[0] != 0 },
-                                          l.slice(1))));
+const primes_recursive = function(n) {
+  const primes = function(n) {
+    const sieve = function(l) {
+      if (l.length === 0)
+        return [];
+      else
+        return [ l[0] ].concat(sieve(filter((e) => { return e % l[0] != 0 },
+                                            l.slice(1))));
+    }
+    return sieve(range(2, n));
   }
-
-  return sieve(range(2, n));
+  return primes(n);
 }
+
+
+const primes_accumulator = function(n) {
+  const primes = function(n) {
+    const sieve = function(l, a = []) {
+      if (l.length === 0)
+        return a;
+      else
+        return () => sieve(filter((e) => { return e % l[0] != 0 },
+                                  l.slice(1)),
+                           a.concat([ l[0] ]));
+    }
+    return trampoline(sieve)(range(2, n));
+  }
+  return primes(n);
+}
+
+
+const primes_callbacks = function(n) {
+  const primes = function(n) {
+    const sieve = function(l, c = (v) => v) {
+      if (l.length === 0)
+        return c([]);
+      else
+        return () => sieve(filter((e) => { return e % l[0] != 0 },
+                                  l.slice(1)),
+	                   (v) => () => c([ l[0] ].concat(v)));
+    }
+    return trampoline(sieve)(range(2, n));
+  }
+  return primes(n);
+}
+
+
+const primes = primes_callbacks;
 
 
 const ispalindrome = function(s) {
@@ -589,6 +626,9 @@ module.exports = {
   'fibonacci_callbacks':   fibonacci_callbacks,
   'fibonacci':             fibonacci,
   'memoizedfibonacci':     memoizedfibonacci,
+  'primes_recursive':      primes_recursive,
+  'primes_accumulator':    primes_accumulator,
+  'primes_callbacks':      primes_callbacks,
   'primes':                primes,
   'ispalindrome':          ispalindrome
 };

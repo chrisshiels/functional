@@ -434,13 +434,42 @@ def memoizedfibonacci(n):
   return fibonacci(n)
 
 
-def primes(n):
-  def sieve(l):
-    if l == []:
-      return []
-    else:
-      return [ l[0] ] + sieve(filter(lambda e: e % l[0] != 0, l[1:]))
-  return sieve(range(2, n))
+def primes_recursive(n):
+  def primes(n):
+    def sieve(l):
+      if l == []:
+        return []
+      else:
+        return [ l[0] ] + sieve(filter(lambda e: e % l[0] != 0, l[1:]))
+    return sieve(range(2, n))
+  return primes(n)
+
+
+def primes_accumulator(n):
+  def primes(n):
+    def sieve(l, a = []):
+      if l == []:
+        return a
+      else:
+          return lambda: sieve(filter(lambda e: e % l[0] != 0, l[1:]),
+                               a + [ l[0] ])
+    return trampoline(sieve)(range(2, n))
+  return primes(n)
+
+
+def primes_callbacks(n):
+  def primes(n):
+    def sieve(l, c = lambda v: v):
+      if l == []:
+        return c([])
+      else:
+        return lambda: sieve(filter(lambda e: e % l[0] != 0, l[1:]),
+                             lambda v: lambda: c([ l[0] ] + v))
+    return trampoline(sieve)(range(2, n))
+  return primes(n)
+
+
+primes = primes_callbacks
 
 
 def ispalindrome(s):

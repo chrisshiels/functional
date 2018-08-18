@@ -523,8 +523,18 @@ def test_memoizedfibonacci():
          20365011074
 
 
-def test_primes():
-  assert functional.primes(20) == \
+def test_primes_recursive():
+  assert functional.primes_recursive(20) == \
+         [ 2, 3, 5, 7, 11, 13, 17, 19 ]
+
+
+def test_primes_accumulator():
+  assert functional.primes_accumulator(20) == \
+         [ 2, 3, 5, 7, 11, 13, 17, 19 ]
+
+
+def test_primes_callbacks():
+  assert functional.primes_callbacks(20) == \
          [ 2, 3, 5, 7, 11, 13, 17, 19 ]
 
 
