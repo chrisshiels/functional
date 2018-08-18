@@ -12,6 +12,8 @@ const functional = require('./functional');
 
 
 describe('functional', function() {
+  this.timeout(5000);
+
   describe('#all_recursive()', function() {
     const divisibleby2 = function(v) {
       return v % 2 === 0;
