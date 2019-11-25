@@ -118,16 +118,18 @@ def unique(l):
   return reduce(accumulate, l, [])
 
 
-def zip(*args):
-  def accumulateheads(a, e):
-    return a + [ e[0] ]
-  def accumulatetails(a, e):
-    return a + [ e[1:] ]
-  args = list(args)
-  if args[0] == []:
+def zip(l1, l2):
+  if l1 == [] or l2 == []:
     return []
-  return [ reduce(accumulateheads, args, []) ] + \
-             zip(*reduce(accumulatetails, args, []))
+  else:
+    return [ (l1[0], l2[0]) ] + zip(l1[1:], l2[1:])
+
+
+def zipwith(f, l1, l2):
+  if l1 == [] or l2 == []:
+    return []
+  else:
+    return [ f(l1[0], l2[0]) ] + zipwith(f, l1[1:], l2[1:])
 
 
 def permutations(l):

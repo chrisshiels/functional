@@ -147,15 +147,25 @@ def test_unique():
 
 
 def test_zip():
-  a = [ [ 1, 2, 3, 4 ],
-        [ 5, 6, 7, 8 ] ]
-  a1 = [ [ 1, 5 ],
-         [ 2, 6 ],
-         [ 3, 7 ],
-         [ 4, 8 ] ]
-  assert functional.zip(*a) == \
-         a1
-  assert functional.zip(*functional.zip(*a)) == a
+  l1 = [ 1, 2, 3, 4 ]
+  l2 = [ 5, 6, 7, 8 ]
+  ret = [ ( 1, 5 ),
+          ( 2, 6 ),
+          ( 3, 7 ),
+          ( 4, 8 ) ]
+  assert functional.zip(l1, l2) == \
+         ret
+
+
+def test_zipwith():
+  l1 = [ 1, 2, 3, 4 ]
+  l2 = [ 5, 6, 7, 8 ]
+  ret = [ 6,
+          8,
+          10,
+          12 ]
+  assert functional.zipwith(lambda x, y: x + y, l1, l2) == \
+         ret
 
 
 def test_permutations():

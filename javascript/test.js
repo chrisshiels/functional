@@ -338,24 +338,32 @@ describe('functional', function() {
 
 
   describe('#zip()', function() {
-    it('returns [ [ 1, 5 ], [ 2, 6 ], [ 3, 7 ], [ 4, 8 ] ] for zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ])',
+    it('returns [ (1, 5), (2, 6), (3, 7), (4, 8) ] for zip([ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ])',
        function() {
-         let a = [ [ 1, 2, 3, 4 ],
-                   [ 5, 6, 7, 8 ] ];
-         let a1 = [ [ 1, 5 ],
-                    [ 2, 6 ],
-                    [ 3, 7 ],
-                    [ 4, 8 ] ];
-         assert.deepEqual(functional.zip(...a),
-                          a1);
+         let l1 = [ 1, 2, 3, 4 ];
+         let l2 = [ 5, 6, 7, 8 ];
+         let ret = [ (1, 5),
+                     (2, 6),
+                     (3, 7),
+                     (4, 8) ];
+         assert.deepEqual(functional.zip(l1, l2),
+                          ret);
     });
+  });
 
-    it('returns [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ] for zip(...zip(...[ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ]))',
+
+  describe('#zipwith()', function() {
+    it('returns [ 6, 8, 10, 12 ] for zipwith([ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ])',
        function() {
-         let a = [ [ 1, 2, 3, 4 ],
-                   [ 5, 6, 7, 8 ] ];
-         assert.deepEqual(functional.zip(...functional.zip(...a)),
-                          a);
+         let l1 = [ 1, 2, 3, 4 ];
+         let l2 = [ 5, 6, 7, 8 ];
+         let ret = [ 6,
+                     8,
+                     10,
+                     12 ];
+         assert.deepEqual(functional.zipwith((m, n) => { return m + n; },
+		                             l1, l2),
+                          ret);
     });
   });
 

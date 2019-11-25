@@ -2,7 +2,7 @@
 
 Implementations of common functional programming functions in Python:
 all, any, flatten, range, reduce, map, filter, partition, permutations,
-split, reverse, sort, unique, zip, compose, pipe, pipemaybe, partial,
+split, reverse, sort, unique, zip, zipwith, compose, pipe, pipemaybe, partial,
 curry and memoize.
 
     host$ virtualenv virtualenv

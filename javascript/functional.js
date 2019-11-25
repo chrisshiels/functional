@@ -144,17 +144,19 @@ const unique = function(l) {
 }
 
 
-const zip = function(...args) {
-  const accumulateheads = function(a, e) {
-    return a.concat([ e[0] ]);
-  }
-  const accumulatetails = function(a, e) {
-    return a.concat([ e.slice(1) ]);
-  }
-  if (args[0].length === 0)
-    return [];
-  return [ reduce(accumulateheads, args, []) ]
-           .concat(zip(...(reduce(accumulatetails, args, []))));
+const zip = function(l1, l2) {
+    if (l1.length === 0 || l2.length === 0)
+        return [];
+    else
+        return [ (l1[0], l2[0]) ].concat(zip(l1.slice(1), l2.slice(1)));
+}
+
+
+const zipwith = function(f, l1, l2) {
+    if (l1.length === 0 || l2.length === 0)
+        return [];
+    else
+        return [ f(l1[0], l2[0]) ].concat(zipwith(f, l1.slice(1), l2.slice(1)));
 }
 
 
@@ -306,6 +308,7 @@ module.exports = {
   'sort':              sort,
   'unique':            unique,
   'zip':               zip,
+  'zipwith':           zipwith,
   'permutations':      permutations,
   'compose':           compose,
   'pipe':              pipe,

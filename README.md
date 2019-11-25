@@ -24,3 +24,4 @@ Python:
 * split
 * unique
 * zip
+* zipwith
