@@ -10,6 +10,6 @@
   "author": "Chris Shiels",
   "license": "ISC",
   "dependencies": {
-    "mocha": "^3.4.1"
+    "mocha": "6.2.2"
   }
 }
