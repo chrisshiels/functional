@@ -73,6 +73,12 @@ def test_reduce():
          6
 
 
+def test_scan():
+  assert functional.scan(lambda a, e: a + e,
+                         functional.range(1, 11), 0) == \
+         [ 0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
+
+
 def test_map():
   assert functional.map(lambda e: e * 2,
                         functional.range(1, 11)) == \

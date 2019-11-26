@@ -20,6 +20,7 @@ Python:
 * range
 * reduce
 * reverse
+* scan
 * sort
 * split
 * unique

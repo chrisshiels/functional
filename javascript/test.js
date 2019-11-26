@@ -193,6 +193,17 @@ describe('functional', function() {
   });
 
 
+  describe('#scan()', function() {
+    it('returns [ 0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ] for scan((a, e) => { return a + e; }, range(1, 11), 0)',
+       function() {
+         assert.deepEqual(functional.scan((a, e) => { return a + e; },
+                                          functional.range(1, 11),
+                                          0),
+                          [ 0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]);
+    });
+  });
+
+
   describe('#map()', function() {
     it('returns [ 2,4,6..20 ] for map((e) => { return e * 2; }, range(1, 11))',
        function() {

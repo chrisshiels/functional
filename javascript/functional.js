@@ -67,6 +67,17 @@ const reduce = function(f, l, v = null) {
 }
 
 
+const scan = function(f, l, v) {
+  const internal = function(f, l, a) {
+    if (l.length === 0)
+      return a;
+    else
+      return internal(f, l.slice(1), a.concat(f(a.slice(-1)[0], l[0])));
+  }
+  return internal(f, l, [ v ]);
+}
+
+
 const map = function(f, l) {
   const accumulate = function(a, e) {
     return a.concat([ f(e) ]);
@@ -300,6 +311,7 @@ module.exports = {
   'flatten':           flatten,
   'range':             range,
   'reduce':            reduce,
+  'scan':              scan,
   'map':               map,
   'filter':            filter,
   'partition':         partition,

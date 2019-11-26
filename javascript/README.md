@@ -1,7 +1,7 @@
 # functional/javascript
 
 Implementations of common functional programming functions in JavaScript:
-all, any, flatten, range, reduce, map, filter, partition, permutations,
+all, any, flatten, range, reduce, scan, map, filter, partition, permutations,
 split, reverse, sort, unique, zip, zipwith, compose, pipe, pipemaybe, partial,
 curry and memoize.
 

@@ -57,6 +57,15 @@ def reduce(f, l, v = None):
     return internal(f, l, v)
 
 
+def scan(f, l, v):
+  def internal(f, l, a):
+    if l == []:
+      return a
+    else:
+      return internal(f, l[1:], a + [f(a[-1], l[0])])
+  return internal(f, l, [ v ])
+
+
 def map(f, l):
   def accumulate(a, e):
     return a + [ f(e) ]
