@@ -156,18 +156,18 @@ const unique = function(l) {
 
 
 const zip = function(l1, l2) {
-    if (l1.length === 0 || l2.length === 0)
-        return [];
-    else
-        return [ (l1[0], l2[0]) ].concat(zip(l1.slice(1), l2.slice(1)));
+  if (l1.length === 0 || l2.length === 0)
+    return [];
+  else
+    return [ (l1[0], l2[0]) ].concat(zip(l1.slice(1), l2.slice(1)));
 }
 
 
 const zipwith = function(f, l1, l2) {
-    if (l1.length === 0 || l2.length === 0)
-        return [];
-    else
-        return [ f(l1[0], l2[0]) ].concat(zipwith(f, l1.slice(1), l2.slice(1)));
+  if (l1.length === 0 || l2.length === 0)
+    return [];
+  else
+    return [ f(l1[0], l2[0]) ].concat(zipwith(f, l1.slice(1), l2.slice(1)));
 }
 
 
