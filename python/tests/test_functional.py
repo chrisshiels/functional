@@ -110,7 +110,6 @@ def test_partition():
   assert functional.partition(lambda e: e == 0,
                               functional.range(1, 11)) == \
          [ [], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ]
-
   assert functional.partition(lambda e: len(e) > 1,
                               [ [ 1 ], [ 1, 2 ], [ 1, 2, 3 ] ]) == \
          [ [ [ 1, 2 ], [ 1, 2, 3 ] ], [ [ 1 ] ] ]
@@ -172,6 +171,13 @@ def test_zipwith():
           12 ]
   assert functional.zipwith(lambda x, y: x + y, l1, l2) == \
          ret
+
+
+def test_group():
+  assert functional.group([ 1, 1, 2, 3, 3, 1, 4, 4, 4 ]) == \
+         [ [ 1, 1 ], [ 2 ], [ 3, 3 ], [ 1 ], [ 4, 4, 4 ]]
+  a = [ 1, 1, 2, 3, 3, 1, 4, 4, 4 ]
+  assert functional.flatten(functional.group(a)) == a
 
 
 def test_permutations():

@@ -379,6 +379,21 @@ describe('functional', function() {
   });
 
 
+  describe('#group()', function() {
+    it('returns [ [ 1, 1 ], [ 2 ], [ 3, 3 ], [ 1 ], [ 4, 4, 4 ] ] for group([ 1, 1, 2, 3, 3, 1, 4, 4, 4 ])',
+       function() {
+         assert.deepEqual(functional.group([ 1, 1, 2, 3, 3, 1, 4, 4, 4 ]),
+		          [ [ 1, 1 ], [ 2 ], [ 3, 3 ], [ 1 ], [ 4, 4, 4 ] ]);
+    });
+
+    it('returns [ 1, 1, 2, 3, 3, 1, 4, 4, 4 ] for flatten(group([ 1, 1, 2, 3, 3, 1, 4, 4, 4 ]))',
+       function() {
+         assert.deepEqual(functional.flatten(functional.group([ 1, 1, 2, 3, 3, 1, 4, 4, 4 ])),
+		          [ 1, 1, 2, 3, 3, 1, 4, 4, 4 ]);
+    });
+  });
+
+
   describe('#permutations()', function() {
     it('returns [] for permutations([])',
        function() {

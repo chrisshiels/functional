@@ -171,6 +171,17 @@ const zipwith = function(f, l1, l2) {
 }
 
 
+const group = function(l) {
+  const accumulate = function(a, e) {
+    if (a.length && a.slice(-1)[0].includes(e))
+      return a.slice(0, -1).concat([ a.slice(-1)[0].concat([ e ]) ]);
+    else
+      return a.concat([ [ e ] ]);
+  }
+  return reduce(accumulate, l, []);
+}
+
+
 const permutations = function(l) {
   if (l.length === 0)
     return [];
@@ -321,6 +332,7 @@ module.exports = {
   'unique':            unique,
   'zip':               zip,
   'zipwith':           zipwith,
+  'group':             group,
   'permutations':      permutations,
   'compose':           compose,
   'pipe':              pipe,

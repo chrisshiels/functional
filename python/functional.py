@@ -141,6 +141,15 @@ def zipwith(f, l1, l2):
     return [ f(l1[0], l2[0]) ] + zipwith(f, l1[1:], l2[1:])
 
 
+def group(l):
+  def accumulate(a, e):
+    if len(a) and e in a[-1]:
+      return a[0:-1] + [ a[-1] + [ e ] ]
+    else:
+      return a + [ [ e ] ]
+  return reduce(accumulate, l, [])
+
+
 def permutations(l):
   if len(l) == 0:
     return []
