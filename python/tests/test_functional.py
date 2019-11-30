@@ -287,7 +287,7 @@ def test_pipemaybe():
                                 valueadd1 ])(0) == 3
   assert functional.pipemaybe([ valueadd1,
                                 valuenone,
-                                valueadd1 ])(0) == None
+                                valueadd1 ])(0) is None
 
 
 def test_partial():

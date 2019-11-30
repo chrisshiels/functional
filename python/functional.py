@@ -184,7 +184,7 @@ def pipe2(l):
 
 def pipemaybe(l):
   def accumulate(a, e):
-    if a != None:
+    if a is not None:
       return e(a)
     else:
       return None
