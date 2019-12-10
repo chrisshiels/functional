@@ -194,6 +194,18 @@ def pipemaybe(l):
   return internal
 
 
+def pipeeither(l):
+  def accumulate(a, e):
+    if a[0] is None:
+      return e(a[1])
+    else:
+      return a
+
+  def internal(v):
+    return reduce(accumulate, l, (None, v))
+  return internal
+
+
 def partial(f, *args1):
   def internal(*args2):
     return f(*(args1 + args2))

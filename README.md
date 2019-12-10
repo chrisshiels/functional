@@ -17,6 +17,7 @@ Python:
 * permutations
 * pipe2
 * pipe
+* pipeeither
 * pipemaybe
 * range
 * reduce

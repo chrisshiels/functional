@@ -3,7 +3,7 @@
 Implementations of common functional programming functions in JavaScript:
 all, any, flatten, range, reduce, scan, map, filter, partition, permutations,
 split, reverse, sort, unique, zip, zipwith, group, compose, pipe, pipemaybe,
-partial, curry and memoize.
+pipeeither, partial, curry and memoize.
 
 
     host$ npm install

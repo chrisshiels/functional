@@ -295,6 +295,26 @@ def test_pipemaybe():
                                 iseven ])(0) is None
 
 
+def test_pipeeither():
+  def inc(v):
+    return (None, v + 1)
+
+  def iseven(v):
+    if v % 2 == 0:
+      return (None, v)
+    else:
+      return ('not even', v)
+
+  assert functional.pipeeither([ inc,
+                                 inc,
+                                 iseven,
+                                 inc ])(0) == (None, 3)
+  assert functional.pipeeither([ inc,
+                                 inc,
+                                 inc,
+                                 iseven ])(0) == ('not even', 3)
+
+
 def test_partial():
   def add(a, b):
     return a + b

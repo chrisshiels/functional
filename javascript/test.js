@@ -574,6 +574,34 @@ describe('functional', function() {
   });
 
 
+  describe('#pipeeither()', function() {
+    const inc = function(v) {
+      return [null, v + 1];
+    }
+
+    const iseven = function(v) {
+      if (v % 2 === 0)
+        return [null, v];
+      else
+        return ['not even', v];
+    }
+
+    it('returns [null, 3] for pipeeither([ inc, inc, iseven, inc])(0)',
+       function() {
+         assert.deepEqual(functional.pipeeither([ inc,
+                                                  inc,
+		                                  iseven,
+                                                  inc ])(0),
+                          [null, 3]);
+    });
+
+    it('returns [\'not even\', 3] for pipeeither([ inc, inc, inc, iseven ])(0)',
+       function() {
+         assert.deepEqual(functional.pipeeither([ inc,
+                                                  inc,
+		                                  inc,
+                                                  iseven ])(0),
+                          ['not even', 3]);
     });
   });
 

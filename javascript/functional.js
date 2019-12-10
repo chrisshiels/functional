@@ -234,6 +234,19 @@ const pipemaybe = function(l) {
 }
 
 
+const pipeeither = function(l) {
+  const accumulate = function(a, e) {
+    if (a[0] === null)
+      return e(a[1]);
+    else
+      return a;
+  }
+  return function(v) {
+    return reduce(accumulate, l, [null, v]);
+  }
+}
+
+
 const partial = function(f, ...args1) {
   return function(...args2) {
     return f(...args1.concat(args2));
@@ -338,6 +351,7 @@ module.exports = {
   'pipe':              pipe,
   'pipe2':             pipe2,
   'pipemaybe':         pipemaybe,
+  'pipeeither':        pipeeither,
   'partial':           partial,
   'curry':             curry,
   'memoize':           memoize,
