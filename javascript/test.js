@@ -543,32 +543,37 @@ describe('functional', function() {
 
 
   describe('#pipemaybe()', function() {
-    it('returns 3 for pipemaybe([ valueadd1, valueadd1, valueadd1 ])(0)',
-       function() {
-         const valueadd1 = function(v) {
-           return v + 1;
-         }
+    const inc = function(v) {
+      return v + 1;
+    }
 
-         assert.equal(functional.pipemaybe([ valueadd1,
-                                             valueadd1,
-                                             valueadd1 ])(0),
+    const iseven = function(v) {
+      if (v % 2 === 0)
+        return v;
+      else
+        return null;
+    }
+
+    it('returns 3 for pipemaybe([ inc, inc, iseven, inc])(0)',
+       function() {
+         assert.equal(functional.pipemaybe([ inc,
+                                             inc,
+		                             iseven,
+                                             inc ])(0),
                       3);
     });
 
-    it('returns null for pipemaybe([ valueadd1, valuenull, valueadd1 ])(0)',
+    it('returns null for pipemaybe([ inc, inc, inc, iseven ])(0)',
        function() {
-         const valueadd1 = function(v) {
-           return v + 1;
-         }
-
-         const valuenull = function(v) {
-           return null;
-         }
-
-         assert.equal(functional.pipemaybe([ valueadd1,
-                                             valuenull,
-                                             valueadd1 ])(0),
+         assert.equal(functional.pipemaybe([ inc,
+                                             inc,
+		                             inc,
+                                             iseven ])(0),
                       null);
+    });
+  });
+
+
     });
   });
 

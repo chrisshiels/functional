@@ -226,7 +226,7 @@ const pipemaybe = function(l) {
     if (a !== null)
       return e(a);
     else
-      return null;
+      return a;
   }
   return function(v) {
     return reduce(accumulate, l, v);

@@ -276,18 +276,23 @@ def test_pipe2():
 
 
 def test_pipemaybe():
-  def valueadd1(v):
+  def inc(v):
     return v + 1
 
-  def valuenone(v):
-    return None
+  def iseven(v):
+    if v % 2 == 0:
+      return v
+    else:
+      return None
 
-  assert functional.pipemaybe([ valueadd1,
-                                valueadd1,
-                                valueadd1 ])(0) == 3
-  assert functional.pipemaybe([ valueadd1,
-                                valuenone,
-                                valueadd1 ])(0) is None
+  assert functional.pipemaybe([ inc,
+                                inc,
+                                iseven,
+                                inc ])(0) == 3
+  assert functional.pipemaybe([ inc,
+                                inc,
+                                inc,
+                                iseven ])(0) is None
 
 
 def test_partial():

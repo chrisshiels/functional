@@ -187,7 +187,7 @@ def pipemaybe(l):
     if a is not None:
       return e(a)
     else:
-      return None
+      return a
 
   def internal(v):
     return reduce(accumulate, l, v)
