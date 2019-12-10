@@ -374,5 +374,9 @@ def test_primes():
 
 
 def test_ispalindrome():
+  assert functional.ispalindrome('hello') == \
+         False
+  assert functional.ispalindrome('detartrated') == \
+         True
   assert functional.ispalindrome('tattarrattat') == \
          True

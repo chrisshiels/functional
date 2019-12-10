@@ -714,6 +714,18 @@ describe('functional', function() {
 
 
   describe('#ispalindrome()', function() {
+    it('returns false for ispalindrome(\'hello\')',
+       function() {
+         assert.equal(functional.ispalindrome('hello'),
+                      false);
+    });
+
+    it('returns true for ispalindrome(\'detartrated\')',
+       function() {
+         assert.equal(functional.ispalindrome('detartrated'),
+                      true);
+    });
+
     it('returns true for ispalindrome(\'tattarrattat\')',
        function() {
          assert.equal(functional.ispalindrome('tattarrattat'),
