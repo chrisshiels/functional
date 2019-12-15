@@ -360,12 +360,12 @@ def test_factorial():
 
 def test_fibonacci():
   assert functional.map(functional.fibonacci, functional.range(1, 11)) == \
-         [ 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ]
+         [ 1, 1, 2, 3, 5, 8, 13, 21, 34, 55 ]
 
 
 def test_memoizedfibonacci():
   assert functional.memoizedfibonacci(50) == \
-         20365011074
+         12586269025
 
 
 def test_primes():

@@ -686,20 +686,20 @@ describe('functional', function() {
 
 
   describe('#fibonacci()', function() {
-    it('returns [ 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ] for map(fibonacci, range(1, 11))',
+    it('returns [ 1, 1, 2, 3, 5, 8, 13, 21, 34, 55 ] for map(fibonacci, range(1, 11))',
        function() {
          assert.deepEqual(functional.map(functional.fibonacci,
                                          functional.range(1, 11)),
-                          [ 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ]);
+                          [ 1, 1, 2, 3, 5, 8, 13, 21, 34, 55 ]);
     });
   });
 
 
   describe('#memoizedfibonacci()', function() {
-    it('returns 20365011074 for memoizedfibonacci(50)',
+    it('returns 12586269025 for memoizedfibonacci(50)',
        function() {
          assert.equal(functional.memoizedfibonacci(50),
-                      20365011074);
+                      12586269025);
     });
   });
 

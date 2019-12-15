@@ -287,7 +287,7 @@ const factorial = function(n) {
 
 
 const fibonacci = function(n) {
-  if (n <= 1)
+  if (n === 1 || n === 2)
     return 1;
   else
     return fibonacci(n - 1) + fibonacci(n - 2);
@@ -296,7 +296,7 @@ const fibonacci = function(n) {
 
 const memoizedfibonacci = function(n) {
   let fibonacci = function(n) {
-    if (n <= 1)
+    if (n === 1 || n === 2)
       return 1;
     else
       return fibonacci(n - 1) + fibonacci(n - 2);
