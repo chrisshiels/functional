@@ -368,6 +368,11 @@ def test_memoizedfibonacci():
          12586269025
 
 
+def test_tablefibonacci():
+  assert functional.tablefibonacci(50) == \
+         12586269025
+
+
 def test_primes():
   assert functional.primes(20) == \
          [ 2, 3, 5, 7, 11, 13, 17, 19 ]

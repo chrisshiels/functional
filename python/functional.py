@@ -258,6 +258,15 @@ def memoizedfibonacci(n):
   return fibonacci(n)
 
 
+def tablefibonacci(n):
+  def fibonacci(a, e):
+    if e == 1 or e == 2:
+      return a + [ 1 ]
+    else:
+      return a + [ a[-1] + a[-2] ]
+  return reduce(fibonacci, range(1, n + 1), [])[-1]
+
+
 def primes(n):
   def sieve(l):
     if l == []:

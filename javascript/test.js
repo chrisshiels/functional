@@ -704,6 +704,15 @@ describe('functional', function() {
   });
 
 
+  describe('#tablefibonacci()', function() {
+    it('returns 12586269025 for tablefibonacci(50)',
+       function() {
+         assert.equal(functional.tablefibonacci(50),
+                      12586269025);
+    });
+  });
+
+
   describe('#primes()', function() {
     it('returns [ 2, 3, 5, 7, 11, 13, 17, 19 ] for primes(20)',
        function() {

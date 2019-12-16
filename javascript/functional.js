@@ -306,6 +306,17 @@ const memoizedfibonacci = function(n) {
 }
 
 
+const tablefibonacci = function(n) {
+  const fibonacci = function(a, e) {
+    if (e === 1 || e === 2)
+      return a.concat([ 1 ]);
+    else
+      return a.concat([ a.slice(-1)[0] + a.slice(-2)[0] ]);
+  }
+  return reduce(fibonacci, range(1, n + 1), []).slice(-1);
+}
+
+
 const primes = function(n) {
   const sieve = function(l) {
     if (l.length === 0)
@@ -358,6 +369,7 @@ module.exports = {
   'factorial':         factorial,
   'fibonacci':         fibonacci,
   'memoizedfibonacci': memoizedfibonacci,
+  'tablefibonacci':    tablefibonacci,
   'primes':            primes,
   'ispalindrome':      ispalindrome
 };
