@@ -163,6 +163,12 @@ def permutations(l):
                   [])
 
 
+def flip(f):
+  def internal(*args):
+    return f(*(reverse(list(args))))
+  return internal
+
+
 def compose(f1, f2):
   def internal(v):
     return f2(f1(v))

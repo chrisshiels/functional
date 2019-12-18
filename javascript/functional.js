@@ -199,6 +199,13 @@ const permutations = function(l) {
 }
 
 
+const flip = function(f) {
+  return function(...args) {
+    return f(...reverse(args));
+  }
+}
+
+
 const compose = function(f1, f2) {
   return function(v) {
     return f2(f1(v));
@@ -358,6 +365,7 @@ module.exports = {
   'zipwith':           zipwith,
   'group':             group,
   'permutations':      permutations,
+  'flip':              flip,
   'compose':           compose,
   'pipe':              pipe,
   'pipe2':             pipe2,

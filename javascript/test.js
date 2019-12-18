@@ -455,6 +455,24 @@ describe('functional', function() {
   });
 
 
+  describe('#flip()', function() {
+    const subtract = function(x, y) {
+      return x - y;
+    }
+
+    it('returns 2 for subtract(4, 2)',
+       function() {
+         assert.equal(subtract(4, 2),
+                      2);
+    });
+
+    it('returns -2 for flip(subtract)(4, 2)',
+       function() {
+         assert.equal(functional.flip(subtract)(4, 2),
+                      -2);
+    });
+  });
+
   describe('#compose()', function() {
     it('returns 3 for compose(valueadd1, valuemultiply2)(1)',
        function() {

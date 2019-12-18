@@ -9,6 +9,7 @@ Python:
 * curry
 * filter
 * flatten
+* flip
 * group
 * map
 * memoize

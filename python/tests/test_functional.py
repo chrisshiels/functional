@@ -221,6 +221,14 @@ def test_permutations():
            [ 4, 3, 2, 1 ] ]
 
 
+def test_flip():
+  def subtract(x, y):
+    return x - y
+
+  assert subtract(4, 2) == 2
+  assert functional.flip(subtract)(4, 2) == -2
+
+
 def test_compose():
   def valueadd1(v):
     return v + 1
