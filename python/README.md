@@ -11,7 +11,7 @@ pipemaybe, pipeeither, partial, curry and memoize.
 
     (virtualenv) host$ pip install -r requirements.txt
 
-    (virtualenv) host$ pytest -v --cov tests/
+    (virtualenv) host$ pytest -v --cov .
     ============================= test session starts ==============================
     platform linux2 -- Python 2.7.15, pytest-4.4.1, py-1.8.0, pluggy-0.9.0 -- /home/chris/github.com/functional/python/virtualenv/bin/python2
     cachedir: .pytest_cache
