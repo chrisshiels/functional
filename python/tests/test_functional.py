@@ -8,6 +8,8 @@ import functional
 def test_all():
   assert functional.all(lambda e: e % 2 == 0, []) == \
          False
+  assert functional.all(lambda e: e % 2 == 0, [ 2 ]) == \
+         True
   assert functional.all(lambda e: e % 2 == 0, [ 2, 4, 6, 8, 10 ]) == \
          True
   assert functional.all(lambda e: e % 3 == 0, [ 2, 4, 6, 8, 10 ]) == \
@@ -17,6 +19,8 @@ def test_all():
 def test_any():
   assert functional.any(lambda e: e % 2 == 0, []) == \
          False
+  assert functional.any(lambda e: e % 2 == 0, [ 2 ]) == \
+         True
   assert functional.any(lambda e: e % 2 == 0, [ 2, 4, 6, 8, 10 ]) == \
          True
   assert functional.any(lambda e: e % 3 == 0, [ 2, 4, 6, 8, 10 ]) == \
@@ -300,7 +304,8 @@ def test_pipemaybe():
   assert functional.pipemaybe([ inc,
                                 inc,
                                 inc,
-                                iseven ])(0) is None
+                                iseven,
+                                inc ])(0) is None
 
 
 def test_pipeeither():
@@ -320,7 +325,8 @@ def test_pipeeither():
   assert functional.pipeeither([ inc,
                                  inc,
                                  inc,
-                                 iseven ])(0) == ('not even', 3)
+                                 iseven,
+                                 inc ])(0) == ('not even', 3)
 
 
 def test_partial():
